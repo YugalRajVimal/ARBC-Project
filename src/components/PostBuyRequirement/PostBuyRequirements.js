@@ -25,7 +25,7 @@ const PostBuyRequirements = () => {
             alt="Post Buy Requirements"
           />
         </div>
-        <div className="h-[100%] w-[55%] flex flex-col justify-center gap-2 bg-[#f9f7ee]">
+        <div className="h-[95%] w-[55%] mr-4 flex flex-col justify-center gap-2 bg-[#f9f7ee]">
           <h3>Post Buy Requirement</h3>
           <p>Tell us what you need, and we'll help you get quotes</p>
           <span className="w-full border-[1px] h-[6px] rounded-full overflow-hidden ">
