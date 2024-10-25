@@ -33,7 +33,7 @@ const NavBar = () => {
     };
 
   return (
-    <div className=" h-[7vh] flex justify-around items-center">
+    <div className=" h-[7vh] flex justify-around items-center shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)]">
         <div className="logo">
             LOGO
         </div>
