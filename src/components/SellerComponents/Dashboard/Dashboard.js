@@ -4,7 +4,7 @@ import ProductStatusChart from "./ProductStatusChart";
 
 const Dashboard = () => {
   return (
-    <div className="w-full h-full flex">
+    <div className="w-full h-full flex ">
       <div className="w-[65%] h-full mx-1 p-2">
         <div className="h-[40%]">
           <h5>Dashboard</h5>
@@ -35,21 +35,17 @@ const Dashboard = () => {
           <AnalyticsBarGraph />
         </div>
       </div>
-      <div className="w-[35%] h-full mx-1">
-        <div className="p-2 h-1/2 shadow-md bg-white">
+      <div className="w-[35%] h-full mx-1 overflow-y-auto">
         <ProductStatusChart />
-        </div>
-        
-        <div className="h-1/2  text-center flex flex-col justify-between p-2">
-            <div className="flex justify-between p-2">
-                <h5>My products</h5>
-                <button>
-                    View All
-                </button>
-            </div>
-            <button className="text-xl text-white px-4 py-1 bg-blue-900 rounded-md">
-                Add New Product
-            </button>
+
+        <div className="h-1/2  text-center flex flex-col justify-between p-2 ">
+          <div className="flex justify-between p-2">
+            <h5>My products</h5>
+            <button>View All</button>
+          </div>
+          <button className="text-xl text-white px-4 py-1 bg-blue-900 rounded-md">
+            Add New Product
+          </button>
         </div>
       </div>
     </div>
