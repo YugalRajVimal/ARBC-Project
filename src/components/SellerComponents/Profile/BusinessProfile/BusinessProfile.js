@@ -2,7 +2,7 @@ import React from 'react';
 
 // Sample data to represent a seller (this would typically come from an API)
 const sellerData = {
-  companyName: "Tech Solutions",
+  companyName: "ARBC",
   companyPhoneNumber: "123-456-7890",
   companyOwnershipType: "Private Limited",
   companyTurnover: 5000000,
@@ -28,7 +28,7 @@ const sellerData = {
     "photo1.jpg",
     "photo2.jpg"
   ],
-  companyDescription: "Tech Solutions is a leading provider of innovative tech solutions.",
+  companyDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi impedit ab at, beatae dolores perferendis!",
   modeOfPayment: ["Cash", "Bank Transfer", "UPI"],
   companyWorkingDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
 };

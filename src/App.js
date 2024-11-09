@@ -9,10 +9,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<BuyerLayout />}>
+        <Route path="/" element={<BuyerLayout />}>
           <Route index element={<BuyerLandingPage />} />
-        </Route> */}
-        <Route path="/" element={<SellerLayout />}>
+        </Route>
+        <Route path="/seller" element={<SellerLayout />}>
           <Route index element={<SellerLandingPage />} />
         </Route>
       </Routes>
