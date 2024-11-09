@@ -68,7 +68,7 @@ const PostBuyRequirements = () => {
             {/* Phone No. */}
             <div className="w-[87%]">
               <input
-                type="text"
+                type="number"
                 placeholder="Enter Mobile Number"
                 className="w-full p-2 border-[1px] border-gray-300 rounded-md"
                 onChange={(e) => handleProcessingState(3, e.target.value)}

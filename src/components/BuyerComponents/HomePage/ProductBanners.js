@@ -31,7 +31,7 @@ const ProductBanners = () => {
   };
 
   return (
-    <div className="productBanner h-[45%] relative rounded-md">
+    <div className="productBanner w-full h-[45%] relative rounded-md">
       <div className="absolute left-0 top-1/2 -translate-y-1/2 px-1 py-5 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)] rounded-r-md cursor-pointer" onClick={handlePrevClick}>
         <IoIosArrowBack className="text-xl" />
       </div>

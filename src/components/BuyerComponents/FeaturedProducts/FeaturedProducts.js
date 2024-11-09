@@ -86,9 +86,9 @@ const productDetails = [
 
 const FeaturedProducts = () => {
   return (
-    <div className="h-1/2 p-2 flex flex-col justify-around items-start">
+    <div className="p-2 flex flex-col justify-around items-start">
       <h2 className="p-2 text-xl font-bold h-[12%]">Featured Products</h2>
-      <div className="h-[88%] flex w-full gap-4 overflow-x-auto mx-4">
+      <div className="h-[360px] flex w-full gap-4 overflow-x-auto mx-4">
         {productDetails.map((product, index) => (
           <ProductCard key={index} product={product} />
         ))}

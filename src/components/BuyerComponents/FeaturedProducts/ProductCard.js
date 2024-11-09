@@ -8,14 +8,14 @@ const ProductCard = (props) => {
   return (
     <div
       key={index}
-      className="p-2 h-full w-[170px]  flex flex-col justify-around items-start border border-gray-200 rounded-md shrink-0 "
+      className="p-2 h-full w-[180px]  flex flex-col justify-around items-start border border-gray-200 rounded-md shrink-0 "
     >
       <img
         src={image}
         alt={name}
-        className="h-1/2 aspect-[1/1] object-cover m-auto"
+        className="h-1/2 aspect-[1/1] object-cover mx-auto"
       />
-      <h3 className="text-md font-semibold">{name}</h3>
+      <h3 className="text-[15px] font-semibold">{name}</h3>
       <p className="text-sm">{price}</p>
       <p className="text-sm">{units}</p>
       <br />
