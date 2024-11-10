@@ -4,22 +4,61 @@ import BuyerLayout from "./pages/BuyerLayout";
 import BuyerLandingPage from "./pages/BuyerLandingPage";
 import SellerLayout from "./pages/SellerLayout";
 import SellerLandingPage from "./pages/SellerLandingPage";
+import UserLogin from "./components/AuthComponents/UserLogin";
+import UserSignUp from "./components/AuthComponents/UserSignUp";
+import UserResetPassword from "./components/AuthComponents/UserResetPassword";
+import VerifyAccount from "./components/AuthComponents/UserVerifyAccount";
+import { useEffect, useState } from "react";
+import AuthWrapper from "./AuthWrapper";
 
 function App() {
+  const [isAuthenticatedSeller, setIsAuthenticatedSeller] = useState(false);
+  const [isAuthenticatedBuyer, setIsAuthenticatedBuyer] = useState(true);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<BuyerLayout />}>
+        <Route
+          path="/"
+          element={
+            <BuyerLayout
+              isAuthenticatedBuyer={isAuthenticatedBuyer}
+              setIsAuthenticatedBuyer={setIsAuthenticatedBuyer}
+            />
+          }
+        >
           <Route index element={<BuyerLandingPage />} />
         </Route>
-        <Route path="/seller" element={<SellerLayout />}>
+        <Route
+          path="/seller"
+          element={
+            <SellerLayout
+              isAuthenticatedSeller={isAuthenticatedSeller}
+              setIsAuthenticatedSeller={setIsAuthenticatedSeller}
+            />
+          }
+        >
           <Route index element={<SellerLandingPage />} />
+        </Route>
+
+        <Route>
+          <Route
+            path="/signin"
+            element={
+              <UserLogin setIsAuthenticatedSeller={setIsAuthenticatedSeller} />
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <UserSignUp setIsAuthenticatedSeller={setIsAuthenticatedSeller} />
+            }
+          />
+          <Route path="/reset-password" element={<UserResetPassword />} />
+          <Route path="/verify-account" element={<VerifyAccount />} />
         </Route>
       </Routes>
     </BrowserRouter>
-    // <div className="App">
-    //   App
-    // </div>
   );
 }
 

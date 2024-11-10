@@ -39,7 +39,7 @@ const inquiriesData = [
 
 const CompletedInquiries = () => {
   return (
-    <div className="container mx-auto p-6 space-y-8">
+    <div className="container mx-auto p-6 space-y-8 h-full overflow-y-auto">
       {/* Header Section */}
       <header className="bg-blue-600 text-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-semibold">Completed Inquiries</h1>

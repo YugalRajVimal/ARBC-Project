@@ -1,45 +1,45 @@
-import React from 'react';
+import React from "react";
 
 // Sample data for received inquiries (this would typically come from an API)
 const inquiriesData = [
   {
-    id: 'INV123',
-    customerId: 'CUST001',
-    productId: 'PROD1001',
-    productName: 'Smartphone XYZ',
+    id: "INV123",
+    customerId: "CUST001",
+    productId: "PROD1001",
+    productName: "Smartphone XYZ",
     quantity: 2,
-    customerName: 'Alice Johnson',
-    customerPhone: '9876543210',
-    date: '2024-11-01',
-    status: 'Active',
+    customerName: "Alice Johnson",
+    customerPhone: "9876543210",
+    date: "2024-11-01",
+    status: "Active",
   },
   {
-    id: 'INV124',
-    customerId: 'CUST002',
-    productId: 'PROD1002',
-    productName: 'Laptop ABC',
+    id: "INV124",
+    customerId: "CUST002",
+    productId: "PROD1002",
+    productName: "Laptop ABC",
     quantity: 1,
-    customerName: 'Bob Smith',
-    customerPhone: '9123456789',
-    date: '2024-11-02',
-    status: 'Completed',
+    customerName: "Bob Smith",
+    customerPhone: "9123456789",
+    date: "2024-11-02",
+    status: "Completed",
   },
   {
-    id: 'INV125',
-    customerId: 'CUST003',
-    productId: 'PROD1003',
-    productName: 'Wireless Earbuds',
+    id: "INV125",
+    customerId: "CUST003",
+    productId: "PROD1003",
+    productName: "Wireless Earbuds",
     quantity: 3,
-    customerName: 'Charlie Brown',
-    customerPhone: '9345678901',
-    date: '2024-11-03',
-    status: 'Pending',
+    customerName: "Charlie Brown",
+    customerPhone: "9345678901",
+    date: "2024-11-03",
+    status: "Pending",
   },
 ];
 
 const ReceivedInquiries = () => {
   return (
-    <div className="container mx-auto p-6 space-y-8">
+    <div className="container mx-auto p-6 space-y-8 h-full overflow-y-auto">
       {/* Header Section */}
       <header className="bg-blue-600 text-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-semibold">Received Inquiries</h1>
@@ -48,10 +48,12 @@ const ReceivedInquiries = () => {
 
       {/* Inquiry Table Section */}
       <section className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
-        <h2 className="text-2xl font-bold mb-4 text-blue-600">Received Inquiries List</h2>
+        <h2 className="text-2xl font-bold mb-4 text-blue-600">
+          Received Inquiries List
+        </h2>
 
         {/* Table for displaying inquiries */}
-        <table className="w-full table-auto border-collapse">
+        <table className="w-full table-auto border-collapse ">
           <thead>
             <tr className="bg-blue-100 text-left text-sm text-gray-700">
               <th className="p-3 border-b">Inquiry ID</th>
@@ -77,13 +79,19 @@ const ReceivedInquiries = () => {
                 <td className="p-3 border-b">{inquiry.customerName}</td>
                 <td className="p-3 border-b">{inquiry.customerPhone}</td>
                 <td className="p-3 border-b">{inquiry.date}</td>
-                <td className={`p-3 border-b ${inquiry.status === 'Completed' && 'text-green-600' } 
-                ${inquiry.status === 'Active' && 'text-blue-600'}
-                ${inquiry.status === 'Pending' && 'text-red-600'}`}>
+                <td
+                  className={`p-3 border-b ${
+                    inquiry.status === "Completed" && "text-green-600"
+                  } 
+                ${inquiry.status === "Active" && "text-blue-600"}
+                ${inquiry.status === "Pending" && "text-red-600"}`}
+                >
                   {inquiry.status}
                 </td>
                 <td className="p-3 border-b">
-                  <button className="text-blue-500 hover:text-blue-700">View</button>
+                  <button className="text-blue-500 hover:text-blue-700">
+                    View
+                  </button>
                 </td>
               </tr>
             ))}

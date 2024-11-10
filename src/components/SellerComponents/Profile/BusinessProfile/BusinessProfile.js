@@ -1,33 +1,67 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
 
-const sellerData = {
-  companyName: "ARBC",
-  companyPhoneNumber: "123-456-7890",
-  companyOwnershipType: "Private Limited",
-  companyTurnover: 5000000,
-  companyYearOfEstablishment: 2010,
-  companyNumberOfEmployees: 200,
-  companyFaxNumber: "123-456-7891",
-  companyAddress: "1234 Tech Street",
-  companyPincode: "110001",
-  companyCity: "New Delhi",
-  companyState: "Delhi",
-  companyIdentifiers: {
-    gstNumber: "GST123456",
-    aadharNumber: "AADHAR1234",
-    panNumber: "PAN1234",
-    tanNumber: "TAN1234",
-    images: ["image1.jpg", "image2.jpg"],
-  },
-  companyLogo: "logo.jpg",
-  companyPhotos: ["photo1.jpg", "photo2.jpg"],
-  companyDescription:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi impedit ab at, beatae dolores perferendis!",
-  modeOfPayment: ["Cash", "Bank Transfer", "UPI"],
-  companyWorkingDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-};
+// const sellerData = {
+//   companyName: "ARBC",
+//   companyPhoneNumber: "123-456-7890",
+//   companyOwnershipType: "Private Limited",
+//   companyTurnover: 5000000,
+//   companyYearOfEstablishment: 2010,
+//   companyNumberOfEmployees: 200,
+//   companyFaxNumber: "123-456-7891",
+//   companyAddress: "1234 Tech Street",
+//   companyPincode: "110001",
+//   companyCity: "New Delhi",
+//   companyState: "Delhi",
+//   companyIdentifiers: {
+//     gstNumber: "GST123456",
+//     aadharNumber: "AADHAR1234",
+//     panNumber: "PAN1234",
+//     tanNumber: "TAN1234",
+//     images: ["image1.jpg", "image2.jpg"],
+//   },
+//   companyLogo: "logo.jpg",
+//   companyPhotos: ["photo1.jpg", "photo2.jpg"],
+//   companyDescription:
+//     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi impedit ab at, beatae dolores perferendis!",
+//   modeOfPayment: ["Cash", "Bank Transfer", "UPI"],
+//   companyWorkingDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+// };
 
 const BusinessProfile = () => {
+  const [error, setError] = useState("");
+  const [businessProfileDetails, setBusinessProfileDetails] = useState({});
+
+  const getBusinessProfileDetails = async () => {
+    try {
+      //Fetch business profile details using axios
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/user/get-business-profile-details`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      const data = await response.data;
+      console.log(data.seller);
+      setBusinessProfileDetails(data.seller);
+      setEditableData({ ...businessProfileDetails });
+      setInitialData({ ...businessProfileDetails });
+    } catch (error) {
+      console.log(error);
+      setError("Something went wrong. Please try again later.");
+    }
+  };
+
+  const [editableData, setEditableData] = useState({
+    ...businessProfileDetails,
+  });
+  const [initialData, setInitialData] = useState({
+    ...businessProfileDetails,
+  });
+
   const [isEditing, setIsEditing] = useState({
     companyDetails: false,
     addressDetails: false,
@@ -46,8 +80,9 @@ const BusinessProfile = () => {
     companyPhotos: true,
   });
 
-  const [editableData, setEditableData] = useState({ ...sellerData });
-  const [initialData, setInitialData] = useState({ ...sellerData });
+  useEffect(() => {
+    getBusinessProfileDetails();
+  }, [isCollapsed]);
 
   const handleEditToggle = (section) => {
     setIsEditing((prev) => ({ ...prev, [section]: !prev[section] }));
@@ -98,12 +133,13 @@ const BusinessProfile = () => {
       {/* Company Details Section */}
       <section className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
         <h2
-          className="text-2xl font-bold mb-4 text-[#e2a940] cursor-pointer"
+          className="text-2xl font-bold  text-[#e2a940] cursor-pointer flex justify-between items-center"
           onClick={(e) => {
             handleCollapseToggle("companyDetails");
           }}
         >
           Company Details
+          <IoIosArrowDown />
         </h2>
         {!isCollapsed.companyDetails && (
           <div>
@@ -216,8 +252,9 @@ const BusinessProfile = () => {
           handleCollapseToggle("addressDetails");
         }}
       >
-        <h2 className="text-2xl font-bold mb-4 text-[#e2a940] flex justify-between">
+        <h2 className="text-2xl font-bold  text-[#e2a940] flex justify-between items-center">
           Address Details
+          <IoIosArrowDown />
         </h2>
         {!isCollapsed.addressDetails && (
           <div>
@@ -301,13 +338,14 @@ const BusinessProfile = () => {
 
       {/* Taxation Details Section */}
       <section
-        className="bg-white p-6 rounded-lg shadow-md border border-gray-300"
+        className="bg-white p-6 rounded-lg shadow-md border border-gray-300 "
         onClick={(e) => {
           handleCollapseToggle("taxationDetails");
         }}
       >
-        <h2 className="text-2xl font-bold mb-4 text-[#e2a940] flex justify-between">
+        <h2 className="text-2xl font-bold  text-[#e2a940] flex justify-between items-center">
           Taxation Details
+          <IoIosArrowDown />
         </h2>
         {!isCollapsed.taxationDetails && (
           <div>
@@ -402,8 +440,9 @@ const BusinessProfile = () => {
           handleCollapseToggle("paymentMethods");
         }}
       >
-        <h2 className="text-2xl font-bold mb-4 text-[#e2a940] flex justify-between">
+        <h2 className="text-2xl font-bold  text-[#e2a940] flex justify-between items-center">
           Payment Methods
+          <IoIosArrowDown />
         </h2>
         {!isCollapsed.paymentMethods && (
           <div>
@@ -463,8 +502,9 @@ const BusinessProfile = () => {
           handleCollapseToggle("workingDays");
         }}
       >
-        <h2 className="text-2xl font-bold mb-4 text-[#e2a940] flex justify-between">
+        <h2 className="text-2xl font-bold  text-[#e2a940] flex justify-between items-center">
           Working Days
+          <IoIosArrowDown />
         </h2>
         {!isCollapsed.workingDays && (
           <div>
@@ -524,7 +564,7 @@ const BusinessProfile = () => {
           handleCollapseToggle("companyPhotos");
         }}
       >
-        <h2 className="text-2xl font-bold mb-4 text-[#e2a940] flex justify-between">
+        <h2 className="text-2xl font-bold  text-[#e2a940] flex justify-between">
           Company Photos
         </h2>
         {!isCollapsed.companyPhotos && (
