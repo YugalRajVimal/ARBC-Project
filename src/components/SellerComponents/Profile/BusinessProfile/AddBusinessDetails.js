@@ -42,37 +42,92 @@ const AddBusinessDetails = () => {
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
+    console.log(name, "-", files[0]);
     setFormData({ ...formData, [name]: files[0] });
   };
 
   const handleMultiFileChange = (e) => {
     const { name, files } = e.target;
-    setFormData({ ...formData, [name]: Array.from(files) });
+    console.log(name, "-", files);
+    setFormData({ ...formData, [name]: files });
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const token = localStorage.getItem("token");
+
+  //   try {
+  //     console.log(formData);
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_API_URL}/user/update-user-profile`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           Authorization: `${token}`,
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //     console.log(response.data);
+  //     if (response.status === 200) {
+  //       // Redirect to the seller landing
+  //       alert("Profile updated successfully");
+  //       navigate("/seller");
+  //       return;
+  //     }
+  //     alert("Error updating profile");
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert("Error updating profile");
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: token,
-      "Content-Type": "application/json",
-    };
+
+    // Create a new FormData instance
+    const formDataToSend = new FormData();
+
+    // Append each form data field
+    Object.keys(formData).forEach((key) => {
+      // Handle multiple file input for companyPhotos
+      if (key === "companyPhotos" && formData[key].length > 0) {
+        Array.from(formData[key]).forEach((file) =>
+          formDataToSend.append(key, file)
+        );
+      }
+      // Handle single file input for companyLogo
+      else if (key === "companyLogo" && formData[key]) {
+        formDataToSend.append(key, formData[key]);
+      }
+      // Append all other fields
+      else {
+        formDataToSend.append(key, formData[key]);
+      }
+    });
 
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/user/update-user-profile`,
-        formData,
+        formDataToSend,
         {
-          headers,
+          headers: {
+            Authorization: `${token}`,
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
-      console.log(response.data);
+
       if (response.status === 200) {
-        // Redirect to the seller landing
+        alert("Profile updated successfully");
         navigate("/seller");
+      } else {
+        alert("Error updating profile");
       }
-      alert("Profile updated successfully");
+      navigate("/seller");
     } catch (error) {
       console.error(error);
       alert("Error updating profile");

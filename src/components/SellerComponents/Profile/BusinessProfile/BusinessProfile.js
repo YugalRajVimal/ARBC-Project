@@ -89,9 +89,18 @@ const BusinessProfile = () => {
 
   return (
     <div className="container h-full w-full overflow-y-auto mx-auto p-6 space-y-8">
-      <header className="bg-[#e2a940] text-white p-6 rounded-lg shadow-md">
-        <h1 className="text-3xl font-semibold">{editableData.companyName}</h1>
-        <p className="text-xl">{editableData.companyDescription}</p>
+      <header className="bg-[#e2a940] text-white p-6 rounded-lg shadow-md flex">
+        <div>
+          <img
+            src={process.env.REACT_APP_API_URL + editableData.companyLogo}
+            alt="Company Logo"
+            className="h-[70px] w-[70px] rounded-full mr-4"
+          />
+        </div>
+        <div>
+          <h1 className="text-3xl font-semibold">{editableData.companyName}</h1>
+          <p className="text-xl">{editableData.companyDescription}</p>
+        </div>
       </header>
       {/* Render sections as in your original code */}
 
@@ -522,66 +531,32 @@ const BusinessProfile = () => {
         )}
       </section>
 
-      {/* Company Photos Section */}
-      {/* <section
+      <section
         className="bg-white p-6 rounded-lg shadow-md border border-gray-300"
-        onClick={(e) => {
-          handleCollapseToggle("companyPhotos");
-        }}
+        onClick={() => handleCollapseToggle("companyPhotos")}
       >
-        <h2 className="text-2xl font-bold  text-[#e2a940] flex justify-between">
+        <h2 className="text-2xl font-bold text-[#e2a940] flex justify-between items-center">
           Company Photos
+          <IoIosArrowDown />
         </h2>
         {!isCollapsed.companyPhotos && (
-          <div>
-            {isEditing.companyPhotos ? (
-              <div className="space-y-4">
-                <input
-                  type="text"
-                  name="companyPhotos"
-                  value={editableData.companyPhotos.join(", ")}
-                  onChange={(e) => handleChange(e, "companyPhotos")}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-                <button
-                  onClick={(e) => {
-                    handleButtonClick(e);
-                    handleUpdate("companyPhotos");
-                  }}
-                  className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-                >
-                  Update
-                </button>
-                <button
-                  onClick={(e) => {
-                    handleButtonClick(e);
-                    handleCancel("companyPhotos");
-                  }}
-                  className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
-                >
-                  Cancel
-                </button>
-              </div>
+          <div className="grid grid-cols-3 gap-4 mt-4">
+            {editableData.companyPhotos && editableData.companyPhotos.length > 0 ? (
+              editableData.companyPhotos.map((imgPath, index) => (
+                <div key={index} className="flex justify-center">
+                  <img
+                    src={`${process.env.REACT_APP_API_URL}${imgPath}`}
+                    alt={`Company Photo ${index + 1}`}
+                    className="w-full h-auto object-cover rounded-md shadow-md"
+                  />
+                </div>
+              ))
             ) : (
-              <div className="space-y-4">
-                <p>
-                  <strong>Photos:</strong>{" "}
-                  {editableData.companyPhotos.join(", ")}
-                </p>
-                <button
-                  onClick={(e) => {
-                    handleButtonClick(e);
-                    handleEditToggle("companyPhotos");
-                  }}
-                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                >
-                  Edit
-                </button>
-              </div>
+              <p>No company photos available</p>
             )}
           </div>
         )}
-      </section> */}
+      </section>
     </div>
   );
 };
