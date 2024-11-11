@@ -35,8 +35,7 @@ const NavBar = () => {
 
       <div>
         <button className="flex justify-center items-center">
-          Sign In
-          <IoIosArrowDown />
+          LogOut
         </button>
       </div>
     </div>

@@ -1,173 +1,486 @@
-import React from "react";
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+
+// const MyProducts = () => {
+//   const [products, setProducts] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   // Fetch products from the server
+//   useEffect(() => {
+//     const fetchProducts = async () => {
+//       try {
+//         const response = await axios.get(
+//           `${process.env.REACT_APP_API_URL}/product/get-seller-products`,
+//           {
+//             headers: {
+//               Authorization: `${localStorage.getItem("token")}`,
+//             },
+//           }
+//         );
+//         setProducts(response.data); // Assuming response.data is the array of products
+//         setLoading(false);
+//       } catch (error) {
+//         console.error("Error fetching products:", error);
+//         setError("Failed to load products");
+//         setLoading(false);
+//       }
+//     };
+//     fetchProducts();
+//   }, []);
+
+//   const handleDeleteProduct = async (productId) => {
+//     try {
+//       const response = await axios.delete(
+//         `${process.env.REACT_APP_API_URL}/product/delete-product/${productId}`,
+//         {
+//           headers: {
+//             Authorization: `${localStorage.getItem("token")}`,
+//           },
+//         }
+//       );
+//       alert("Product deleted successfully");
+//       // Remove the deleted product from the state
+//       setProducts((prevProducts) =>
+//         prevProducts.filter((product) => product._id !== productId)
+//       );
+//     } catch (error) {
+//       console.error("Error deleting product:", error);
+//     }
+//   };
+
+//   if (loading) {
+//     return <div className="text-center text-2xl p-6">Loading...</div>;
+//   }
+
+//   if (error) {
+//     return <div className="text-center text-red-500 text-2xl p-6">{error}</div>;
+//   }
+
+//   return (
+//     <div className="container mx-auto p-6 h-full overflow-y-auto">
+//       <h1 className="text-3xl font-semibold text-center mb-6">My Products</h1>
+//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//         {products.map((product, index) => (
+//           <div
+//             key={index}
+//             className="bg-white p-4 rounded-lg shadow-md border border-gray-300 flex flex-col justify-between"
+//           >
+//             {/* Product Name */}
+//             <h2 className="text-xl font-semibold text-gray-800 mb-2">
+//               {product.productName}
+//             </h2>
+
+//             {/* Product Images */}
+//             <div className="mb-3">
+//               <div className="flex space-x-2">
+//                 {product.productImages.slice(0, 3).map((image, idx) => (
+//                   <img
+//                     key={idx}
+//                     src={image}
+//                     alt={`Product ${product.productName}`}
+//                     className="w-16 h-16 object-cover rounded-lg"
+//                   />
+//                 ))}
+//               </div>
+//             </div>
+
+//             {/* Product Overview */}
+//             <p className="text-gray-600 mb-3 text-sm line-clamp-2">
+//               {product.productOverview}
+//             </p>
+
+//             {/* Product Specifications (Compact View) */}
+//             <div className="mb-3">
+//               <h3 className="text-md font-medium text-gray-800 mb-1">
+//                 Specifications
+//               </h3>
+//               <div className="flex flex-wrap text-gray-600 text-sm">
+//                 {product.productSpecifications.map((spec, idx) => (
+//                   <span key={idx} className="mr-2">
+//                     <strong>{spec.name}:</strong> {spec.value}
+//                   </span>
+//                 ))}
+//               </div>
+//             </div>
+
+//             {/* Product Price & Quantity */}
+//             <div className="flex justify-between items-center mb-3">
+//               <span className="text-lg font-semibold text-green-600">
+//                 ₹{product.productPrice} per {product.productUnitType}
+//               </span>
+//               <span className="text-sm text-gray-600">
+//                 Qty: {product.productQuantity}
+//               </span>
+//             </div>
+
+//             {/* Edit & Delete Buttons */}
+//             <div className="flex justify-around space-x-2">
+//               <button className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 w-full text-sm">
+//                 Edit
+//               </button>
+//               <button
+//                 onClick={() => handleDeleteProduct(product._id)}
+//                 className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-700 w-full text-sm"
+//               >
+//                 Delete
+//               </button>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default MyProducts;
+
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const MyProducts = () => {
-  // Sample products data
-  const products = [
-    {
-      productName: "Product 1",
-      productImages: ["/images/product1.jpg", "/images/product2.jpg"],
-      productPrice: 100,
-      productQuantity: 10,
-      productUnitType: "kg",
-      productOverview: "This is a great product for all your needs.",
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [currentProduct, setCurrentProduct] = useState(null);
+
+  // Fetch products from the server
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/product/get-seller-products`,
+          {
+            headers: {
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setProducts(response.data); // Assuming response.data is the array of products
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setError("Failed to load products");
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_API_URL}/product/delete-product/${productId}`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      alert("Product deleted successfully");
+      // Remove the deleted product from the state
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product._id !== productId)
+      );
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
+  const handleEditProduct = (product) => {
+    setCurrentProduct(product);
+    setIsEditMode(true);
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/product/update-product/${currentProduct._id}`,
+        currentProduct,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      alert("Product updated successfully");
+
+      // Update the product in the state
+      setProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product._id === currentProduct._id ? response.data : product
+        )
+      );
+      setIsEditMode(false); // Close the form
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
+  };
+
+  const handleAddSpecification = () => {
+    setCurrentProduct({
+      ...currentProduct,
       productSpecifications: [
-        { name: "Color", value: "Red" },
-        { name: "Size", value: "Medium" },
+        ...currentProduct.productSpecifications,
+        { name: "", value: "" },
       ],
-    },
-    {
-      productName: "Product 2",
-      productImages: ["/images/product3.jpg", "/images/product4.jpg"],
-      productPrice: 200,
-      productQuantity: 5,
-      productUnitType: "ltr",
-      productOverview: "A top-quality product for your satisfaction.",
-      productSpecifications: [
-        { name: "Material", value: "Plastic" },
-        { name: "Color", value: "Blue" },
-      ],
-    },
-    {
-      productName: "Product 3",
-      productImages: ["/images/product5.jpg", "/images/product6.jpg"],
-      productPrice: 350,
-      productQuantity: 15,
-      productUnitType: "pcs",
-      productOverview: "Durable and reliable for everyday use.",
-      productSpecifications: [
-        { name: "Material", value: "Steel" },
-        { name: "Weight", value: "500g" },
-      ],
-    },
-    {
-      productName: "Product 4",
-      productImages: ["/images/product7.jpg", "/images/product8.jpg"],
-      productPrice: 80,
-      productQuantity: 30,
-      productUnitType: "kg",
-      productOverview: "Affordable product for bulk purchases.",
-      productSpecifications: [
-        { name: "Flavour", value: "Vanilla" },
-        { name: "Shelf Life", value: "12 months" },
-      ],
-    },
-    {
-      productName: "Product 5",
-      productImages: ["/images/product9.jpg", "/images/product10.jpg"],
-      productPrice: 450,
-      productQuantity: 20,
-      productUnitType: "ltr",
-      productOverview: "Premium quality product with eco-friendly packaging.",
-      productSpecifications: [
-        { name: "Eco-friendly", value: "Yes" },
-        { name: "Ingredients", value: "Natural" },
-      ],
-    },
-    {
-      productName: "Product 6",
-      productImages: ["/images/product11.jpg", "/images/product12.jpg"],
-      productPrice: 120,
-      productQuantity: 25,
-      productUnitType: "g",
-      productOverview: "A perfect blend of taste and nutrition.",
-      productSpecifications: [
-        { name: "Taste", value: "Sweet" },
-        { name: "Packaging", value: "Resealable Bag" },
-      ],
-    },
-    {
-      productName: "Product 7",
-      productImages: ["/images/product13.jpg", "/images/product14.jpg"],
-      productPrice: 250,
-      productQuantity: 12,
-      productUnitType: "kg",
-      productOverview: "High quality for professional use.",
-      productSpecifications: [
-        { name: "Model", value: "ProX" },
-        { name: "Power", value: "1500W" },
-      ],
-    },
-    {
-      productName: "Product 8",
-      productImages: ["/images/product15.jpg", "/images/product16.jpg"],
-      productPrice: 500,
-      productQuantity: 8,
-      productUnitType: "pcs",
-      productOverview: "Luxury product with premium materials.",
-      productSpecifications: [
-        { name: "Material", value: "Gold Plated" },
-        { name: "Size", value: "Large" },
-      ],
-    },
-  ];
+    });
+  };
+
+  const handleRemoveSpecification = (index) => {
+    setCurrentProduct({
+      ...currentProduct,
+      productSpecifications: currentProduct.productSpecifications.filter(
+        (_, idx) => idx !== index
+      ),
+    });
+  };
+
+  if (loading) {
+    return <div className="text-center text-2xl p-6">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500 text-2xl p-6">{error}</div>;
+  }
 
   return (
     <div className="container mx-auto p-6 h-full overflow-y-auto">
       <h1 className="text-3xl font-semibold text-center mb-6">My Products</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map((product, index) => (
-          <div
-            key={index}
-            className="bg-white p-6 rounded-lg shadow-lg border border-gray-300"
-          >
+      {isEditMode ? (
+        <div className="p-6 bg-white rounded-lg shadow-lg">
+          <h2 className="text-2xl font-semibold mb-4">Edit Product</h2>
+          <form onSubmit={handleFormSubmit}>
             {/* Product Name */}
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              {product.productName}
-            </h2>
-
-            {/* Product Images */}
             <div className="mb-4">
-              <div className="flex space-x-4">
-                {product.productImages.map((image, idx) => (
-                  <img
-                    key={idx}
-                    src={image}
-                    alt={`Product ${product.productName}`}
-                    className="w-24 h-24 object-cover rounded-lg"
-                  />
-                ))}
-              </div>
+              <label className="block text-gray-700">Product Name</label>
+              <input
+                type="text"
+                value={currentProduct.productName}
+                onChange={(e) =>
+                  setCurrentProduct({
+                    ...currentProduct,
+                    productName: e.target.value,
+                  })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+                required
+              />
+            </div>
+
+            {/* Product Unit Type */}
+            <div className="mb-4">
+              <label className="block text-gray-700">Unit Type</label>
+              <input
+                type="text"
+                value={currentProduct.productUnitType}
+                onChange={(e) =>
+                  setCurrentProduct({
+                    ...currentProduct,
+                    productUnitType: e.target.value,
+                  })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+                required
+              />
             </div>
 
             {/* Product Overview */}
-            <p className="text-gray-600 mb-4">{product.productOverview}</p>
+            <div className="mb-4">
+              <label className="block text-gray-700">Overview</label>
+              <textarea
+                value={currentProduct.productOverview}
+                onChange={(e) =>
+                  setCurrentProduct({
+                    ...currentProduct,
+                    productOverview: e.target.value,
+                  })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+                rows="4"
+                required
+              />
+            </div>
+
+            {/* Product Price */}
+            <div className="mb-4">
+              <label className="block text-gray-700">Price</label>
+              <input
+                type="number"
+                value={currentProduct.productPrice}
+                onChange={(e) =>
+                  setCurrentProduct({
+                    ...currentProduct,
+                    productPrice: e.target.value,
+                  })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+                required
+              />
+            </div>
+
+            {/* Product Quantity */}
+            <div className="mb-4">
+              <label className="block text-gray-700">Quantity</label>
+              <input
+                type="number"
+                value={currentProduct.productQuantity}
+                onChange={(e) =>
+                  setCurrentProduct({
+                    ...currentProduct,
+                    productQuantity: e.target.value,
+                  })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+                required
+              />
+            </div>
 
             {/* Product Specifications */}
             <div className="mb-4">
-              <h3 className="text-lg font-medium text-gray-800 mb-2">
-                Specifications
-              </h3>
-              <ul className="list-disc pl-5 text-gray-600">
-                {product.productSpecifications.map((spec, idx) => (
-                  <li key={idx} className="mb-1">
-                    <strong>{spec.name}:</strong> {spec.value}
-                  </li>
-                ))}
-              </ul>
+              <label className="block text-gray-700">Specifications</label>
+              {currentProduct.productSpecifications.map((spec, idx) => (
+                <div key={idx} className="flex space-x-4 mb-2">
+                  <input
+                    type="text"
+                    value={spec.name}
+                    onChange={(e) =>
+                      setCurrentProduct({
+                        ...currentProduct,
+                        productSpecifications: currentProduct.productSpecifications.map(
+                          (s, i) =>
+                            i === idx
+                              ? { ...s, name: e.target.value }
+                              : s
+                        ),
+                      })
+                    }
+                    className="w-1/2 p-2 border border-gray-300 rounded"
+                    placeholder="Specification Name"
+                  />
+                  <input
+                    type="text"
+                    value={spec.value}
+                    onChange={(e) =>
+                      setCurrentProduct({
+                        ...currentProduct,
+                        productSpecifications: currentProduct.productSpecifications.map(
+                          (s, i) =>
+                            i === idx
+                              ? { ...s, value: e.target.value }
+                              : s
+                        ),
+                      })
+                    }
+                    className="w-1/2 p-2 border border-gray-300 rounded"
+                    placeholder="Specification Value"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveSpecification(idx)}
+                    className="p-2 bg-red-500 text-white rounded"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={handleAddSpecification}
+                className="p-2 bg-green-500 text-white rounded mt-2"
+              >
+                Add Specification
+              </button>
             </div>
 
-            {/* Product Price & Quantity */}
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-lg font-semibold text-green-600">
-                ₹{product.productPrice} per {product.productUnitType}
-              </span>
-              <span className="text-sm text-gray-600">
-                Quantity: {product.productQuantity}
-              </span>
-            </div>
+            <button
+              type="submit"
+              className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+            >
+              Save Changes
+            </button>
+          </form>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {products.map((product, index) => (
+    <div
+      key={index}
+      className="bg-white p-4 rounded-lg shadow-md border border-gray-300 flex flex-col justify-between "
+    >
+      {/* Product Name */}
+      <h2 className="text-xl font-semibold text-gray-800 mb-2">
+        {product.productName}
+      </h2>
 
-            {/* Edit & Delete Buttons */}
-            <div className="flex space-x-4">
-              <button className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 w-full">
-                Edit Product
-              </button>
-              <button className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-700 w-full">
-                Delete Product
-              </button>
-            </div>
-          </div>
+      {/* Product Images */}
+      <div className="flex space-x-2 mb-3 overflow-x-auto">
+        {product.productImages?.slice(0, 3).map((image, idx) => (
+          <img
+            key={idx}
+            src={process.env.REACT_APP_API_URL+image}
+            alt={`Product ${product.productName}`}
+            className="w-30 h-40 object-cover rounded-lg"
+          />
         ))}
       </div>
+
+      {/* Product Overview */}
+      <p className="text-gray-600 mb-3 text-sm line-clamp-2">
+        {product.productOverview}
+      </p>
+
+
+      {/* Product Specifications */}
+      <div className="mb-3">
+        <p className="text-md font-medium text-gray-700">Specifications:</p>
+        {product.productSpecifications && product.productSpecifications.length > 0 ? (
+          <ul className="list-disc pl-5 text-sm">
+            {product.productSpecifications.map((spec, idx) => (
+              <li key={idx} className="text-gray-600">
+                {spec.name}: {spec.value}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-600">No specifications available.</p>
+        )}
+      </div>
+
+      {/* Product Price and Quantity */}
+      <div className="mb-3">
+        <h3 className="text-md font-medium text-gray-700">
+          Price: ${product.productPrice} / {product.productUnitType}
+        </h3>
+        <p className="text-md font-medium text-gray-700">
+          Quantity: {product.productQuantity} (Total Quantity: {product.totalQuantity})
+        </p>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex gap-2 justify-end">
+        <button
+          onClick={() => handleEditProduct(product)}
+          className="p-2 bg-yellow-500 text-white rounded"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => handleDeleteProduct(product._id)}
+          className="p-2 bg-red-500 text-white rounded"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
+      )}
     </div>
   );
 };

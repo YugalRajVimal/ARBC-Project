@@ -2,40 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
-// const sellerData = {
-//   companyName: "ARBC",
-//   companyPhoneNumber: "123-456-7890",
-//   companyOwnershipType: "Private Limited",
-//   companyTurnover: 5000000,
-//   companyYearOfEstablishment: 2010,
-//   companyNumberOfEmployees: 200,
-//   companyFaxNumber: "123-456-7891",
-//   companyAddress: "1234 Tech Street",
-//   companyPincode: "110001",
-//   companyCity: "New Delhi",
-//   companyState: "Delhi",
-//   companyIdentifiers: {
-//     gstNumber: "GST123456",
-//     aadharNumber: "AADHAR1234",
-//     panNumber: "PAN1234",
-//     tanNumber: "TAN1234",
-//     images: ["image1.jpg", "image2.jpg"],
-//   },
-//   companyLogo: "logo.jpg",
-//   companyPhotos: ["photo1.jpg", "photo2.jpg"],
-//   companyDescription:
-//     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi impedit ab at, beatae dolores perferendis!",
-//   modeOfPayment: ["Cash", "Bank Transfer", "UPI"],
-//   companyWorkingDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-// };
-
 const BusinessProfile = () => {
   const [error, setError] = useState("");
   const [businessProfileDetails, setBusinessProfileDetails] = useState({});
+  const [editableData, setEditableData] = useState({});
+  const [initialData, setInitialData] = useState({});
 
   const getBusinessProfileDetails = async () => {
     try {
-      //Fetch business profile details using axios
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/user/get-business-profile-details`,
         {
@@ -44,23 +18,15 @@ const BusinessProfile = () => {
           },
         }
       );
-      const data = await response.data;
-      console.log(data.seller);
-      setBusinessProfileDetails(data.seller);
-      setEditableData({ ...businessProfileDetails });
-      setInitialData({ ...businessProfileDetails });
+      const data = response.data.seller;
+      setBusinessProfileDetails(data);
+      setEditableData(data); // Set initial data here directly after fetching
+      setInitialData(data);
     } catch (error) {
       console.log(error);
       setError("Something went wrong. Please try again later.");
     }
   };
-
-  const [editableData, setEditableData] = useState({
-    ...businessProfileDetails,
-  });
-  const [initialData, setInitialData] = useState({
-    ...businessProfileDetails,
-  });
 
   const [isEditing, setIsEditing] = useState({
     companyDetails: false,
@@ -81,8 +47,8 @@ const BusinessProfile = () => {
   });
 
   useEffect(() => {
-    getBusinessProfileDetails();
-  }, [isCollapsed]);
+    getBusinessProfileDetails(); // Fetch data once when component mounts
+  }, []); // Empty dependency array to fetch data only on mount
 
   const handleEditToggle = (section) => {
     setIsEditing((prev) => ({ ...prev, [section]: !prev[section] }));
@@ -117,18 +83,17 @@ const BusinessProfile = () => {
     }));
   };
 
-  // Preventing collapse toggle when clicking on buttons inside the section
   const handleButtonClick = (e) => {
     e.stopPropagation();
   };
 
   return (
     <div className="container h-full w-full overflow-y-auto mx-auto p-6 space-y-8">
-      {/* Header Section */}
       <header className="bg-[#e2a940] text-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-semibold">{editableData.companyName}</h1>
         <p className="text-xl">{editableData.companyDescription}</p>
       </header>
+      {/* Render sections as in your original code */}
 
       {/* Company Details Section */}
       <section className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
@@ -231,7 +196,7 @@ const BusinessProfile = () => {
                   <strong>Fax Number:</strong>{" "}
                   {editableData.companyFaxNumber || "N/A"}
                 </p>
-                <button
+                {/* <button
                   onClick={(e) => {
                     handleButtonClick(e);
                     handleEditToggle("companyDetails");
@@ -239,7 +204,7 @@ const BusinessProfile = () => {
                   className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                 >
                   Edit
-                </button>
+                </button> */}
               </div>
             )}
           </div>
@@ -321,7 +286,7 @@ const BusinessProfile = () => {
                 <p>
                   <strong>State:</strong> {editableData.companyState}
                 </p>
-                <button
+                {/* <button
                   onClick={(e) => {
                     handleButtonClick(e);
                     handleEditToggle("addressDetails");
@@ -329,7 +294,7 @@ const BusinessProfile = () => {
                   className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                 >
                   Edit
-                </button>
+                </button> */}
               </div>
             )}
           </div>
@@ -416,7 +381,7 @@ const BusinessProfile = () => {
                   <strong>TAN Number:</strong>{" "}
                   {editableData.companyIdentifiers.tanNumber}
                 </p>
-                <button
+                {/* <button
                   onClick={(e) => {
                     handleButtonClick(e);
                     handleEditToggle("taxationDetails");
@@ -424,7 +389,7 @@ const BusinessProfile = () => {
                   className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                 >
                   Edit
-                </button>
+                </button> */}
               </div>
             )}
           </div>
@@ -480,7 +445,7 @@ const BusinessProfile = () => {
                   <strong>Payment Methods:</strong>{" "}
                   {editableData.modeOfPayment.join(", ")}
                 </p>
-                <button
+                {/* <button
                   onClick={(e) => {
                     handleButtonClick(e);
                     handleEditToggle("paymentMethods");
@@ -488,7 +453,7 @@ const BusinessProfile = () => {
                   className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                 >
                   Edit
-                </button>
+                </button> */}
               </div>
             )}
           </div>
@@ -542,7 +507,7 @@ const BusinessProfile = () => {
                   <strong>Working Days:</strong>{" "}
                   {editableData.companyWorkingDays.join(", ")}
                 </p>
-                <button
+                {/* <button
                   onClick={(e) => {
                     handleButtonClick(e);
                     handleEditToggle("workingDays");
@@ -550,7 +515,7 @@ const BusinessProfile = () => {
                   className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                 >
                   Edit
-                </button>
+                </button> */}
               </div>
             )}
           </div>
