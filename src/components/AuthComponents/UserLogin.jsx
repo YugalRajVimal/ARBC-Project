@@ -19,6 +19,7 @@ const UserLogin = (props) => {
         `${process.env.REACT_APP_API_URL}/user/signin`,
         { email, password, role: isSeller ? "seller" : "customer" }
       );
+      console.log(response);
       if (response.data.error) {
         return setError(response.data.error);
       }
@@ -31,18 +32,22 @@ const UserLogin = (props) => {
           localStorage.setItem("role", "seller");
           setIsAuthenticatedSeller(true);
           navigate("/seller");
+          return;
         } else {
           localStorage.setItem("role", "customer");
           setIsAuthenticatedSeller(true);
           navigate("/");
+          return;
         }
       }
       if (response.status === 209) {
         navigate("/verify-account", {
           state: { email: email, role: isSeller ? "seller" : "customer" },
         });
+        return;
       }
       setError("Something went wrong. Please try again later.");
+      return;
     } catch (error) {
       console.error("Error signing in", error);
 
