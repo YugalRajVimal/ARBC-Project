@@ -135,7 +135,6 @@
 
 // export default MyProducts;
 
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -351,12 +350,10 @@ const MyProducts = () => {
                     onChange={(e) =>
                       setCurrentProduct({
                         ...currentProduct,
-                        productSpecifications: currentProduct.productSpecifications.map(
-                          (s, i) =>
-                            i === idx
-                              ? { ...s, name: e.target.value }
-                              : s
-                        ),
+                        productSpecifications:
+                          currentProduct.productSpecifications.map((s, i) =>
+                            i === idx ? { ...s, name: e.target.value } : s
+                          ),
                       })
                     }
                     className="w-1/2 p-2 border border-gray-300 rounded"
@@ -368,12 +365,10 @@ const MyProducts = () => {
                     onChange={(e) =>
                       setCurrentProduct({
                         ...currentProduct,
-                        productSpecifications: currentProduct.productSpecifications.map(
-                          (s, i) =>
-                            i === idx
-                              ? { ...s, value: e.target.value }
-                              : s
-                        ),
+                        productSpecifications:
+                          currentProduct.productSpecifications.map((s, i) =>
+                            i === idx ? { ...s, value: e.target.value } : s
+                          ),
                       })
                     }
                     className="w-1/2 p-2 border border-gray-300 rounded"
@@ -407,79 +402,81 @@ const MyProducts = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  {products.map((product, index) => (
-    <div
-      key={index}
-      className="bg-white p-4 rounded-lg shadow-md border border-gray-300 flex flex-col justify-between "
-    >
-      {/* Product Name */}
-      <h2 className="text-xl font-semibold text-gray-800 mb-2">
-        {product.productName}
-      </h2>
+          {products.map((product, index) => (
+            <div
+              key={index}
+              className="bg-white p-4 rounded-lg shadow-md border border-gray-300 flex flex-col justify-between "
+            >
+              {/* Product Name */}
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                {product.productName}
+              </h2>
 
-      {/* Product Images */}
-      <div className="flex space-x-2 mb-3 overflow-x-auto">
-        {product.productImages?.slice(0, 3).map((image, idx) => (
-          <img
-            key={idx}
-            src={process.env.REACT_APP_API_URL+image}
-            alt={`Product ${product.productName}`}
-            className="w-30 h-40 object-cover rounded-lg"
-          />
-        ))}
-      </div>
+              {/* Product Images */}
+              <div className="flex space-x-2 mb-3 overflow-x-auto">
+                {product.productImages?.slice(0, 3).map((image, idx) => (
+                  <img
+                    key={idx}
+                    src={process.env.REACT_APP_API_URL + "/" + image}
+                    alt={`Product ${product.productName}`}
+                    className="w-30 h-40 object-cover rounded-lg"
+                  />
+                ))}
+              </div>
 
-      {/* Product Overview */}
-      <p className="text-gray-600 mb-3 text-sm line-clamp-2">
-        {product.productOverview}
-      </p>
+              {/* Product Overview */}
+              <p className="text-gray-600 mb-3 text-sm line-clamp-2">
+                {product.productOverview}
+              </p>
 
+              {/* Product Specifications */}
+              <div className="mb-3">
+                <p className="text-md font-medium text-gray-700">
+                  Specifications:
+                </p>
+                {product.productSpecifications &&
+                product.productSpecifications.length > 0 ? (
+                  <ul className="list-disc pl-5 text-sm">
+                    {product.productSpecifications.map((spec, idx) => (
+                      <li key={idx} className="text-gray-600">
+                        {spec.name}: {spec.value}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-600">No specifications available.</p>
+                )}
+              </div>
 
-      {/* Product Specifications */}
-      <div className="mb-3">
-        <p className="text-md font-medium text-gray-700">Specifications:</p>
-        {product.productSpecifications && product.productSpecifications.length > 0 ? (
-          <ul className="list-disc pl-5 text-sm">
-            {product.productSpecifications.map((spec, idx) => (
-              <li key={idx} className="text-gray-600">
-                {spec.name}: {spec.value}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-600">No specifications available.</p>
-        )}
-      </div>
+              {/* Product Price and Quantity */}
+              <div className="mb-3">
+                <h3 className="text-md font-medium text-gray-700">
+                  Price: ${product.productPrice} / {product.productUnitType}
+                </h3>
+                <p className="text-md font-medium text-gray-700">
+                  Quantity: {product.productQuantity} (Total Quantity:{" "}
+                  {product.totalQuantity})
+                </p>
+              </div>
 
-      {/* Product Price and Quantity */}
-      <div className="mb-3">
-        <h3 className="text-md font-medium text-gray-700">
-          Price: ${product.productPrice} / {product.productUnitType}
-        </h3>
-        <p className="text-md font-medium text-gray-700">
-          Quantity: {product.productQuantity} (Total Quantity: {product.totalQuantity})
-        </p>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex gap-2 justify-end">
-        <button
-          onClick={() => handleEditProduct(product)}
-          className="p-2 bg-yellow-500 text-white rounded"
-        >
-          Edit
-        </button>
-        <button
-          onClick={() => handleDeleteProduct(product._id)}
-          className="p-2 bg-red-500 text-white rounded"
-        >
-          Delete
-        </button>
-      </div>
-    </div>
-  ))}
-</div>
-
+              {/* Action Buttons */}
+              <div className="flex gap-2 justify-end">
+                <button
+                  onClick={() => handleEditProduct(product)}
+                  className="p-2 bg-yellow-500 text-white rounded"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteProduct(product._id)}
+                  className="p-2 bg-red-500 text-white rounded"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

@@ -75,8 +75,7 @@ const UserProfile = () => {
 
   const handleProfileImageUpdate = async () => {
     try {
-
-      if(!newImage) {
+      if (!newImage) {
         setError("Please select an image to upload.");
         return;
       }
@@ -134,7 +133,7 @@ const UserProfile = () => {
         <div className="flex gap-2 items-center mb-6 relative">
           <img
             src={
-              process.env.REACT_APP_API_URL + user.profileImg ||
+              process.env.REACT_APP_API_URL + "/" + user.profileImg ||
               "/default-avatar.png"
             } // Display default image if no profile image
             alt="Profile"
