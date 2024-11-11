@@ -8,7 +8,7 @@ const SellerLayout = (props) => {
 
   return (
     <>
-      <AuthWrapper setIsAuthenticatedSeller={setIsAuthenticatedSeller} />
+      {/* <AuthWrapper setIsAuthenticatedSeller={setIsAuthenticatedSeller} /> */}
       {isAuthenticatedSeller ? (
         <div>
           <NavBar />
