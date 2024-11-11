@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
 
@@ -29,6 +31,10 @@ const NavBar = () => {
     setSearchText(e.target.value);
   };
 
+  const navigateTo = (path) => {
+    navigate(`/${path}`);
+  };
+
   return (
     <div className=" h-[7vh] flex justify-around items-center shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)]">
       <div className="logo">LOGO</div>
@@ -49,7 +55,7 @@ const NavBar = () => {
           <IoIosArrowDown />
         </button>
       </div>
-      <a href="/signup">Become a Seller</a>
+      <a onClick={() => navigateTo("signup")}>Become a Seller</a>
       <div>=</div>
     </div>
   );
