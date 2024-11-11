@@ -48,7 +48,7 @@ const SellerLayout = (props) => {
 
     const token = localStorage.getItem("token");
     authUser(token);
-  }, [setIsAuthenticatedSeller, navigate]); // Only dependencies that should trigger this effect
+  }, []); // Only dependencies that should trigger this effect
 
   return (
     <>
