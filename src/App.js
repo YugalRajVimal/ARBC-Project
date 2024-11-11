@@ -45,7 +45,10 @@ function App() {
           <Route
             path="/signin"
             element={
-              <UserLogin setIsAuthenticatedSeller={setIsAuthenticatedSeller} />
+              <UserLogin
+                setIsAuthenticatedSeller={setIsAuthenticatedSeller}
+                setIsAuthenticatedBuyer={setIsAuthenticatedBuyer}
+              />
             }
           />
           <Route
