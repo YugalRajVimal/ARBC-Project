@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import NavBar from "../components/SellerComponents/NavBar/NavBar";
-import AuthWrapper from "../AuthWrapper";
 import axios from "axios";
 
 const SellerLayout = (props) => {
   const navigate = useNavigate();
   const { isAuthenticatedSeller, setIsAuthenticatedSeller } = props;
-
-  const navigateTo = (path) => {
-    navigate(`/${path}`);
-  };
 
   useEffect(() => {
     const authUser = async (token) => {
@@ -38,12 +33,11 @@ const SellerLayout = (props) => {
 
         if (response.status === 200) {
           setIsAuthenticatedSeller(true);
-          return;
+        } else {
+          setIsAuthenticatedSeller(false);
+          localStorage.removeItem("token");
+          navigate("/signin");
         }
-
-        setIsAuthenticatedSeller(false);
-        localStorage.removeItem("token");
-        navigate("/signin");
       } catch (error) {
         console.log(error);
         setIsAuthenticatedSeller(false);
@@ -54,12 +48,11 @@ const SellerLayout = (props) => {
 
     const token = localStorage.getItem("token");
     authUser(token);
-  }, [setIsAuthenticatedSeller,isAuthenticatedSeller, navigate]);
+  }, [setIsAuthenticatedSeller, navigate]); // Only dependencies that should trigger this effect
 
   return (
     <>
-      {/* <AuthWrapper setIsAuthenticatedSeller={setIsAuthenticatedSeller} /> */}
-      {isAuthenticatedSeller && (
+      {localStorage.getItem("token") && isAuthenticatedSeller && (
         <div>
           <NavBar />
           <Outlet />
