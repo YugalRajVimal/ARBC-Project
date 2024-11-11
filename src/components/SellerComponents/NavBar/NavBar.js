@@ -36,6 +36,7 @@ const NavBar = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("role");
+    localStorage.removeItem("isAuthenticatedSeller");
     navigate("/signin");
   }
 

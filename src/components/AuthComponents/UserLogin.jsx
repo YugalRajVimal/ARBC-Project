@@ -27,9 +27,11 @@ const UserLogin = (props) => {
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.userId);
+        
 
         if (isSeller) {
           localStorage.setItem("role", "seller");
+          localStorage.setItem("isAuthenticatedSeller", true);
           setIsAuthenticatedSeller(true);
           navigate("/seller");
           return;
@@ -50,7 +52,7 @@ const UserLogin = (props) => {
       return;
     } catch (error) {
       console.error("Error signing in", error);
-
+      localStorage.setItem("isAuthenticatedSeller", false);
       setError(
         error.response.data.message ||
           error.message ||

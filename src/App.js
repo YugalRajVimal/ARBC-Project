@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import AuthWrapper from "./AuthWrapper";
 
 function App() {
-  const [isAuthenticatedSeller, setIsAuthenticatedSeller] = useState(false);
+  const [isAuthenticatedSeller, setIsAuthenticatedSeller] = useState(localStorage.getItem("isAuthenticatedSeller") || false);
   const [isAuthenticatedBuyer, setIsAuthenticatedBuyer] = useState(true);
 
   return (
