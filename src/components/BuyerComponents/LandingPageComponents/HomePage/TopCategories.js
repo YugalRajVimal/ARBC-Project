@@ -61,7 +61,7 @@ const topCategoriesItems = [
 
 const TopCategories = () => {
   return (
-    <div className="w-[24%]  max-w-[300px] h-full shadow-[0px_0px_10px_2px_rgba(0,0,0,0.3)] p-2 rounded-md">
+    <div className="w-[24%]   h-full shadow-[0px_0px_10px_2px_rgba(0,0,0,0.3)] p-2 rounded-md">
         <h3 className="text-lg font-bold pb-2">Top Categories</h3>
         <ul>
           {topCategoriesItems.map((item, index) => (

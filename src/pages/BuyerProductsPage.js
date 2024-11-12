@@ -1,5 +1,7 @@
 import React from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import RecentlyAddedProdcuts from "../components/BuyerComponents/ProductsPageComponents/RecentlyAddedProducts";
+import PopularProducts from "../components/BuyerComponents/PopularProducts/PopularProducts";
 
 const sampleData = [
   {
@@ -806,18 +808,178 @@ const sampleData = [
   //... continue adding up to 30 categories with similar structure
 ];
 
+const products = [
+  {
+    id: 1,
+    productName: "Wireless Bluetooth Headphones",
+    productImages: [
+      "https://example.com/images/headphone1.jpg",
+      "https://example.com/images/headphone2.jpg",
+    ],
+    productPrice: 79.99,
+    productQuantity: 150,
+    productUnitType: "piece",
+    productOverview:
+      "High-quality wireless headphones with noise cancellation and long battery life.",
+    productSpecifications: [
+      {
+        name: "Battery Life",
+        value: "30 hours",
+      },
+      {
+        name: "Noise Cancellation",
+        value: "Active",
+      },
+      {
+        name: "Bluetooth Version",
+        value: "5.0",
+      },
+    ],
+    user: "60c72b2f9e1e8c3b8c9c8f3d", // Sample User ObjectId
+    categoryId: "60c72b2f9e1e8c3b8c9c8f4a", // Sample Category ObjectId
+    subCategoryId: "60c72b2f9e1e8c3b8c9c8f5b", // Sample SubCategory ObjectId
+  },
+  {
+    id: 2,
+    productName: "Smart LED TV 55 Inch",
+    productImages: [
+      "https://example.com/images/tv1.jpg",
+      "https://example.com/images/tv2.jpg",
+    ],
+    productPrice: 499.99,
+    productQuantity: 50,
+    productUnitType: "piece",
+    productOverview:
+      "Smart 4K LED TV with HDR support and multiple streaming apps pre-installed.",
+    productSpecifications: [
+      {
+        name: "Resolution",
+        value: "4K UHD",
+      },
+      {
+        name: "Screen Size",
+        value: "55 inches",
+      },
+      {
+        name: "Smart OS",
+        value: "WebOS",
+      },
+    ],
+    user: "60c72b2f9e1e8c3b8c9c8f3d", // Sample User ObjectId
+    categoryId: "60c72b2f9e1e8c3b8c9c8f4a", // Sample Category ObjectId
+    subCategoryId: "60c72b2f9e1e8c3b8c9c8f5b", // Sample SubCategory ObjectId
+  },
+  {
+    id: 3,
+    productName: "Electric Kettle",
+    productImages: [
+      "https://example.com/images/kettle1.jpg",
+      "https://example.com/images/kettle2.jpg",
+    ],
+    productPrice: 29.99,
+    productQuantity: 200,
+    productUnitType: "piece",
+    productOverview:
+      "Electric kettle with 1.5L capacity and automatic shut-off feature.",
+    productSpecifications: [
+      {
+        name: "Capacity",
+        value: "1.5 liters",
+      },
+      {
+        name: "Power",
+        value: "1500 watts",
+      },
+      {
+        name: "Material",
+        value: "Stainless Steel",
+      },
+    ],
+    user: "60c72b2f9e1e8c3b8c9c8f3d", // Sample User ObjectId
+    categoryId: "60c72b2f9e1e8c3b8c9c8f4a", // Sample Category ObjectId
+    subCategoryId: "60c72b2f9e1e8c3b8c9c8f5b", // Sample SubCategory ObjectId
+  },
+];
+
 const BuyerProductsPage = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
   const categoryId = searchParams.get("categoryId");
   const subCategoryId = searchParams.get("subCategoryId");
 
+  const subCategoryName = sampleData
+    .find((category) => category.id === Number(categoryId))
+    .subCategories.find(
+      (subCategory) => subCategory.subCategoryId === Number(subCategoryId)
+    ).subCategoryName;
+
+  // const products = sampleData
+  //   .find((category) => category.id === Number(categoryId))
+  //   .subCategories.find(
+  //     (subCategory) => subCategory.subCategoryId === Number(subCategoryId)
+  //   ).products;
+
+  const navigateToDetailedProduct = (productId) => {
+    navigate(`/product/${productId}`);
+  }
+
   return (
-    <div>
-      <h1>Products Page</h1>
-      <p>Category ID: {categoryId}</p>
-      <p>Subcategory ID: {subCategoryId}</p>
+    <div className="p-4">
+      <h2 className="text-2xl font-semibold">{subCategoryName}</h2>
+      <div>
+        {products.map((product) => (
+          <div className="flex border border-gray-200 rounded-lg shadow-lg w-full max-w-4xl mx-auto my-4">
+          {/* Product Image on the Left */}
+          <div className="w-1/3 h-64 overflow-hidden rounded-l-lg">
+            <img
+              src={product.productImages[0]}
+              alt={product.productName}
+              className="w-full h-full object-cover"
+            />
+          </div>
+    
+          {/* Product Details on the Right */}
+          <div className="w-2/3 p-6 flex flex-col justify-between">
+            {/* Product Name and Overview */}
+            <div>
+              <h2 onClick={()=>navigateToDetailedProduct(product.id)} className="text-2xl font-semibold text-gray-800">{product.productName}</h2>
+              <p className="text-sm text-gray-600 mt-2">{product.productOverview}</p>
+            </div>
+    
+            {/* Product Price and Availability */}
+            <div className="mt-4">
+              <p className="text-xl font-bold text-blue-600">${product.productPrice.toFixed(2)}</p>
+              <p className="text-sm text-gray-500 mt-1">
+                Available: {product.productQuantity} {product.productUnitType}(s)
+              </p>
+            </div>
+    
+            {/* Product Specifications */}
+            <ul className="text-sm text-gray-700 mt-4 space-y-1">
+              {product.productSpecifications.map((spec, index) => (
+                <li key={index} className="flex">
+                  <strong className="mr-2">{spec.name}:</strong>
+                  <span>{spec.value}</span>
+                </li>
+              ))}
+            </ul>
+    
+            {/* Send Inquiry Button */}
+            <button className="mt-6 bg-blue-600 text-white py-2 px-4 rounded font-semibold hover:bg-blue-700 self-start">
+              Send Inquiry
+            </button>
+          </div>
+        </div>
+        ))}
+      </div>
+      <div className="p-4">
+        <RecentlyAddedProdcuts />
+      </div>
+      <div className="flex justify-center">
+        <PopularProducts />
+      </div>
     </div>
   );
 };

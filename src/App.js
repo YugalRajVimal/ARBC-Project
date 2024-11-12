@@ -41,7 +41,7 @@ function App() {
           />
           <Route path="/products" element={<BuyerProductsPage />} />
           <Route
-            path="/product/:ProductId"
+            path="/product/:productId"
             element={<BuyerDetailedProductPage />}
           />
         </Route>
