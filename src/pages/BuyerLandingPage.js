@@ -1,12 +1,12 @@
 import React from "react";
-import Home from "../components/BuyerComponents/HomePage/Home";
-import Categories from "../components/BuyerComponents/Categories/Categories";
-import FeaturedProducts from "../components/BuyerComponents/FeaturedProducts/FeaturedProducts";
-import NewArrival from "../components/BuyerComponents/NewArrival/NewArrival";
-import TrustedProducts from "../components/BuyerComponents/TrustedProducts/TrustedProducts";
-import PostBuyRequirements from "../components/BuyerComponents/PostBuyRequirement/PostBuyRequirements";
-import Testimonials from "../components/BuyerComponents/Testimonials/Testimonials";
-import TopCategories from "../components/BuyerComponents/TopCategories/TopCategories";
+import Home from "../components/BuyerComponents/LandingPageComponents/HomePage/Home";
+import Categories from "../components/BuyerComponents/LandingPageComponents/Categories/Categories";
+import FeaturedProducts from "../components/BuyerComponents/LandingPageComponents/FeaturedProducts/FeaturedProducts";
+import NewArrival from "../components/BuyerComponents/LandingPageComponents/NewArrival/NewArrival";
+import TrustedProducts from "../components/BuyerComponents/LandingPageComponents/TrustedProducts/TrustedProducts";
+import PostBuyRequirements from "../components/BuyerComponents/LandingPageComponents/PostBuyRequirement/PostBuyRequirements";
+import Testimonials from "../components/BuyerComponents/LandingPageComponents/Testimonials/Testimonials";
+import TopCategories from "../components/BuyerComponents/LandingPageComponents/TopCategories/TopCategories";
 import PopularProducts from "../components/BuyerComponents/PopularProducts/PopularProducts";
 import Footer from "../components/BuyerComponents/Footer/Footer";
 
@@ -26,7 +26,6 @@ const LandingPage = () => {
         <TopCategories />
         <PopularProducts />
       </div>
-      <Footer />
     </div>
   );
 };

@@ -1,21 +1,17 @@
 import React from "react";
-import { Outlet} from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
 import NavBar from "../components/BuyerComponents/NavBar/NavBar";
-
+import Footer from "../components/BuyerComponents/Footer/Footer";
 
 const BuyerLayout = (props) => {
   const { isAuthenticatedBuyer, setIsAuthenticatedBuyer } = props;
-  
+
   return (
-    <>
-      {isAuthenticatedBuyer ? (
-        <div>
-          <NavBar setIsAuthenticatedBuyer={setIsAuthenticatedBuyer} />
-          <Outlet />
-        </div>
-      ) : 
-      null}
-    </>
+    <div>
+      <NavBar setIsAuthenticatedBuyer={setIsAuthenticatedBuyer} />
+      <Outlet />
+      <Footer />
+    </div>
   );
 };
 

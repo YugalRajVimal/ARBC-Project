@@ -10,9 +10,15 @@ import UserResetPassword from "./components/AuthComponents/UserResetPassword";
 import VerifyAccount from "./components/AuthComponents/UserVerifyAccount";
 import { useEffect, useState } from "react";
 import AuthWrapper from "./AuthWrapper";
+import BuyerProductsPage from "./pages/BuyerProductsPage";
+import BuyerSubCategoryPage from "./pages/BuyerSubCategoryPage";
+import BuyerDetailedProductPage from "./pages/BuyerDetailedProductPage";
+import BuyerCategoriesPage from "./pages/BuyerCategoriesPage";
 
 function App() {
-  const [isAuthenticatedSeller, setIsAuthenticatedSeller] = useState(localStorage.getItem("isAuthenticatedSeller") || false);
+  const [isAuthenticatedSeller, setIsAuthenticatedSeller] = useState(
+    localStorage.getItem("isAuthenticatedSeller") || false
+  );
   const [isAuthenticatedBuyer, setIsAuthenticatedBuyer] = useState(true);
 
   return (
@@ -28,6 +34,16 @@ function App() {
           }
         >
           <Route index element={<BuyerLandingPage />} />
+          <Route path="/categories" element={<BuyerCategoriesPage />} />
+          <Route
+            path="/subcategories/:categoryId"
+            element={<BuyerSubCategoryPage />}
+          />
+          <Route path="/products" element={<BuyerProductsPage />} />
+          <Route
+            path="/product/:ProductId"
+            element={<BuyerDetailedProductPage />}
+          />
         </Route>
         <Route
           path="/seller"

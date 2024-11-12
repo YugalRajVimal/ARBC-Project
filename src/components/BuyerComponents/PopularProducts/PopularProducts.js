@@ -16,9 +16,9 @@ const popularProducts = [
 
 const PopularProducts = () => {
   return (
-    <div className="p-8 w-[90%]">
+    <div className="p-8 w-[100%]">
       <h2 className="text-xl font-bold mb-4">Popular Products</h2>
-      <div className="flex flex-wrap gap-2 pl-2">
+      <div className="flex flex-wrap gap-2 pl-2 justify-center">
         {popularProducts.map((product, index) => (
           <a 
             key={index} 
