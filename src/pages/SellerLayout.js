@@ -54,7 +54,7 @@ const SellerLayout = (props) => {
     if(localStorage.getItem("isAuthenticatedSeller") === "false") {
       navigate("/signin");
     }
-    if(!localStorage.getItem("token")) {
+    if(!localStorage.getItem("token") || !localStorage.getItem("isAuthenticatedSeller")) {
       navigate("/signin");
     }
   } , [navigate]);

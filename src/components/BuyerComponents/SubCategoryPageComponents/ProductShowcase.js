@@ -85,6 +85,20 @@ const productDetails = [
   },
 ];
 
+// const handleSendInquiry =async (productId) => {
+//   try {
+//     const response = await postInquiry(productId);
+//     if(response.status===201){
+//       alert("Inquiry sent successfully for product "+productName);
+//     }else{
+//       alert("Failed to send inquiry for product "+productName);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     alert("Failed to send inquiry for product "+productName);
+//   }
+// };
+
 const ProductShowcase = () => {
   return (
     <>

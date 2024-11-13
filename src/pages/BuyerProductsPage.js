@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import RecentlyAddedProdcuts from "../components/BuyerComponents/ProductsPageComponents/RecentlyAddedProducts";
 import PopularProducts from "../components/BuyerComponents/PopularProducts/PopularProducts";
+import { getSubCategoryProducts, postInquiry } from "../api/BuyerAPI/buyerAPI";
+import { BiSolidCheckboxMinus } from "react-icons/bi";
 
 const sampleData = [
   {
@@ -903,17 +905,9 @@ const products = [
 
 const BuyerProductsPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
 
-  const categoryId = searchParams.get("categoryId");
-  const subCategoryId = searchParams.get("subCategoryId");
+  const { subCategoryId } = useParams();
 
-  const subCategoryName = sampleData
-    .find((category) => category.id === Number(categoryId))
-    .subCategories.find(
-      (subCategory) => subCategory.subCategoryId === Number(subCategoryId)
-    ).subCategoryName;
 
   // const products = sampleData
   //   .find((category) => category.id === Number(categoryId))
@@ -923,55 +917,90 @@ const BuyerProductsPage = () => {
 
   const navigateToDetailedProduct = (productId) => {
     navigate(`/product/${productId}`);
-  }
+  };
+
+  const [subCategory, setSubCategory] = useState([]);
+  useEffect(() => {
+    // Fetch top categories from API
+    getSubCategoryProducts(subCategoryId).then((data) => {
+      console.log(data);
+      setSubCategory(data);
+    });
+  }, []);
+
+  const handleSendInquiry =async (productId, productName) => {
+    try {
+      const response = await postInquiry(productId);
+      if(response.status===201){
+        alert("Inquiry sent successfully for product "+productName);
+      }else{
+        alert("Failed to send inquiry for product "+productName);
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Failed to send inquiry for product "+productName);
+    }
+  };
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-semibold">{subCategoryName}</h2>
+      <h2 className="text-2xl font-semibold">{subCategory.name}</h2>
       <div>
-        {products.map((product) => (
-          <div className="flex border border-gray-200 rounded-lg shadow-lg w-full max-w-4xl mx-auto my-4">
-          {/* Product Image on the Left */}
-          <div className="w-1/3 h-64 overflow-hidden rounded-l-lg">
-            <img
-              src={product.productImages[0]}
-              alt={product.productName}
-              className="w-full h-full object-cover"
-            />
-          </div>
-    
-          {/* Product Details on the Right */}
-          <div className="w-2/3 p-6 flex flex-col justify-between">
-            {/* Product Name and Overview */}
-            <div>
-              <h2 onClick={()=>navigateToDetailedProduct(product.id)} className="text-2xl font-semibold text-gray-800">{product.productName}</h2>
-              <p className="text-sm text-gray-600 mt-2">{product.productOverview}</p>
+        {subCategory.products?.map((product) => (
+          <div className="flex border border-gray-200 rounded-lg shadow-lg w-full max-w-4xl mx-auto my-4 px-4">
+            {/* Product Image on the Left */}
+            <div className="w-1/3 h-64 overflow-hidden rounded-l-lg my-auto">
+              <img
+                src={process.env.REACT_APP_API_URL+"/"+product.productImages[0]}
+                alt={product.productName}
+                className="w-full h-full object-cover"
+              />
             </div>
-    
-            {/* Product Price and Availability */}
-            <div className="mt-4">
-              <p className="text-xl font-bold text-blue-600">${product.productPrice.toFixed(2)}</p>
-              <p className="text-sm text-gray-500 mt-1">
-                Available: {product.productQuantity} {product.productUnitType}(s)
-              </p>
+
+            {/* Product Details on the Right */}
+            <div className="w-2/3 p-6 flex flex-col justify-between">
+              {/* Product Name and Overview */}
+              <div>
+                <h2
+                  onClick={() => navigateToDetailedProduct(product._id)}
+                  className="text-2xl font-semibold text-gray-800"
+                >
+                  {product.productName}
+                </h2>
+                <p className="text-sm text-gray-600 mt-2">
+                  {product.productOverview}
+                </p>
+              </div>
+
+              {/* Product Price and Availability */}
+              <div className="mt-4">
+                <p className="text-xl font-bold text-blue-600">
+                  ${product.productPrice.toFixed(2)}
+                </p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Available: {product.productQuantity} {product.productUnitType}
+                  (s)
+                </p>
+              </div>
+
+              {/* Product Specifications */}
+              <ul className="text-sm text-gray-700 mt-4 space-y-1">
+                {product.productSpecifications.map((spec, index) => (
+                  <li key={index} className="flex">
+                    <strong className="mr-2">{spec.name}:</strong>
+                    <span>{spec.value}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Send Inquiry Button */}
+              <button
+              onClick={(e) => (e.stopPropagation(), handleSendInquiry(product._id, product.productName))}
+              className="mt-6 bg-blue-600 text-white py-2 px-4 rounded font-semibold hover:bg-blue-700 self-start">
+                Send Inquiry
+              </button>
             </div>
-    
-            {/* Product Specifications */}
-            <ul className="text-sm text-gray-700 mt-4 space-y-1">
-              {product.productSpecifications.map((spec, index) => (
-                <li key={index} className="flex">
-                  <strong className="mr-2">{spec.name}:</strong>
-                  <span>{spec.value}</span>
-                </li>
-              ))}
-            </ul>
-    
-            {/* Send Inquiry Button */}
-            <button className="mt-6 bg-blue-600 text-white py-2 px-4 rounded font-semibold hover:bg-blue-700 self-start">
-              Send Inquiry
-            </button>
           </div>
-        </div>
         ))}
       </div>
       <div className="p-4">

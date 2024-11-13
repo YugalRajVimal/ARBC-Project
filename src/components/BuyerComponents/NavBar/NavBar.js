@@ -35,9 +35,18 @@ const NavBar = () => {
     navigate(`/${path}`);
   };
 
+  const handleLogout = () => {
+    // Log out the user by removing token and redirecting to signinpage
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("role");
+    localStorage.removeItem("isAuthenticatedBuyer");
+    navigate("/signin");
+  }
+
   return (
     <div className=" h-[7vh] flex justify-around items-center shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)]">
-      <div className="logo">LOGO</div>
+      <a href="/"  className="logo">LOGO</a>
       <div className="searchBar h-[70%] w-[60%] bg-[#f0f5ff] shadow flex justify-center items-center rounded-md text-md px-2">
         <IoSearch className="text-xl" />
         <input
@@ -50,13 +59,12 @@ const NavBar = () => {
         />
       </div>
       <div>
-        <button className="flex justify-center items-center">
-          Sign In
-          <IoIosArrowDown />
+        <button onClick={handleLogout} className="flex justify-center items-center">
+          LogOut
         </button>
       </div>
       <a onClick={() => navigateTo("signup")}>Become a Seller</a>
-      <div>=</div>
+      {/* <div>=</div> */}
     </div>
   );
 };

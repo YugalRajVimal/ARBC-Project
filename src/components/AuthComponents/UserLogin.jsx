@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const UserLogin = (props) => {
-  const { setIsAuthenticatedSeller } = props;
+  const { setIsAuthenticatedSeller, setIsAuthenticatedBuyer } = props;
   const navigate = useNavigate();
 
   // State to manage email and password input
@@ -37,7 +37,8 @@ const UserLogin = (props) => {
           return;
         } else {
           localStorage.setItem("role", "customer");
-          setIsAuthenticatedSeller(true);
+          localStorage.setItem("isAuthenticatedBuyer", true);
+          setIsAuthenticatedBuyer(true);
           navigate("/");
           return;
         }

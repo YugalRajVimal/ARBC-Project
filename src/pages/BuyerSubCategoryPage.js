@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PopularProducts from "../components/BuyerComponents/PopularProducts/PopularProducts";
 import ProductShowcase from "../components/BuyerComponents/SubCategoryPageComponents/ProductShowcase";
 import RecentlyAddedSubCategories from "../components/BuyerComponents/SubCategoryPageComponents/RecentlyAddedSubCategories";
+import { getAllSubCategories } from "../api/BuyerAPI/buyerAPI";
 
 const sampleData = [
   {
@@ -813,51 +814,78 @@ const sampleData = [
 const BuyerSubCategoryPage = () => {
   const navigate = useNavigate();
   const { categoryId } = useParams();
-  const category = sampleData.find(
-    (category) => category.id === parseInt(categoryId)
-  );
+  // const category = sampleData.find(
+  //   (category) => category.id === parseInt(categoryId)
+  // );
 
-  const navigateToProducts = (categoryId, subCategoryId) => {
-    navigate(
-      `/products?categoryId=${categoryId}&subCategoryId=${subCategoryId}`
-    );
+  const navigateToProducts = (subCategoryId) => {
+    console.log(subCategoryId);
+    navigate(`/products/${subCategoryId}`);
+  };
+
+  const [category, setCategory] = useState([]);
+  useEffect(() => {
+    // Fetch top categories from API
+    getAllSubCategories(categoryId).then((data) => {
+      setCategory(data);
+    });
+  }, []);
+
+  const navigateToDetailedProduct = (productId) => {
+    navigate(`/product/${productId}`);
   };
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-semibold">{category.category}</h2>
+      <h2 className="text-2xl font-semibold">{category?.name}</h2>
       <div className=" h-[35%] p-2 m-2 flex flex-col justify-around items-start overflow-hidden bg-zinc-200 rounded-md">
         <ProductShowcase />
       </div>
 
-      <div className="overflow-y-auto flex flex-col  justify-start flex-wrap gap-2 p-4">
-        <div className="overflow-y-auto flex flex  justify-center flex-wrap gap-2 p-4 ">
-          {category.subCategories.map((subCategory) => (
-            <div
-              onClick={() =>
-                navigateToProducts(categoryId, subCategory.subCategoryId)
-              }
-              className=" h-[120px] w-[340px] bg-slate-100 flex flex-col  p-2"
-            >
-              <div className="h-[40%] flex items-center">
-                <img className="h-full aspect-[1/1] bg-slate-200"></img>
-                <h3 className="text-lg font-semibold px-2">
-                  {subCategory.subCategoryName}
-                </h3>
-              </div>
+      {/* Display Sub Categories */}
+      {!category && <div className="text-center text-red-500">
+        SubCategory Not Present
+        </div>}
+      {category && (
+        <div className="overflow-y-auto flex flex-col  justify-start flex-wrap gap-2 p-4">
+          <div className="overflow-y-auto flex flex  justify-center flex-wrap gap-2 p-4 ">
+            {category?.subCategories?.map((subCategory) => (
+              <div
+                onClick={() => navigateToProducts(subCategory?._id)}
+                className=" h-[120px] w-[340px] bg-slate-100 flex flex-col  p-2"
+              >
+                <div className="h-[40%] flex items-center">
+                  <img
+                    src={
+                      process.env.REACT_APP_API_URL + "/" + subCategory?.image
+                    }
+                    className="h-full aspect-[1/1] bg-slate-200"
+                  ></img>
+                  <h3 className="text-lg font-semibold px-2">
+                    {subCategory?.name}
+                  </h3>
+                </div>
 
-              <div className="w-full p-2 pt-0 h-[60%]">
-                <p className="text-sm">
-                  {/* Display Upto 5 Products Only */}
-                  {subCategory.products.slice(0, 5).map((product) => (
-                    <span>{product.productName}, </span>
-                  ))}
-                </p>
+                <div className="w-full p-2 pt-0 h-[60%]">
+                  <p className="text-sm">
+                    {/* Display Upto 5 Products Only */}
+                    {subCategory?.products.slice(0, 5).map((product) => (
+                      <span
+                        onClick={(e) => (
+                          e.stopPropagation(),
+                          navigateToDetailedProduct(product._id)
+                        )}
+                      >
+                        {product.productName},{" "}
+                      </span>
+                    ))}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="p-4">
         <RecentlyAddedSubCategories />

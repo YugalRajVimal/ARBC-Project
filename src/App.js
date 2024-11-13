@@ -19,7 +19,9 @@ function App() {
   const [isAuthenticatedSeller, setIsAuthenticatedSeller] = useState(
     localStorage.getItem("isAuthenticatedSeller") || false
   );
-  const [isAuthenticatedBuyer, setIsAuthenticatedBuyer] = useState(true);
+  const [isAuthenticatedBuyer, setIsAuthenticatedBuyer] = useState(
+    localStorage.getItem("isAuthenticatedBuyer") || false
+  );
 
   return (
     <BrowserRouter>
@@ -39,7 +41,10 @@ function App() {
             path="/subcategories/:categoryId"
             element={<BuyerSubCategoryPage />}
           />
-          <Route path="/products" element={<BuyerProductsPage />} />
+          <Route
+            path="/products/:subCategoryId"
+            element={<BuyerProductsPage />}
+          />
           <Route
             path="/product/:productId"
             element={<BuyerDetailedProductPage />}
