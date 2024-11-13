@@ -293,13 +293,10 @@
 //           />
 //         </div>
 
-
 //       </form>
 //     </div>
 //   );
 // };
-
-
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -329,8 +326,14 @@ const AddNewProduct = () => {
       .then((response) => {
         setCategories(response.data);
         if (response.data.length > 0) {
-          setSelectedCategory(response.data[0]._id);
-          handleCategoryChange(response.data[0]._id);
+          console.log("Default Category:", response);
+          const defaultCategory = response.data[0]._id;
+          const defaultSubcategory = response.data[0].subCategories[0];
+
+          setSelectedCategory(defaultCategory);
+          setSelectedSubcategory(defaultSubcategory._id);
+          console.log("Default Subcategory:", selectedSubcategory);
+          console.log("Default Category:", selectedCategory);
         }
       })
       .catch((error) => console.error("Error fetching categories:", error));
@@ -339,24 +342,38 @@ const AddNewProduct = () => {
   useEffect(() => {
     if (selectedCategory) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/category/get-all-sub-categories/${selectedCategory}`)
+        .get(
+          `${process.env.REACT_APP_API_URL}/category/get-all-sub-categories/${selectedCategory}`
+        )
         .then((response) => {
-
           setSubcategories(response.data.subCategories);
-          setSelectedSubcategory(response.data.subCategories[0]._id);
-          console.log(subcategories);
-          if (subcategories.length > 0) setSelectedSubcategory(subcategories[0]._id);
+          if (response.data.subCategories.length > 0) {
+            setSelectedSubcategory(response.data.subCategories[0]._id);
+          }
         })
-        .catch((error) => console.error("Error fetching subcategories:", error));
+        .catch((error) =>
+          console.error("Error fetching subcategories:", error)
+        );
     }
   }, [selectedCategory]);
 
   const handleCategoryChange = (categoryId) => {
+    
     setSelectedCategory(categoryId);
+    console.log("Category changed:", selectedCategory);
+    // FInd Subcategory and set defaultmsubcategory for category
+    const defaultSubcategory = categories.find(
+      (category) => category._id === categoryId
+    ).subCategories[0];
+
+    setSelectedSubcategory(defaultSubcategory._id);
+    console.log("Default Subcategory:", selectedSubcategory);
   };
 
   const handleSubcategoryChange = (subcategoryId) => {
     setSelectedSubcategory(subcategoryId);
+    console.log("Subcategory changed:", selectedSubcategory);
+
   };
 
   const handleChange = (e) => {
@@ -396,8 +413,6 @@ const AddNewProduct = () => {
       formData.append(`productSpecifications[${index}][name]`, spec.name);
       formData.append(`productSpecifications[${index}][value]`, spec.value);
     });
-
-
 
     try {
       await axios.post(
@@ -455,8 +470,8 @@ const AddNewProduct = () => {
       >
         {/* Category, Subcategory, Name, Price, Quantity, Unit, Overview */}
         {/* <div className="container mx-auto p-6 h-full overflow-y-auto"> */}
-      {/* <h1 className="text-3xl font-semibold text-center mb-6">Add Product</h1> */}
-      
+        {/* <h1 className="text-3xl font-semibold text-center mb-6">Add Product</h1> */}
+
         {/* Category Dropdown */}
         <div className="mb-4">
           <label
@@ -492,7 +507,7 @@ const AddNewProduct = () => {
           <select
             id="subcategory"
             name="subcategory"
-            value={selectedSubcategory._id}
+            value={selectedSubcategory}
             onChange={(e) => handleSubcategoryChange(e.target.value)}
             className="w-full p-3 mt-2 border border-gray-300 rounded-lg"
             required
@@ -623,8 +638,8 @@ const AddNewProduct = () => {
         </div>
 
         {/* Specifications, Submit Button */}
-                {/* Product Specifications */}
-                <div className="mb-4">
+        {/* Product Specifications */}
+        <div className="mb-4">
           <label className="block text-lg font-medium text-gray-700">
             Product Specifications
           </label>
