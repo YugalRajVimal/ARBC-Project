@@ -339,13 +339,13 @@ const AddNewProduct = () => {
   useEffect(() => {
     if (selectedCategory) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/category/get-all-sub-categories`)
+        .get(`${process.env.REACT_APP_API_URL}/category/get-all-sub-categories/${selectedCategory}`)
         .then((response) => {
-          const subCats = response.data.filter(
-            (subcategory) => subcategory.categoryId === selectedCategory
-          );
-          setSubcategories(subCats);
-          if (subCats.length > 0) setSelectedSubcategory(subCats[0]._id);
+
+          setSubcategories(response.data.subCategories);
+          setSelectedSubcategory(response.data.subCategories[0]._id);
+          console.log(subcategories);
+          if (subcategories.length > 0) setSelectedSubcategory(subcategories[0]._id);
         })
         .catch((error) => console.error("Error fetching subcategories:", error));
     }
