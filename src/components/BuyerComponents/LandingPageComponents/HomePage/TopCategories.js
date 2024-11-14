@@ -103,7 +103,7 @@ const TopCategories = () => {
       </ul>
       </div>
       <div>
-        <button onClick={navigateToCategories} className="w-full text-white px-4 py-2 text-blue-900 rounded">
+        <button onClick={navigateToCategories} className="w-full px-4 py-2 text-blue-900 rounded">
           View All Categories
         </button>
       </div>
