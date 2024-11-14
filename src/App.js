@@ -14,6 +14,8 @@ import BuyerProductsPage from "./pages/BuyerProductsPage";
 import BuyerSubCategoryPage from "./pages/BuyerSubCategoryPage";
 import BuyerDetailedProductPage from "./pages/BuyerDetailedProductPage";
 import BuyerCategoriesPage from "./pages/BuyerCategoriesPage";
+import AdminLandingPage from "./pages/AdminLandingPage";
+import AdminLayout from "./pages/AdminLayout";
 
 function App() {
   const [isAuthenticatedSeller, setIsAuthenticatedSeller] = useState(
@@ -26,6 +28,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Buyer */}
         <Route
           path="/"
           element={
@@ -50,6 +53,7 @@ function App() {
             element={<BuyerDetailedProductPage />}
           />
         </Route>
+        {/* Seller */}
         <Route
           path="/seller"
           element={
@@ -60,6 +64,18 @@ function App() {
           }
         >
           <Route index element={<SellerLandingPage />} />
+        </Route>
+        {/* Admin  */}
+        <Route
+          path="/admin"
+          element={
+            <AdminLayout
+              isAuthenticatedSeller={true}
+              setIsAuthenticatedSeller={setIsAuthenticatedSeller}
+            />
+          }
+        >
+          <Route index element={<AdminLandingPage />} />
         </Route>
 
         <Route>

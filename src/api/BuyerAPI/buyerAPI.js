@@ -159,8 +159,24 @@ const postInquiry = async (productId) => {
     if (response.status === 201) {
       return {
         data: response.data,
-        status: response.status
+        status: response.status,
       };
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+// /category/get-recently-added-categories
+const getRecentlyAddedCategories = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/category/get-recently-added-subcategories`
+    );
+    if (response.status === 200) {
+      return response.data;
     }
     return null;
   } catch (error) {
@@ -180,4 +196,5 @@ export {
   postBuyRequirement,
   getAllTestimonials,
   postInquiry,
+  getRecentlyAddedCategories,
 };
