@@ -95,6 +95,7 @@ const SellerLandingPage = () => {
             {selectedPage === "DetailedInquiry" && (
               <DetailedInquiry
                 selectedInquiryDetails={selectedInquiryDetails}
+                setSelectedInquiryDetails={setSelectedInquiryDetails}
               />
             )}
           </>

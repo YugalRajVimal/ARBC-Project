@@ -72,13 +72,17 @@ const SellerList = () => {
             <p className="text-gray-600">
               PAN: {seller.companyIdentifiers.panNumber}
             </p>
-            <p className="mt-2 font-semibold text-gray-800">Bank Details</p>
-            <p className="text-gray-600">
-              Holder: {seller.bankDetails.accountHolderName}
-            </p>
-            <p className="text-gray-600">
-              Account #: {seller.bankDetails.accountNumber}
-            </p>
+            {seller.bankDetails && (
+              <>
+                <p className="mt-2 font-semibold text-gray-800">Bank Details</p>
+                <p className="text-gray-600">
+                  Holder: {seller.bankDetails.accountHolderName}
+                </p>
+                <p className="text-gray-600">
+                  Account #: {seller.bankDetails.accountNumber}
+                </p>
+              </>
+            )}
           </div>
         ))}
       </div>

@@ -1,6 +1,10 @@
 import React from "react";
 
-const CompletedInquiries = ({ inquiries, setSelectedPage, setSelectedInquiryDetails }) => {
+const CompletedInquiries = ({
+  inquiries,
+  setSelectedPage,
+  setSelectedInquiryDetails,
+}) => {
   const handleViewInquiry = (inquiry) => {
     setSelectedInquiryDetails(inquiry);
     setSelectedPage("DetailedInquiry");
