@@ -1,8 +1,10 @@
 import React from "react";
 import { FiSend } from "react-icons/fi";
 import { postInquiry } from "../../../api/BuyerAPI/buyerAPI";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = (props) => {
+  const navigate = useNavigate();
   const { product, index } = props;
   const { productName, productPrice, productUnitType,productQuantity, productImages, seller } = product;
 
@@ -20,9 +22,14 @@ const ProductCard = (props) => {
     }
   };
 
+  const navigateToDetailedProduct = (productId) => {
+    navigate(`/product/${productId}`);
+  };
+
   return (
     <div
       key={index}
+      onClick={(e)=>(e.stopPropagation(),navigateToDetailedProduct(product._id))}
       className="p-2 h-full w-[180px]  flex flex-col justify-around items-start border border-black rounded-md shrink-0 p-4"
     >
       <img

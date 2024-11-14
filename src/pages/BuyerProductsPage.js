@@ -947,7 +947,9 @@ const BuyerProductsPage = () => {
       <h2 className="text-2xl font-semibold">{subCategory.name}</h2>
       <div>
         {subCategory.products?.map((product) => (
-          <div className="flex border border-gray-200 rounded-lg shadow-lg w-full max-w-4xl mx-auto my-4 px-4">
+          <div
+          onClick={() => navigateToDetailedProduct(product._id)}
+          className="flex border border-gray-200 rounded-lg shadow-lg w-full max-w-4xl mx-auto my-4 px-4">
             {/* Product Image on the Left */}
             <div className="w-1/3 h-64 overflow-hidden rounded-l-lg my-auto">
               <img
@@ -962,7 +964,7 @@ const BuyerProductsPage = () => {
               {/* Product Name and Overview */}
               <div>
                 <h2
-                  onClick={() => navigateToDetailedProduct(product._id)}
+                  
                   className="text-2xl font-semibold text-gray-800"
                 >
                   {product.productName}

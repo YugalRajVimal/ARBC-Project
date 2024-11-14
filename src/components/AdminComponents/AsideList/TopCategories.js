@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { addAsideListItem, deleteAllAsideListItems, getAllCategories, getAllSubCategories, getAsideListItems } from '../../../api/AdminAPI/adminAPI';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  addAsideListItem,
+  deleteAllAsideListItems,
+  deleteAsideListItems,
+  getAllCategories,
+  getAllSubCategories,
+  getAsideListItems,
+} from "../../../api/AdminAPI/adminAPI";
 
 const TopCategories = () => {
   const [allCategories, setAllCategories] = useState([]);
@@ -13,13 +20,12 @@ const TopCategories = () => {
 
   const fetchAllCategories = async () => {
     const data = await getAllCategories();
-    console.log(data)
+    console.log(data);
     if (data) setAllCategories(data);
   };
 
   const fetchTopCategories = async () => {
     const data = await getAsideListItems(0); // ID 0 for top categories
-
     if (data) setTopCategories(data[0].categories);
   };
 
@@ -31,9 +37,9 @@ const TopCategories = () => {
     }
   };
 
-  const deleteTopCategory = async (category) => {
-    const data = { id: 0, categoryId: category._id, productId: null };
-    const result = await deleteAllAsideListItems(data);
+  const deleteTopCategory = async (categoryId) => {
+    const data = { id: 0, categoryId: categoryId, productId: null };
+    const result = await deleteAsideListItems(data);
     if (result && result.status === 200) {
       fetchTopCategories();
     }
@@ -47,10 +53,13 @@ const TopCategories = () => {
       <div className="mb-6">
         {topCategories?.length > 0 ? (
           topCategories?.map((category) => (
-            <div key={category._id} className="flex items-center justify-between border p-2 mb-2 rounded">
+            <div
+              key={category._id}
+              className="flex items-center justify-between border p-2 mb-2 rounded"
+            >
               <span>{category.name}</span>
               <button
-                onClick={() => deleteTopCategory(category)}
+                onClick={() => deleteTopCategory(category._id)}
                 className="text-red-500 hover:text-red-700"
               >
                 Remove
@@ -66,7 +75,10 @@ const TopCategories = () => {
       <h2 className="text-xl font-bold mb-4">All Categories</h2>
       <div>
         {allCategories?.map((category) => (
-          <div key={category._id} className="flex items-center justify-between border p-2 mb-2 rounded">
+          <div
+            key={category._id}
+            className="flex items-center justify-between border p-2 mb-2 rounded"
+          >
             <span>{category.name}</span>
             <button
               onClick={() => addTopCategory(category)}

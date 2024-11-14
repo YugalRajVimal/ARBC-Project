@@ -110,7 +110,10 @@ const addAsideListItem = async (data) => {
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_API_URL}/category/add-aside-list-items/${data.id}`,
-      data
+      data,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
     );
     if (response.status === 200) {
       return {
@@ -120,12 +123,11 @@ const addAsideListItem = async (data) => {
     }
     return null;
   } catch (error) {
-    
     return null;
   }
 };
 
-const deleteAllAsideListItems = async (data) => {
+const deleteAsideListItems = async (data) => {
   if (data.id == 0) {
     data.productId = null;
   }
@@ -133,10 +135,12 @@ const deleteAllAsideListItems = async (data) => {
     data.categoryId = null;
   }
 
+  console.log("----", data);
+
   try {
     const response = await axios.delete(
-      `${process.env.REACT_APP_API_URL}/category/delete-aside-list-items/${data.id}`,
-      data
+      `${process.env.REACT_APP_API_URL}/category/delete-aside-list-item/${data.id}`,
+      {data}
     );
     if (response.status === 200) {
       return {
@@ -181,7 +185,6 @@ const getAllCategories = async () => {
   }
 };
 
-
 export {
   addCategory,
   addSubCategory,
@@ -189,8 +192,7 @@ export {
   getAllBuyers,
   getAllSellers,
   addAsideListItem,
-  deleteAllAsideListItems,
+  deleteAsideListItems,
   getAsideListItems,
   getAllCategories,
-
 };
