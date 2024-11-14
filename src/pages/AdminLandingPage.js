@@ -4,6 +4,7 @@ import AddCategory from "../components/AdminComponents/Category/AddCategory";
 import AddSubCategory from "../components/AdminComponents/SubCategory/AddSubCategory";
 import BuyerList from "../components/AdminComponents/Profile/BuyerList";
 import SellerList from "../components/AdminComponents/Profile/SellerList";
+import TopCategories from "../components/AdminComponents/AsideList/TopCategories";
 
 const AdminLandingPage = () => {
   const [selectedPage, setSelectedPage] = useState("Category");
@@ -23,6 +24,8 @@ const AdminLandingPage = () => {
             {selectedPage === "SubCategory" && <AddSubCategory />}
             {selectedPage === "BuyerProfile" && <BuyerList />}
             {selectedPage === "SellerProfile" && <SellerList />}
+            {selectedPage === "TopCategories" && <TopCategories />}
+
           </>
       </div>
     </div>
