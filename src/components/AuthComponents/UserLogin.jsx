@@ -32,12 +32,14 @@ const UserLogin = (props) => {
         if (isSeller) {
           localStorage.setItem("role", "seller");
           localStorage.setItem("isAuthenticatedSeller", true);
+          localStorage.setItem("isAuthenticatedBuyer", false);
           setIsAuthenticatedSeller(true);
           navigate("/seller");
           return;
         } else {
           localStorage.setItem("role", "customer");
           localStorage.setItem("isAuthenticatedBuyer", true);
+          localStorage.setItem("isAuthenticatedSeller", false);
           setIsAuthenticatedBuyer(true);
           navigate("/");
           return;

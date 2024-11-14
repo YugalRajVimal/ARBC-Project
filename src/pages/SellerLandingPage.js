@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Dashboard from "../components/SellerComponents/Dashboard/Dashboard";
 import UserProfile from "../components/SellerComponents/Profile/UserProfile/UserProfile";
 import BusinessProfile from "../components/SellerComponents/Profile/BusinessProfile/BusinessProfile";
@@ -10,43 +11,46 @@ import AddNewProduct from "../components/SellerComponents/ManageProducts/AddNewP
 import MyProducts from "../components/SellerComponents/ManageProducts/MyProducts/MyProducts";
 import SidePanel from "../components/SellerComponents/SidePanel/SidePanel";
 import AddBusinessDetails from "../components/SellerComponents/Profile/BusinessProfile/AddBusinessDetails";
-import axios from "axios";
+import DetailedInquiry from "../components/SellerComponents/LeadsAndInquiries/DetailedInquiry";
 
 const SellerLandingPage = () => {
   const [selectedPage, setSelectedPage] = useState("Dashboard");
   const [isBusinessProfileComplete, setIsBusinessProfileComplete] =
     useState(false);
+  const [inquiries, setInquiries] = useState([]);
+  const [selectedInquiryDetails, setSelectedInquiryDetails] = useState(null);
 
   useEffect(() => {
-    // Check if the business profile is complete
-    // This would typically be a GET request to the backend API - /user/is-seller-details-completed
-    // The API would return a boolean value indicating if the profile is complete
-    // For now, we are setting it to true for demonstration purposes
     const checkIsBusinessProfileCompleted = async () => {
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/user/is-seller-details-completed`,
           {
-            headers: {
-              Authorization: `${localStorage.getItem("token")}`,
-            },
+            headers: { Authorization: `${localStorage.getItem("token")}` },
           }
         );
-
-        console.log(response);
-        if (response.status === 200) {
-          if (response.data.isProfileCompleted) {
-            setIsBusinessProfileComplete(true);
-          } else if (!response.data.isProfileCompleted) {
-            setIsBusinessProfileComplete(false);
-          }
-        }
+        setIsBusinessProfileComplete(response.data.isProfileCompleted);
       } catch (error) {
-        console.log(error);
-        setIsBusinessProfileComplete(false);
+        console.error("Error checking profile:", error);
       }
     };
+
+    const fetchInquiries = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/user/get-inquiries`,
+          {
+            headers: { Authorization: `${localStorage.getItem("token")}` },
+          }
+        );
+        setInquiries(response.data.inquiries);
+      } catch (error) {
+        console.error("Error fetching inquiries:", error);
+      }
+    };
+
     checkIsBusinessProfileCompleted();
+    fetchInquiries();
   }, []);
 
   return (
@@ -59,15 +63,40 @@ const SellerLandingPage = () => {
       <div className="w-4/5 h-full mx-1 bg-[#fdfef4] p-4">
         {isBusinessProfileComplete ? (
           <>
-            {selectedPage === "Dashboard" && <Dashboard />}
+            {selectedPage === "Dashboard" && (
+              <Dashboard setSelectedPage={setSelectedPage} />
+            )}
             {selectedPage === "UserProfile" && <UserProfile />}
             {selectedPage === "BusinessProfile" && <BusinessProfile />}
             {selectedPage === "BankDetails" && <BankDetails />}
-            {selectedPage === "ReceivedInquiries" && <ReceivedInquiries />}
-            {selectedPage === "ActiveInquiries" && <ActiveInquiries />}
-            {selectedPage === "CompletedInquiries" && <CompletedInquiries />}
+            {selectedPage === "ReceivedInquiries" && (
+              <ReceivedInquiries
+                inquiries={inquiries}
+                setSelectedPage={setSelectedPage}
+                setSelectedInquiryDetails={setSelectedInquiryDetails}
+              />
+            )}
+            {selectedPage === "ActiveInquiries" && (
+              <ActiveInquiries
+                inquiries={inquiries}
+                setSelectedPage={setSelectedPage}
+                setSelectedInquiryDetails={setSelectedInquiryDetails}
+              />
+            )}
+            {selectedPage === "CompletedInquiries" && (
+              <CompletedInquiries
+                inquiries={inquiries}
+                setSelectedPage={setSelectedPage}
+                setSelectedInquiryDetails={setSelectedInquiryDetails}
+              />
+            )}
             {selectedPage === "AddNewProduct" && <AddNewProduct />}
             {selectedPage === "MyProducts" && <MyProducts />}
+            {selectedPage === "DetailedInquiry" && (
+              <DetailedInquiry
+                selectedInquiryDetails={selectedInquiryDetails}
+              />
+            )}
           </>
         ) : (
           <AddBusinessDetails />

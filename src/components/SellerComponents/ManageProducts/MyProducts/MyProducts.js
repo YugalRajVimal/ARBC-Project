@@ -144,6 +144,7 @@ const MyProducts = () => {
   const [error, setError] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
+  const [status, setStatus] = useState("");
 
   // Fetch products from the server
   useEffect(() => {
@@ -199,7 +200,10 @@ const MyProducts = () => {
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API_URL}/product/update-product/${currentProduct._id}`,
-        currentProduct,
+        {
+          ...currentProduct,
+          status, // include status in the update request
+        },
         {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
@@ -208,10 +212,9 @@ const MyProducts = () => {
       );
       alert("Product updated successfully");
 
-      // Update the product in the state
       setProducts((prevProducts) =>
         prevProducts.map((product) =>
-          product._id === currentProduct._id ? response.data : product
+          product._id === currentProduct._id ? response.data.product : product
         )
       );
       setIsEditMode(false); // Close the form
@@ -339,6 +342,22 @@ const MyProducts = () => {
               />
             </div>
 
+            {/* Product Status Dropdown */}
+            <div className="mb-4">
+              <label className="block text-gray-700">Status</label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded"
+                required
+              >
+                <option value="">Select Status</option>
+                <option value="available">Available</option>
+                <option value="comingsoon">Coming Soon</option>
+                <option value="outofstock">Out of Stock</option>
+              </select>
+            </div>
+
             {/* Product Specifications */}
             <div className="mb-4">
               <label className="block text-gray-700">Specifications</label>
@@ -456,6 +475,12 @@ const MyProducts = () => {
                 <p className="text-md font-medium text-gray-700">
                   Quantity: {product.productQuantity} (Total Quantity:{" "}
                   {product.totalQuantity})
+                </p>
+                <p>
+                  Status:{product.status === "available" && "Available" }
+                  {product.status === "comingsoon" && "Coming Soon" }
+                  {product.status === "outofstock" && "Out of Stock" }
+                  
                 </p>
               </div>
 

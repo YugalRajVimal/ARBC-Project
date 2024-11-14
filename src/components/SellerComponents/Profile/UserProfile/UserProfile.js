@@ -187,14 +187,14 @@ const UserProfile = () => {
               <h5 className="text-xl">{user.name || "John Doe"}</h5>
             )}
           </div>
-          {!isNameEditing && (
+          {/* {!isNameEditing && (
             <button
               onClick={handleNameEdit}
               className="p-2 bg-yellow-500 text-white rounded"
             >
               Edit
             </button>
-          )}
+          )} */}
           {isNameEditing && (
             <div className="flex gap-2">
               <button

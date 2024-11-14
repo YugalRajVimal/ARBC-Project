@@ -1,58 +1,21 @@
 import React from "react";
 
-// Sample data for received inquiries (this would typically come from an API)
-const inquiriesData = [
-  {
-    id: "INV123",
-    customerId: "CUST001",
-    productId: "PROD1001",
-    productName: "Smartphone XYZ",
-    quantity: 2,
-    customerName: "Alice Johnson",
-    customerPhone: "9876543210",
-    date: "2024-11-01",
-    status: "Completed",
-  },
-  {
-    id: "INV124",
-    customerId: "CUST002",
-    productId: "PROD1002",
-    productName: "Laptop ABC",
-    quantity: 1,
-    customerName: "Bob Smith",
-    customerPhone: "9123456789",
-    date: "2024-11-02",
-    status: "Completed",
-  },
-  {
-    id: "INV125",
-    customerId: "CUST003",
-    productId: "PROD1003",
-    productName: "Wireless Earbuds",
-    quantity: 3,
-    customerName: "Charlie Brown",
-    customerPhone: "9345678901",
-    date: "2024-11-03",
-    status: "Completed",
-  },
-];
+const CompletedInquiries = ({ inquiries, setSelectedPage, setSelectedInquiryDetails }) => {
+  const handleViewInquiry = (inquiry) => {
+    setSelectedInquiryDetails(inquiry);
+    setSelectedPage("DetailedInquiry");
+  };
+  const completedInquiries = inquiries.filter(
+    (inquiry) => inquiry.status === "Completed"
+  );
 
-const CompletedInquiries = () => {
   return (
     <div className="container mx-auto p-6 space-y-8 h-full overflow-y-auto">
-      {/* Header Section */}
       <header className="bg-blue-600 text-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-semibold">Completed Inquiries</h1>
-        <p className="text-xl">View completed inquiries</p>
       </header>
 
-      {/* Inquiry Table Section */}
-      <section className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
-        <h2 className="text-2xl font-bold mb-4 text-blue-600">
-          Completed Inquiries List
-        </h2>
-
-        {/* Table for displaying inquiries */}
+      <section className="w-full bg-white p-6 rounded-lg shadow-md border border-gray-300 overflow-y-auto overflow-x-auto">
         <table className="w-full table-auto border-collapse">
           <thead>
             <tr className="bg-blue-100 text-left text-sm text-gray-700">
@@ -69,27 +32,36 @@ const CompletedInquiries = () => {
             </tr>
           </thead>
           <tbody>
-            {inquiriesData.map((inquiry) => (
+            {completedInquiries.map((inquiry) => (
               <tr key={inquiry.id} className="text-sm">
-                <td className="p-3 border-b">{inquiry.id}</td>
-                <td className="p-3 border-b">{inquiry.customerId}</td>
-                <td className="p-3 border-b">{inquiry.productId}</td>
-                <td className="p-3 border-b">{inquiry.productName}</td>
-                <td className="p-3 border-b">{inquiry.quantity}</td>
-                <td className="p-3 border-b">{inquiry.customerName}</td>
-                <td className="p-3 border-b">{inquiry.customerPhone}</td>
-                <td className="p-3 border-b">{inquiry.date}</td>
+                <td className="p-3 border-b">{inquiry._id}</td>
+                <td className="p-3 border-b">{inquiry.user._id}</td>
+                <td className="p-3 border-b">{inquiry.product._id}</td>
+                <td className="p-3 border-b">{inquiry.product.productName}</td>
+                <td className="p-3 border-b">
+                  {inquiry.product.productQuantity}
+                </td>
+                <td className="p-3 border-b">{inquiry.user.name}</td>
+                <td className="p-3 border-b">{inquiry.user.phoneNo}</td>
+                {/* CreateAT -> Date  */}
+                <td className="p-3 border-b">
+                  {new Date(inquiry.createdAt).toLocaleDateString()}
+                </td>
+
                 <td
                   className={`p-3 border-b ${
-                    inquiry.status === "Completed"
-                      ? "text-green-600"
-                      : "text-yellow-600"
-                  }`}
+                    inquiry.status === "Completed" && "text-green-600"
+                  } 
+              ${inquiry.status === "Active" && "text-blue-600"}
+              ${inquiry.status === "Pending" && "text-red-600"}`}
                 >
                   {inquiry.status}
                 </td>
                 <td className="p-3 border-b">
-                  <button className="text-blue-500 hover:text-blue-700">
+                  <button
+                    onClick={() => handleViewInquiry(inquiry)}
+                    className="text-blue-500 hover:text-blue-700"
+                  >
                     View
                   </button>
                 </td>
