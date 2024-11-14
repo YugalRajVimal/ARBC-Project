@@ -83,7 +83,8 @@ const TopCategories = () => {
   }
 
   return (
-    <div className="w-[24%]   h-full shadow-[0px_0px_10px_2px_rgba(0,0,0,0.3)] p-2 rounded-md">
+    <div className="w-[24%]   h-full shadow-[0px_0px_10px_2px_rgba(0,0,0,0.3)] p-2 rounded-md flex flex-col justify-between">
+      <div>
       <h3 onClick={navigateToCategories} className="text-lg font-bold pb-2">Top Categories</h3>
       <ul>
         {topCategories.map((item, index) => (
@@ -100,6 +101,12 @@ const TopCategories = () => {
           </li>
         ))}
       </ul>
+      </div>
+      <div>
+        <button onClick={navigateToCategories} className="w-full text-white px-4 py-2 text-blue-900 rounded">
+          View All Categories
+        </button>
+      </div>
     </div>
   );
 };
