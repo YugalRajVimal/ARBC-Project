@@ -83,18 +83,18 @@ const TopCategories = () => {
   }
 
   return (
-    <div className="w-[24%]   h-full shadow-[0px_0px_10px_2px_rgba(0,0,0,0.3)] p-2 rounded-md flex flex-col justify-between">
-      <div>
-      <h3 onClick={navigateToCategories} className="text-lg font-bold pb-2">Top Categories</h3>
-      <ul>
+    <div className="w-[24%]   h-full shadow-[0px_0px_10px_2px_rgba(0,0,0,0.3)] p-2 rounded-md flex flex-col justify-around">
+      <div className="h-[90%]">
+      <h3 onClick={navigateToCategories} className="h-[5%] text-lg font-bold pb-2">Top Categories</h3>
+      <ul className="h-full overflow-y-auto h-[95%]">
         {topCategories.map((item, index) => (
           <li
             key={index}
-            className="flex justify-between items-center py-2 pl-2"
+            className=" flex justify-between items-center py-2 pl-2"
           >
             <div
             onClick={(e)=>(e.stopPropagation(),navigateToSubCategories(item._id))}
-            className="flex items-center">
+            className="flex items-center h-">
               <img src={process.env.REACT_APP_API_URL+"/"+item.image} alt={item.name} className="w-8 h-8 bg-black rounded-full" />
               <span className="pl-2 text-md">{item.name}</span>
             </div>
@@ -102,7 +102,7 @@ const TopCategories = () => {
         ))}
       </ul>
       </div>
-      <div>
+      <div className="h-[5%]">
         <button onClick={navigateToCategories} className="w-full px-4 py-2 text-blue-900 rounded">
           View All Categories
         </button>
