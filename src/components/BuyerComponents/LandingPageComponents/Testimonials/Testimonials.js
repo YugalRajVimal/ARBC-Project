@@ -62,6 +62,10 @@ const Testimonials = () => {
     );
   };
 
+  if (testimonials.length < 3) {
+    return null;
+  }
+
   return (
     <div className="h-[70%] w-full p-8 flex flex-col justify-around items-center relative">
       {randomDots.map((dot, index) => (
@@ -90,6 +94,7 @@ const Testimonials = () => {
         {testimonials.length > 0 && (
           <>
             {/* Previous Testimonial Image */}
+
             <div
               className="w-[20%] flex justify-center items-center cursor-pointer"
               onClick={handlePrevClick}
@@ -106,6 +111,7 @@ const Testimonials = () => {
             </div>
 
             {/* Current Testimonial */}
+
             <div className="w-[70%] h-full currentTestimonial flex flex-col justify-center items-center text-center">
               <div className="h-[150px] w-[150px]">
                 <img
@@ -144,6 +150,7 @@ const Testimonials = () => {
             </div>
 
             {/* Next Testimonial Image */}
+
             <div
               className="w-[20%] flex justify-center items-center cursor-pointer"
               onClick={handleNextClick}

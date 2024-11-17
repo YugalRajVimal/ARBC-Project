@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import {
   addAsideListItem,
-  deleteAllAsideListItems,
   deleteAsideListItems,
   getAllCategories,
-  getAllSubCategories,
   getAsideListItems,
 } from "../../../api/AdminAPI/adminAPI";
 
@@ -46,7 +43,7 @@ const TopCategories = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 h-full overflow-y-auto">
       <h2 className="text-xl font-bold mb-4">Top Categories</h2>
 
       {/* Top Categories Section */}
@@ -92,74 +89,5 @@ const TopCategories = () => {
     </div>
   );
 };
-
-// Helper functions
-// const getAllCategories = async () => {
-//   try {
-//     const response = await axios.get(
-//       `${process.env.REACT_APP_API_URL}/category/get-all-categories`
-//     );
-//     return response.status === 200 ? response.data : null;
-//   } catch (error) {
-//     console.error("Error fetching all categories:", error);
-//     return null;
-//   }
-// };
-
-// const getAsideListItems = async (id) => {
-//   try {
-//     const response = await axios.get(
-//       `${process.env.REACT_APP_API_URL}/category/get-aside-list-items/${id}`
-//     );
-//     return response.status === 200 ? response.data : null;
-//   } catch (error) {
-//     console.error("Error fetching aside list items:", error);
-//     return null;
-//   }
-// };
-
-// const addAsideListItem = async (data) => {
-//   if (data.id === null) {
-//     return { status: 400, data: "Category ID/ProductId is required" };
-//   }
-
-//   if (data.id === 0) {
-//     data.productId = null;
-//   }
-//   if (data.id > 0 || data.id < 0) {
-//     data.categoryId = null;
-//   }
-
-//   try {
-//     const response = await axios.post(
-//       `${process.env.REACT_APP_API_URL}/category/add-aside-list-items/${data.id}`,
-//       data
-//     );
-//     return response.status === 200 ? { status: response.status, data: response.data } : null;
-//   } catch (error) {
-//     console.error("Error adding aside list item:", error);
-//     return null;
-//   }
-// };
-
-// const deleteAllAsideListItems = async (data) => {
-//   if (data.id === 0) {
-//     data.productId = null;
-//   }
-//   if (data.id > 0 || data.id < 0) {
-//     data.categoryId = null;
-//   }
-
-//   try {
-//     const response = await axios.delete(
-//       `${process.env.REACT_APP_API_URL}/category/delete-aside-list-items/${data.id}`,
-//       { data }
-//     );
-//     return response.status === 200 ? { status: response.status, data: response.data } : null;
-//   } catch (error) {
-//     console.error("Error deleting aside list item:", error);
-//     return null;
-//   }
-// };
 
 export default TopCategories;

@@ -3,10 +3,11 @@ import {
   addAsideListItem,
   deleteAsideListItems,
   getAsideListItems,
+  getAllCategories,
   getAllPopulatedCategories,
 } from "../../../api/AdminAPI/adminAPI";
 
-const PopularProducts = () => {
+const FeaturedProducts = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
 
   const [allCategories, setAllCategories] = useState([]);
@@ -39,15 +40,14 @@ const PopularProducts = () => {
   };
 
   const fetchFeaturedProducts = async () => {
-    const data = await getAsideListItems(2); // ID 0 for top categories
+    const data = await getAsideListItems(1); // ID 0 for top categories
     console.log("===", data);
     if (data) setFeaturedProducts(data[0].products);
     console.log(featuredProducts);
   };
 
   const addFeaturedProducts = async (productId) => {
-    console.log("add", productId);
-    const data = { id: 2, categoryId: null, productId: productId };
+    const data = { id: 1, categoryId: null, productId: productId };
     const result = await addAsideListItem(data);
     if (result && result.status === 200) {
       fetchFeaturedProducts();
@@ -55,8 +55,7 @@ const PopularProducts = () => {
   };
 
   const deleteFeaturedProducts = async (productId) => {
-    console.log("delete", productId);
-    const data = { id: 2, categoryId: null, productId: productId };
+    const data = { id: 1, categoryId: null, productId: productId };
     const result = await deleteAsideListItems(data);
     if (result && result.status === 200) {
       fetchFeaturedProducts();
@@ -68,7 +67,7 @@ const PopularProducts = () => {
       <div className="container mx-auto p-6">
         <div className="mb-10">
           {/* Featured Products Title */}
-          <h2 className="text-2xl font-bold mb-4">Popular Products</h2>
+          <h2 className="text-2xl font-bold mb-4">Featured Products</h2>
 
           {/* Product List */}
           <div className="flex w-full overflow-x-auto gap-6">
@@ -225,4 +224,4 @@ const PopularProducts = () => {
   );
 };
 
-export default PopularProducts;
+export default FeaturedProducts;

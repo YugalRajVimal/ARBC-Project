@@ -140,7 +140,7 @@ const deleteAsideListItems = async (data) => {
   try {
     const response = await axios.delete(
       `${process.env.REACT_APP_API_URL}/category/delete-aside-list-item/${data.id}`,
-      {data}
+      { data }
     );
     if (response.status === 200) {
       return {
@@ -185,6 +185,220 @@ const getAllCategories = async () => {
   }
 };
 
+const getSubCategories = async (categoryId) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/category/get-all-sub-categories/${categoryId}`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const getAllPopulatedCategories = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/category/get-all-populated-categories`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+// featuredCategory={
+//   "subCategory1": {
+//       "subCategoryId": "6734a95b5a2fe6dba1d5ec52",
+//       "text": "Gadgets",
+//       "image": "uploads/1731790868937-IMG_20240828_103636.jpg"
+//   },
+//   "subCategory2": {
+//       "subCategoryId": "6734a95b5a2fe6dba1d5ec52",
+//       "text": "2nd Cat",
+//       "image": "uploads/1731790868940-WhatsApp Image 2024-11-15 at 18.56.08 (1).jpeg"
+//   },
+//   "_id": "67387a7b16ec16b1636f70f4",
+//   "id": 0,
+//   "categoryId": "6734a8c05a2fe6dba1d5ebcb",
+//   "text": "Electronics"
+// }
+
+const addFeaturedCategoryDetails = async (formData) => {
+  try {
+    console.log(formData);
+    const response = await axios.put(
+      `${process.env.REACT_APP_API_URL}/category/update-featured-category`,
+      formData,
+      {
+        // multipart formdata
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    if (response.status === 200) {
+      return {
+        status: response.status,
+        data: response.data,
+      };
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const getBuyRequirements = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/admin/get-buy-requirements`
+    );
+    const data = await response.data;
+    if (response.status === 200) {
+      console.log(response.data);
+      return await data;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const getAllInquiries = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/admin/get-all-inquiries`
+    );
+    const data = await response.data;
+    if (response.status === 200) {
+      console.log(response.data);
+      return await data;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const addBanner = async (formData) => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_URL}/admin/add-banner`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    if (response.status === 201) {
+      return 201;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const getBanners = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/admin/get-banners`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const deleteBanner = async (id) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_API_URL}/admin/delete-banner/${id}`
+    );
+    if (response.status === 200) {
+      return 200;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+//user/get-testimonials
+const getTestimonials = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/user/get-testimonials`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+// Post Testimonials
+// {
+//   "name":"Yugal", 
+//   "designation":"Software Developer", 
+//   "rating":"4", 
+//   "review":"xsjcndijwncjewnd"
+// }
+
+const postTestimonials = async (data) => {
+  try {
+
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_URL}/user/post-testimonial`,
+      data
+    );
+
+    if (response.status === 201) {
+      return 201;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+// /admin/delete-testimonial/:testimonialId
+const deleteTestimonial = async (testimonialId) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_API_URL}/admin/delete-testimonial/${testimonialId}`
+    );
+    if (response.status === 200) {
+      return 200;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+
+
 export {
   addCategory,
   addSubCategory,
@@ -195,4 +409,15 @@ export {
   deleteAsideListItems,
   getAsideListItems,
   getAllCategories,
+  getSubCategories,
+  getAllPopulatedCategories,
+  addFeaturedCategoryDetails,
+  getBuyRequirements,
+  getAllInquiries,
+  addBanner,
+  getBanners,
+  deleteBanner,
+  getTestimonials,
+  postTestimonials,
+  deleteTestimonial
 };

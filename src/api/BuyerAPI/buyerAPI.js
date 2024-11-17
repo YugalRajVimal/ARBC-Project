@@ -185,6 +185,37 @@ const getRecentlyAddedCategories = async () => {
   }
 };
 
+const getFeaturedCategory = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/category/get-featured-category`
+    );
+    if (response.status === 200) {
+      console.log("Featured Category", response.data);
+      return response;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const getBanners = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/admin/get-banners`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 export {
   getAsideListItems,
   getAllCategories,
@@ -197,4 +228,6 @@ export {
   getAllTestimonials,
   postInquiry,
   getRecentlyAddedCategories,
+  getFeaturedCategory,
+  getBanners,
 };

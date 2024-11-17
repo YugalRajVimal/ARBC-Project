@@ -76,11 +76,11 @@ const AdminSidePanel = (props) => {
               </li>
               <li
                 className={`hover:bg-[#ffbe48] p-2 rounded shadow-lg ${
-                  selectedPage === "FeaturedCategory" && "bg-[#ffbe48]"
+                  selectedPage === "FeaturedProducts" && "bg-[#ffbe48]"
                 }`}
-                onClick={() => setSelectedPage("FeaturedCategory")}
+                onClick={() => setSelectedPage("FeaturedProducts")}
               >
-                Featured Category
+                Featured Products
               </li>
               {/* Trusted Products */}
               <li
@@ -106,12 +106,52 @@ const AdminSidePanel = (props) => {
                 className={`hover:bg-[#ffbe48] p-2 rounded shadow-lg ${
                   selectedPage === "ProductShowcase" && "bg-[#ffbe48]"
                 }`}
-                onClick={() => setSelectedPage("PopulaProductShowcaserProducts")}
+                onClick={() => setSelectedPage("ProductShowcase")}
               >
                 Product Showcase
               </li>
             </ul>
           )}
+        </li>
+        <li
+          className={`p-2 rounded hover:bg-[#ffd383] shadow-lg ${
+            selectedPage === "FeaturedCategory" && "bg-[#ffd383]"
+          }`}
+          onClick={() => setSelectedPage("FeaturedCategory")}
+        >
+          <h4 className="flex gap-2 items-center">Featured Category</h4>
+        </li>
+        <li
+          className={`p-2 rounded hover:bg-[#ffd383] shadow-lg ${
+            selectedPage === "PostBuyRequirements" && "bg-[#ffd383]"
+          }`}
+          onClick={() => setSelectedPage("PostBuyRequirements")}
+        >
+          <h4 className="flex gap-2 items-center">Buy Requirements </h4>
+        </li>
+        <li
+          className={`p-2 rounded hover:bg-[#ffd383] shadow-lg ${
+            selectedPage === "AllInquiries" && "bg-[#ffd383]"
+          }`}
+          onClick={() => setSelectedPage("AllInquiries")}
+        >
+          <h4 className="flex gap-2 items-center">All Inquiries </h4>
+        </li>
+        <li
+          className={`p-2 rounded hover:bg-[#ffd383] shadow-lg ${
+            selectedPage === "Banners" && "bg-[#ffd383]"
+          }`}
+          onClick={() => setSelectedPage("Banners")}
+        >
+          <h4 className="flex gap-2 items-center">Banners </h4>
+        </li>
+        <li
+          className={`p-2 rounded hover:bg-[#ffd383] shadow-lg ${
+            selectedPage === "Testimonials" && "bg-[#ffd383]"
+          }`}
+          onClick={() => setSelectedPage("Testimonials")}
+        >
+          <h4 className="flex gap-2 items-center">Testimonials </h4>
         </li>
       </ul>
     </div>

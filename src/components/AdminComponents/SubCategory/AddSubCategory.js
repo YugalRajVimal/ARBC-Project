@@ -77,7 +77,7 @@ const AddSubCategory = () => {
 
   return (
     <>
-      <div className="p-4 max-w-md mx-auto bg-white shadow-md rounded">
+      <div className="p-4 max-w-md mx-auto bg-white shadow-md rounded h-full overflow-y-auto">
         <h2 className="text-2xl font-bold mb-4">Add Subcategory</h2>
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
           <div>
