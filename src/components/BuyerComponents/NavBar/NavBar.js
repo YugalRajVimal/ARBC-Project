@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = (props) => {
+  const { isAuthenticatedBuyer, setIsAuthenticatedBuyer } = props;
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
@@ -65,7 +66,7 @@ const NavBar = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("role");
     localStorage.removeItem("isAuthenticatedBuyer");
-    navigate("/signin");
+    setIsAuthenticatedBuyer(false);
   };
 
   const navigateToProductsPage = (subcategory) => {
@@ -108,9 +109,12 @@ const NavBar = () => {
                 <h4 className="text-sm font-medium">Categories</h4>
                 <ul className="text-sm text-gray-700 pl-4">
                   {results.categories.map((category) => (
-                    <li 
-                    onClick={() => navigateToSubCategories(category._id)}
-                    key={category._id}>{category.name}</li>
+                    <li
+                      onClick={() => navigateToSubCategories(category._id)}
+                      key={category._id}
+                    >
+                      {category.name}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -122,8 +126,11 @@ const NavBar = () => {
                 <ul className="text-sm text-gray-700 pl-4">
                   {results.subCategories.map((subCategory) => (
                     <li
-                    onClick={() => navigateToProductsPage(subCategory._id)}
-                    key={subCategory._id}>{subCategory.name}</li>
+                      onClick={() => navigateToProductsPage(subCategory._id)}
+                      key={subCategory._id}
+                    >
+                      {subCategory.name}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -135,8 +142,11 @@ const NavBar = () => {
                 <ul className="text-sm text-gray-700 pl-4">
                   {results.products.map((product) => (
                     <li
-                    onClick={() => navigateToDetailedProduct(product._id)}
-                    key={product._id}>{product.productName}</li>
+                      onClick={() => navigateToDetailedProduct(product._id)}
+                      key={product._id}
+                    >
+                      {product.productName}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -150,12 +160,17 @@ const NavBar = () => {
           </div>
         )}
       </div>
-      <button
-        onClick={handleLogout}
-        className="flex justify-center items-center"
-      >
-        LogOut
-      </button>
+      {isAuthenticatedBuyer ? (
+        <div className="flex gap-4">
+          <a onClick={handleLogout}>Logout</a>
+        </div>
+      ) : (
+        <div className="flex gap-4">
+          <a onClick={() => navigateTo("signin")}>Sign In</a>
+          <a onClick={() => navigateTo("signup")}>Sign Up</a>
+        </div>
+      )}
+
       <a onClick={() => navigateTo("signup")}>Become a Seller</a>
     </div>
   );

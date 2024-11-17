@@ -7,24 +7,22 @@ const BuyerLayout = (props) => {
   const navigate = useNavigate();
   const { isAuthenticatedBuyer, setIsAuthenticatedBuyer } = props;
 
-  useEffect(() => {
-    if (localStorage.getItem("isAuthenticatedBuyer") === "false") {
-      navigate("/signin");
-    }
-    if (!localStorage.getItem("token") || !localStorage.getItem("isAuthenticatedBuyer")) {
-      navigate("/signin");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (localStorage.getItem("isAuthenticatedBuyer") === "false") {
+  //     navigate("/signin");
+  //   }
+  //   if (!localStorage.getItem("token") || !localStorage.getItem("isAuthenticatedBuyer")) {
+  //     navigate("/signin");
+  //   }
+  // }, [navigate]);
 
   return (
     <>
-      {localStorage.getItem("token") && isAuthenticatedBuyer && (
-        <div>
-          <NavBar setIsAuthenticatedBuyer={setIsAuthenticatedBuyer} />
-          <Outlet />
-          <Footer />
-        </div>
-      )}
+      <div>
+        <NavBar isAuthenticatedBuyer={isAuthenticatedBuyer} setIsAuthenticatedBuyer={setIsAuthenticatedBuyer} />
+        <Outlet />
+        <Footer />
+      </div>
     </>
   );
 };

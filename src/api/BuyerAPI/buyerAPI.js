@@ -5,6 +5,7 @@ const getAsideListItems = async (id) => {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/category/get-aside-list-items/${id}`
     );
+    console.log("Aside List Items","id", response.data);
     if (response.status === 200) {
       return response.data;
     }
@@ -145,6 +146,14 @@ const getAllTestimonials = async () => {
 
 const postInquiry = async (productId) => {
   ///post-inquiry/:productId with token
+  if(!localStorage.getItem("token")){
+    alert("Login to send inquiry");
+    return null;
+  }
+  if(!localStorage.getItem("isAuthenticatedBuyer")){
+    alert("Login to send inquiry");
+    return null;
+  }
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_API_URL}/user/post-inquiry/${productId}`,

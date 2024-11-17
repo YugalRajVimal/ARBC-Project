@@ -18,17 +18,25 @@ const BuyerDetailedProductPage = () => {
     });
   }, [productId]);
 
-  const handleSendInquiry =async (productId, productName) => {
+  const handleSendInquiry = async (productId, productName) => {
+    if (!localStorage.getItem("token")) {
+      alert("Login to send inquiry");
+      return null;
+    }
+    if (!localStorage.getItem("isAuthenticatedBuyer")) {
+      alert("Login to send inquiry");
+      return null;
+    }
     try {
       const response = await postInquiry(productId);
-      if(response.status===201){
-        alert("Inquiry sent successfully for product "+productName);
-      }else{
-        alert("Failed to send inquiry for product "+productName);
+      if (response.status === 201) {
+        alert("Inquiry sent successfully for product " + productName);
+      } else {
+        alert("Failed to send inquiry for product " + productName);
       }
     } catch (error) {
       console.log(error);
-      alert("Failed to send inquiry for product "+productName);
+      alert("Failed to send inquiry for product " + productName);
     }
   };
 
@@ -69,8 +77,12 @@ const BuyerDetailedProductPage = () => {
             </div>
 
             <button
-            onClick={(e) => (e.stopPropagation(), handleSendInquiry(productId, productDetails.productName))}
-            className="mt-4 bg-blue-600 text-white py-2 px-4 rounded self-start hover:bg-blue-700">
+              onClick={(e) => (
+                e.stopPropagation(),
+                handleSendInquiry(productId, productDetails.productName)
+              )}
+              className="mt-4 bg-blue-600 text-white py-2 px-4 rounded self-start hover:bg-blue-700"
+            >
               Send Inquiry
             </button>
           </div>

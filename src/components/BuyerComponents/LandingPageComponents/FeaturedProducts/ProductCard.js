@@ -21,6 +21,14 @@ const ProductCard = (props) => {
   };
 
   const handleSendInquiry =async (productId) => {
+    if(!localStorage.getItem("token")){
+      alert("Login to send inquiry");
+      return null;
+    }
+    if(!localStorage.getItem("isAuthenticatedBuyer")){
+      alert("Login to send inquiry");
+      return null;
+    }
     try {
       const response = await postInquiry(productId);
       if(response.status===201){
