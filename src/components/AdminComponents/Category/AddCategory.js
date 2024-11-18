@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { addCategory } from "../../../api/AdminAPI/adminAPI";
+import { addCategory, updateCategory } from "../../../api/AdminAPI/adminAPI";
 import { getAllCategories } from "../../../api/BuyerAPI/buyerAPI";
 import { useNavigate } from "react-router-dom";
 
@@ -12,27 +12,24 @@ const AddCategory = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [categories, setCategories] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [editCategoryId, setEditCategoryId] = useState(null);
 
-  const navigateToSubCategory = (id) => {
-    console.log(id);
-    navigate(`/subcategories/${id}`);
-  };
+  // const navigateToSubCategory = (id) => {
+  //   navigate(`/subcategories/${id}`);
+  // };
 
   useEffect(() => {
-    // Fetch top categories from API
     getAllCategories().then((data) => {
-      console.log(data);
       setCategories(data);
     });
   }, []);
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
-    // Create form data for submission
     const formData = new FormData();
     formData.append("categoryName", categoryName);
     formData.append("categoryDescription", categoryDescription);
@@ -41,29 +38,53 @@ const AddCategory = () => {
     }
 
     try {
-      const response = await addCategory(formData);
-      if (response.status === 201) {
-        console.log(response);
-        setMessage("Category added successfully!");
-        // Clear form fields after successful submission
+      const response = editMode
+        ? await updateCategory(editCategoryId, formData)
+        : await addCategory(formData);
+      if (response.status === 201 || response.status === 200) {
+        setMessage(
+          editMode
+            ? "Category updated successfully!"
+            : "Category added successfully!"
+        );
         setCategoryName("");
         setCategoryDescription("");
         setCategoryImage(null);
+        setEditMode(false);
+        setEditCategoryId(null);
         getAllCategories().then((data) => {
-          console.log(data);
           setCategories(data);
         });
       }
     } catch (error) {
-      setMessage("Failed to add category. Please try again.");
+      setMessage("Failed to submit category. Please try again.");
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
+  const handleEdit = (category) => {
+    setEditMode(true);
+    setEditCategoryId(category._id);
+    setCategoryName(category.name);
+    setCategoryDescription(category.description);
+    setCategoryImage(null); // Image upload is optional during edit
+  };
+
   return (
     <div className="p-4 h-full overflow-y-auto max-w-md mx-auto bg-white shadow-md rounded">
-      <h2 className="text-2xl font-bold mb-4">Add Category</h2>
+      <h2
+        onClick={() => {
+          setEditMode(false);
+            setCategoryName("");
+            setCategoryDescription("");
+            setCategoryImage(null);
+        }}
+        className="text-2xl font-bold mb-4"
+      >
+        {editMode ? "Edit Category" : "Add Category"}
+      </h2>
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         <div>
           <label className="block font-medium mb-1" htmlFor="categoryName">
@@ -113,26 +134,38 @@ const AddCategory = () => {
           disabled={loading}
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
-          {loading ? "Submitting..." : "Add Category"}
+          {loading
+            ? "Submitting..."
+            : editMode
+            ? "Update Category"
+            : "Add Category"}
         </button>
       </form>
 
       {message && <p className="mt-4 text-center">{message}</p>}
+
       <div className="p-4">
         <h2 className="text-xl font-semibold">All Categories</h2>
         <div className="h-full overflow-y-auto flex justify-around flex-wrap gap-2 p-4">
           {categories.map((category) => (
             <div
-              onClick={() => navigateToSubCategory(category._id)}
-              className=" h-[120px] w-[340px] bg-slate-100 flex justify-between items-center p-2"
+              key={category._id}
+              // onClick={() => navigateToSubCategory(category._id)}
+              className="h-[120px] w-[340px] bg-slate-100 flex justify-between items-center p-2"
             >
               <img
                 src={process.env.REACT_APP_API_URL + "/" + category.image}
                 className="h-full aspect-[1/1] bg-slate-200"
-              ></img>
+              />
               <div className="w-full p-2 pt-0 h-full">
                 <h3 className="text-lg font-semibold">{category.name}</h3>
                 <p className="text-sm">{category.description}</p>
+                <button
+                  onClick={() => handleEdit(category)}
+                  className="mt-2 bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                >
+                  Edit
+                </button>
               </div>
             </div>
           ))}

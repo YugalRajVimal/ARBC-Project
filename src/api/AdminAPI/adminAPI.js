@@ -20,6 +20,25 @@ const addCategory = async (categoryData) => {
   }
 };
 
+const updateCategory = async (editCategoryId, categoryData) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_API_URL}/category/update-category/${editCategoryId}`,
+      categoryData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    return {
+      status: response.status,
+      data: response.data,
+    };
+  } catch (error) {
+    console.error("Error updating category:", error);
+    throw error;
+  }
+};
+
 // Function to add a new subcategory
 const addSubCategory = async (subCategoryData) => {
   try {
@@ -33,6 +52,23 @@ const addSubCategory = async (subCategoryData) => {
     return response.data;
   } catch (error) {
     console.error("Error adding subcategory:", error);
+    throw error;
+  }
+};
+
+// Function to update  subcategory
+const updateSubCategory = async (subCategoryId, subCategoryData) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_API_URL}/category/update-sub-category/${subCategoryId}`,
+      subCategoryData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating subcategory:", error);
     throw error;
   }
 };
@@ -353,19 +389,18 @@ const getTestimonials = async () => {
     console.error(error);
     return null;
   }
-}
+};
 
 // Post Testimonials
 // {
-//   "name":"Yugal", 
-//   "designation":"Software Developer", 
-//   "rating":"4", 
+//   "name":"Yugal",
+//   "designation":"Software Developer",
+//   "rating":"4",
 //   "review":"xsjcndijwncjewnd"
 // }
 
 const postTestimonials = async (data) => {
   try {
-
     const response = await axios.post(
       `${process.env.REACT_APP_API_URL}/user/post-testimonial`,
       data
@@ -379,7 +414,7 @@ const postTestimonials = async (data) => {
     console.error(error);
     return null;
   }
-}
+};
 
 // /admin/delete-testimonial/:testimonialId
 const deleteTestimonial = async (testimonialId) => {
@@ -395,9 +430,7 @@ const deleteTestimonial = async (testimonialId) => {
     console.error(error);
     return null;
   }
-}
-
-
+};
 
 export {
   addCategory,
@@ -419,5 +452,7 @@ export {
   deleteBanner,
   getTestimonials,
   postTestimonials,
-  deleteTestimonial
+  deleteTestimonial,
+  updateCategory,
+  updateSubCategory,
 };
