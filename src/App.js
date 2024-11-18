@@ -16,6 +16,9 @@ import BuyerDetailedProductPage from "./pages/BuyerDetailedProductPage";
 import BuyerCategoriesPage from "./pages/BuyerCategoriesPage";
 import AdminLandingPage from "./pages/AdminLandingPage";
 import AdminLayout from "./pages/AdminLayout";
+import AdminLogin from "./components/AdminComponents/AdminAuthComponents/AdminLogin";
+import AdminResetPassword from "./components/AdminComponents/AdminAuthComponents/AdminResetPassword";
+import AdminVerifyAccount from "./components/AdminComponents/AdminAuthComponents/AdminVerifyAccount";
 
 function App() {
   const [isAuthenticatedSeller, setIsAuthenticatedSeller] = useState(
@@ -23,6 +26,9 @@ function App() {
   );
   const [isAuthenticatedBuyer, setIsAuthenticatedBuyer] = useState(
     localStorage.getItem("isAuthenticatedBuyer") || false
+  );
+  const [isAuthenticatedAdmin, setIsAuthenticatedAdmin] = useState(
+    localStorage.getItem("isAuthenticatedAdmin") || false
   );
 
   return (
@@ -95,7 +101,21 @@ function App() {
             }
           />
           <Route path="/reset-password" element={<UserResetPassword />} />
-          <Route path="/verify-account" element={<VerifyAccount />} />
+          <Route path="/verify-account" element={<VerifyAccount />} />"
+          <Route
+            path="/admin/reset-password"
+            element={<AdminResetPassword />}
+          />
+          <Route
+            path="/admin/verify-account"
+            element={<AdminVerifyAccount />}
+          />
+          <Route
+            path="/admin/signin"
+            element={
+              <AdminLogin setIsAuthenticatedAdmin={setIsAuthenticatedAdmin} />
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>

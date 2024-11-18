@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const UserResetPassword = () => {
+const AdminResetPassword = () => {
   const navigate = useNavigate();
 
   // State to manage email and password input
@@ -16,13 +16,13 @@ const UserResetPassword = () => {
     // Create reset password data object
     const resetPasswordData = {
       email,
-      role: isSeller ? "seller" : "customer",
+      role: "admin",
     };
 
     try {
       // Make POST request to the reset password API
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/user/reset-password`,
+        `${process.env.REACT_APP_API_URL}/admin/reset-password`,
         {
           method: "POST",
           headers: {
@@ -37,7 +37,9 @@ const UserResetPassword = () => {
       if (response.ok) {
         // Redirect to verify account
         alert("Verify your email to reset your password");
-        navigate("/verify-account", { state: { email: email, role: isSeller ? "seller" : "customer"  } });
+        navigate("/admin/verify-account", {
+          state: { email: email, role: "admin" },
+        });
       } else {
         // Handle reset password failure
         setError(
@@ -54,22 +56,8 @@ const UserResetPassword = () => {
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded shadow-lg">
         <div className="flex justify-between items-center ">
           <h2 className="text-xl font-semibold text-center text-gray-900 ">
-            Reset Password
+            Reset Admin Password
           </h2>
-
-          <div className="flex items-center justify-center">
-            <label htmlFor="isSeller" className="mr-2 text-xs text-gray-600">
-              Seller's Account
-            </label>
-            <input
-              id="isSeller"
-              name="isSeller"
-              type="checkbox"
-              className="w-4 h-4 text-xs text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-              checked={isSeller}
-              onChange={(e) => setIsSeller(e.target.checked)}
-            />
-          </div>
         </div>
 
         {/* Error message */}
@@ -107,17 +95,10 @@ const UserResetPassword = () => {
           <div className="flex items-center justify-between">
             <div className="text-sm">
               <a
-                href="/signin"
+                href="/admin/signin"
                 className="font-medium text-indigo-600 hover:text-indigo-500 px-1"
               >
                 Log In
-              </a>
-              /
-              <a
-                href="/signup"
-                className="font-medium text-indigo-600 hover:text-indigo-500 px-1"
-              >
-                Sign Up
               </a>
             </div>
           </div>
@@ -127,4 +108,4 @@ const UserResetPassword = () => {
   );
 };
 
-export default UserResetPassword;
+export default AdminResetPassword;

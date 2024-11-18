@@ -10,7 +10,6 @@ const AdminLogin = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -25,29 +24,19 @@ const AdminLogin = (props) => {
       }
       //Check Status and store token in local storage
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("adminToken", response.data.token);
         localStorage.setItem("userId", response.data.userId);
-        
-
-        if (isSeller) {
-          localStorage.setItem("role", "seller");
-          localStorage.setItem("isAuthenticatedSeller", true);
-          localStorage.setItem("isAuthenticatedBuyer", false);
-          setIsAuthenticatedSeller(true);
-          navigate("/seller");
-          return;
-        } else {
-          localStorage.setItem("role", "customer");
-          localStorage.setItem("isAuthenticatedBuyer", true);
-          localStorage.setItem("isAuthenticatedSeller", false);
-          setIsAuthenticatedBuyer(true);
-          navigate("/");
-          return;
-        }
+        localStorage.setItem("role", "admin");
+        localStorage.setItem("isAuthenticatedAdmin", true);
+        localStorage.setItem("isAuthenticatedSeller", false);
+        localStorage.setItem("isAuthenticatedBuyer", false);
+        setIsAuthenticatedAdmin(true);
+        navigate("/admin");
+        return;
       }
       if (response.status === 209) {
-        navigate("/verify-account", {
-          state: { email: email, role: isSeller ? "seller" : "customer" },
+        navigate("/admin/verify-account", {
+          state: { email: email, role: "admin" },
         });
         return;
       }
@@ -55,7 +44,7 @@ const AdminLogin = (props) => {
       return;
     } catch (error) {
       console.error("Error signing in", error);
-      localStorage.setItem("isAuthenticatedSeller", false);
+      localStorage.setItem("isAuthenticatedAdmin", false);
       setError(
         error.response.data.message ||
           error.message ||
@@ -68,20 +57,7 @@ const AdminLogin = (props) => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded shadow-lg">
         <div className="flex justify-between items-center ">
-          <p>Sign in to your account</p>
-          <div className="flex items-center justify-center">
-            <label htmlFor="isSeller" className="mr-2 text-xs text-gray-600">
-              Sign up as Seller
-            </label>
-            <input
-              id="isSeller"
-              name="isSeller"
-              type="checkbox"
-              className="w-4 h-4 text-xs text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-              checked={isSeller}
-              onChange={(e) => setIsSeller(e.target.checked)}
-            />
-          </div>
+          <p>Sign in to Admin Panel</p>
         </div>
 
         {/* Error message */}
@@ -126,18 +102,10 @@ const AdminLogin = (props) => {
           <div className="flex items-center justify-between">
             <div className="text-sm">
               <a
-                href="/reset-password"
+                href="/admin/reset-password"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
                 Forgot your password?
-              </a>
-            </div>
-            <div className="text-sm">
-              <a
-                href="/signup"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Create New Account
               </a>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const VerifyAccount = () => {
+const AdminVerifyAccount = () => {
   const location = useLocation();
   const { email, role } = location.state || {};
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const VerifyAccount = () => {
     try {
       // Make POST request to the API
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/user/verify-account`,
+        `${process.env.REACT_APP_API_URL}/admin/verify-account`,
         {
           method: "POST",
           headers: {
@@ -41,7 +41,7 @@ const VerifyAccount = () => {
       if (response.ok) {
         // If verification is successful, show alert and redirect to login page
         alert("Account verified successfully. Please login to continue");
-        navigate("/signin");
+        navigate("/admin/signin");
       } else {
         // Handle API error response
         setError(data.message || "Verification failed. Please try again.");
@@ -56,7 +56,7 @@ const VerifyAccount = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded shadow-lg">
         <h3 className="text-xl font-semibold  text-center">
-          Verify Your Account
+          Verify Your Admin Account
         </h3>
 
         {error && <p className="text-red-500 text-center">{error}</p>}
@@ -111,4 +111,4 @@ const VerifyAccount = () => {
   );
 };
 
-export default VerifyAccount;
+export default AdminVerifyAccount;

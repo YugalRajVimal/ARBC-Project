@@ -5,39 +5,17 @@ import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const [searchText, setSearchText] = useState("");
-  const [debouncedSearchText, setDebouncedSearchText] = useState("");
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchText(searchText);
-    }, 500); // 500ms delay
 
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [searchText]);
 
-  useEffect(() => {
-    if (debouncedSearchText) {
-      // Perform the search
-      console.log(debouncedSearchText, "Searching");
-      // Your search function here, e.g., fetch data from an API
-    }
-  }, [debouncedSearchText]);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setSearchText(e.target.value);
-  };
 
   const handleLogout = () => {
     // Log out the user by removing token and redirecting to signinpage
-    localStorage.removeItem("token");
+    localStorage.removeItem("adminToken");
     localStorage.removeItem("userId");
     localStorage.removeItem("role");
-    localStorage.removeItem("isAuthenticatedSeller");
-    navigate("/signin");
+    localStorage.removeItem("isAuthenticatedAdmin");
+    navigate("/admin/signin");
   }
 
 
