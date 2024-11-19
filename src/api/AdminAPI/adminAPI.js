@@ -1,5 +1,25 @@
 import axios from "axios";
 
+//Update Logo / Name
+const updateLogoAndName = async (formData) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_API_URL}/admin/update-logo-name`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    if (response.status === 200) {
+      return 200;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 // Function to add a new category
 const addCategory = async (categoryData) => {
   try {
@@ -39,6 +59,21 @@ const updateCategory = async (editCategoryId, categoryData) => {
   }
 };
 
+const deleteCategory = async (categoryId) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_API_URL}/category/delete-category/${categoryId}`
+    );
+    return {
+      status: response.status,
+      data: response.data,
+    };
+  } catch (error) {
+    console.error("Error deleting category:", error);
+    throw error;
+  }
+};
+
 // Function to add a new subcategory
 const addSubCategory = async (subCategoryData) => {
   try {
@@ -69,6 +104,22 @@ const updateSubCategory = async (subCategoryId, subCategoryData) => {
     return response.data;
   } catch (error) {
     console.error("Error updating subcategory:", error);
+    throw error;
+  }
+};
+
+// Delete Sub Category
+const deleteSubCategory = async (subCategoryId) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_API_URL}/category/delete-sub-category/${subCategoryId}`
+    );
+    return {
+      status: response.status,
+      data: response.data,
+    };
+  } catch (error) {
+    console.error("Error deleting subcategory:", error);
     throw error;
   }
 };
@@ -455,4 +506,6 @@ export {
   deleteTestimonial,
   updateCategory,
   updateSubCategory,
+  deleteCategory,
+  deleteSubCategory,
 };

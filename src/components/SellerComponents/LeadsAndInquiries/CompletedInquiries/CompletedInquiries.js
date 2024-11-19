@@ -1,15 +1,26 @@
 import React from "react";
+import axios from "axios";
+import { updateInquiryStatus } from "../../../../api/SellerAPI/sellerAPI";
 
 const CompletedInquiries = ({
   inquiries,
   setSelectedPage,
   setSelectedInquiryDetails,
+  fetchInquiries,
 }) => {
   const handleViewInquiry = (inquiry) => {
     setSelectedInquiryDetails(inquiry);
     setSelectedPage("DetailedInquiry");
   };
-  const completedInquiries = inquiries.filter(
+
+  const handleStatusChange = async (inquiryId, newStatus) => {
+    const response = await updateInquiryStatus(inquiryId, newStatus);
+    if (response === 200) {
+      fetchInquiries(); // Refresh the inquiries list after successful update
+    }
+  };
+
+  const completedInquiries = inquiries?.filter(
     (inquiry) => inquiry.status === "Completed"
   );
 
@@ -37,7 +48,7 @@ const CompletedInquiries = ({
           </thead>
           <tbody>
             {completedInquiries.map((inquiry) => (
-              <tr key={inquiry.id} className="text-sm">
+              <tr key={inquiry._id} className="text-sm">
                 <td className="p-3 border-b">{inquiry._id}</td>
                 <td className="p-3 border-b">{inquiry.user._id}</td>
                 <td className="p-3 border-b">{inquiry.product._id}</td>
@@ -47,26 +58,39 @@ const CompletedInquiries = ({
                 </td>
                 <td className="p-3 border-b">{inquiry.user.name}</td>
                 <td className="p-3 border-b">{inquiry.user.phoneNo}</td>
-                {/* CreateAT -> Date  */}
                 <td className="p-3 border-b">
                   {new Date(inquiry.createdAt).toLocaleDateString()}
                 </td>
-
                 <td
                   className={`p-3 border-b ${
                     inquiry.status === "Completed" && "text-green-600"
-                  } 
-              ${inquiry.status === "Active" && "text-blue-600"}
-              ${inquiry.status === "Pending" && "text-red-600"}`}
+                  } ${inquiry.status === "Active" && "text-blue-600"} ${
+                    inquiry.status === "Pending" && "text-red-600"
+                  }`}
                 >
                   {inquiry.status}
                 </td>
-                <td className="p-3 border-b">
+                <td className="p-3 border-b space-x-2 flex flex-col justify-center">
                   <button
                     onClick={() => handleViewInquiry(inquiry)}
-                    className="text-blue-500 hover:text-blue-700"
+                    className="text-blue-500 hover:text-blue-700 block"
                   >
                     View
+                  </button>
+                  <hr className="border-black border-[0.5px]" />
+
+                  <button
+                    onClick={() => handleStatusChange(inquiry._id, "Pending")}
+                    className="text-green-500 hover:text-green-700"
+                  >
+                    Mark as Pending
+                  </button>
+                  <hr className="border-black border-[0.5px]" />
+                  <button
+                    onClick={() => handleStatusChange(inquiry._id, "Active")}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    Mark as Active
                   </button>
                 </td>
               </tr>

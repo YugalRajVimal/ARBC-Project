@@ -358,13 +358,15 @@ const AddNewProduct = () => {
   }, [selectedCategory]);
 
   const handleCategoryChange = (categoryId) => {
-    
     setSelectedCategory(categoryId);
     console.log("Category changed:", selectedCategory);
     // FInd Subcategory and set defaultmsubcategory for category
+
     const defaultSubcategory = categories.find(
       (category) => category._id === categoryId
     ).subCategories[0];
+
+    if(!defaultSubcategory) return;
 
     setSelectedSubcategory(defaultSubcategory._id);
     console.log("Default Subcategory:", selectedSubcategory);
@@ -373,7 +375,6 @@ const AddNewProduct = () => {
   const handleSubcategoryChange = (subcategoryId) => {
     setSelectedSubcategory(subcategoryId);
     console.log("Subcategory changed:", selectedSubcategory);
-
   };
 
   const handleChange = (e) => {

@@ -160,7 +160,7 @@ const NavBar = (props) => {
           </div>
         )}
       </div>
-      {isAuthenticatedBuyer ? (
+      {isAuthenticatedBuyer==true ? (
         <div className="flex gap-4">
           <a onClick={handleLogout}>Logout</a>
         </div>

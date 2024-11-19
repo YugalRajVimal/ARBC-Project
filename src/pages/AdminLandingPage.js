@@ -14,6 +14,7 @@ import PostBuyRequirements from "../components/AdminComponents/PostBuyRequiremen
 import AllInquiries from "../components/AdminComponents/AllInquiries/AllInquiries";
 import Banners from "../components/AdminComponents/Banners/Banners";
 import Testimonials from "../components/AdminComponents/Testimonials/Testimonials";
+import LogoAndName from "../components/AdminComponents/LogoAndName/LogoAndName";
 
 
 const AdminLandingPage = () => {
@@ -30,6 +31,7 @@ const AdminLandingPage = () => {
       <div className="w-4/5 h-full mx-1 bg-[#fdfef4] p-4">
           <>
             {/* {selectedPage === "Dashboard" && <Dashboard />} */}
+            {selectedPage === "LogoAndName" && <LogoAndName />}
             {selectedPage === "Category" && <AddCategory />}
             {selectedPage === "SubCategory" && <AddSubCategory />}
             {selectedPage === "BuyerProfile" && <BuyerList />}
@@ -44,7 +46,6 @@ const AdminLandingPage = () => {
             {selectedPage === "AllInquiries"&& <AllInquiries />}
             {selectedPage === "Banners" && <Banners />}
             {selectedPage === "Testimonials" && <Testimonials />}
-
           </>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const SidePanel = (props) => {
-  const { setSelectedPage, selectedPage } = props;
+  const { setSelectedPage, selectedPage, subscribedStatus, handleSubscribe} = props;
 
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isLeadsOpen, setIsLeadsOpen] = useState(false);
@@ -14,7 +14,12 @@ const SidePanel = (props) => {
 
   return (
     <div className="w-1/5 h-full p-4">
-      <ul className="space-y-4">
+      <ul className="space-y-4 flex flex-col justify-center ">
+        {!subscribedStatus &&(
+          <button onClick={()=>handleSubscribe(localStorage.getItem('userId'))} className="bg-red-500 hover:bg-red-700 text-white px-6 py-1 rounded-md">
+            Subscribe
+          </button>
+        )}
         <li
           className={`p-2 rounded hover:bg-[#ffd383] shadow-lg ${selectedPage === "Dashboard" && "bg-[#ffd383]"}`}
           onClick={() => setSelectedPage("Dashboard")}

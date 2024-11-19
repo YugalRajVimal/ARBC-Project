@@ -23,14 +23,14 @@ ChartJS.register(
 const AnalyticsBarGraph = (props) => {
   const { inquiries } = props;
 
-  useEffect(() => {
-    console.log("Inquiries:", inquiries);
-  }, [inquiries]);
+  useEffect(() => {}, [inquiries]);
 
   const categorizeInquiriesByDaysAndStatus = (inquiries, status) => {
     const currentDate = dayjs();
     const intervals = [0, 7, 14, 21, 28, 30];
     const categorizedCounts = Array(intervals.length - 1).fill(0);
+
+    console.log("Inquiries:------", inquiries);
 
     inquiries
       .filter((inquiry) => inquiry.status === status)
@@ -42,7 +42,10 @@ const AnalyticsBarGraph = (props) => {
         );
 
         for (let i = 0; i < intervals.length - 1; i++) {
-          if (daysDifference >= intervals[i] && daysDifference < intervals[i + 1]) {
+          if (
+            daysDifference >= intervals[i] &&
+            daysDifference < intervals[i + 1]
+          ) {
             categorizedCounts[i] += 1;
             break;
           }
@@ -53,15 +56,21 @@ const AnalyticsBarGraph = (props) => {
   };
 
   // Generate data for each status
-  var totalData = inquiries ? categorizeInquiriesByDaysAndStatus(inquiries, "Pending") : [];
-  const activeData = inquiries ? categorizeInquiriesByDaysAndStatus(inquiries, "Active") : [];
-  const completedData = inquiries ? categorizeInquiriesByDaysAndStatus(inquiries, "Completed") : [];
+  var totalData = inquiries
+    ? categorizeInquiriesByDaysAndStatus(inquiries, "Pending")
+    : [];
+  const activeData = inquiries
+    ? categorizeInquiriesByDaysAndStatus(inquiries, "Active")
+    : [];
+  const completedData = inquiries
+    ? categorizeInquiriesByDaysAndStatus(inquiries, "Completed")
+    : [];
 
   //Totla Data is Sum of all the data
   totalData = totalData.map((item, index) => {
     return item + activeData[index] + completedData[index];
   });
-  
+
   console.log("Total Inquiries Data:", totalData);
   console.log("Active Inquiries Data:", activeData);
   console.log("Completed Inquiries Data:", completedData);
@@ -71,21 +80,21 @@ const AnalyticsBarGraph = (props) => {
     datasets: [
       {
         label: "Total Inquiries",
-        data: totalData,
+        data: totalData ? totalData : [],
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
       },
       {
         label: "Active Inquiries",
-        data: activeData,
+        data: activeData ? activeData : [],
         backgroundColor: "rgba(54, 162, 235, 0.2)",
         borderColor: "rgba(54, 162, 235, 1)",
         borderWidth: 1,
       },
       {
         label: "Completed Inquiries",
-        data: completedData,
+        data: completedData ? completedData : [],
         backgroundColor: "rgba(153, 102, 255, 0.2)",
         borderColor: "rgba(153, 102, 255, 1)",
         borderWidth: 1,

@@ -14,9 +14,15 @@ const ProductStatusChart = () => {
       {
         label: "Product Status",
         data: [
-          productsStatus.availableProducts,
-          productsStatus.comingSoonProducts,
-          productsStatus.outOfStockProducts,
+          productsStatus.availableProducts
+            ? productsStatus.availableProducts
+            : 0,
+          productsStatus.comingSoonProducts
+            ? productsStatus.comingSoonProducts
+            : 0,
+          productsStatus.outOfStockProducts
+            ? productsStatus.outOfStockProducts
+            : 0,
         ], // Example data, replace with dynamic data
         backgroundColor: [
           "rgba(75, 192, 192, 0.2)", // Available
@@ -50,10 +56,17 @@ const ProductStatusChart = () => {
   useEffect(() => {
     // Fetch top categories from API
     getProductsStatus().then((response) => {
-      console.log(response.data);
-      setProductsStatus(response.data);
+      console.log("----",response);
+      if (response.status === 200) {
+        setProductsStatus(response.data);
+      }
+      setProductsStatus(response);
     });
   }, []);
+
+  if (!productsStatus) {
+    return <h1>Data not found</h1>;
+  }
 
   return (
     <div className="p-4 h-80 w-full shadow-md bg-white rounded-lg">
@@ -64,15 +77,18 @@ const ProductStatusChart = () => {
         <div className="flex justify-around w-full mt-4">
           <div className="flex flex-col items-center">
             <span className="text-teal-500">● Available</span>
-            <span>{productsStatus.availableProducts}</span> {/* Replace with dynamic count */}
+            <span>{productsStatus.availableProducts}</span>{" "}
+            {/* Replace with dynamic count */}
           </div>
           <div className="flex flex-col items-center">
             <span className="text-yellow-500">● Coming Soon</span>
-            <span>{productsStatus.comingSoonProducts}</span> {/* Replace with dynamic count */}
+            <span>{productsStatus.comingSoonProducts}</span>{" "}
+            {/* Replace with dynamic count */}
           </div>
           <div className="flex flex-col items-center">
             <span className="text-red-500">● Out of Stock</span>
-            <span>{productsStatus.outOfStockProducts}</span> {/* Replace with dynamic count */}
+            <span>{productsStatus.outOfStockProducts}</span>{" "}
+            {/* Replace with dynamic count */}
           </div>
         </div>
       </div>

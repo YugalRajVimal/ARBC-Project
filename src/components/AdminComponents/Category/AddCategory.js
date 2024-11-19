@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { addCategory, updateCategory } from "../../../api/AdminAPI/adminAPI";
+import {
+  addCategory,
+  deleteCategory,
+  updateCategory,
+} from "../../../api/AdminAPI/adminAPI";
 import { getAllCategories } from "../../../api/BuyerAPI/buyerAPI";
 import { useNavigate } from "react-router-dom";
 
@@ -64,6 +68,29 @@ const AddCategory = () => {
     }
   };
 
+  const handleDeleteCategory = async (id) => {
+    try {
+      //Confirmation
+      if (
+        !window.confirm(
+          "Are you sure you want to delete this category with respective sub-categories and products?"
+        )
+      ) {
+        return;
+      }
+      const response = await deleteCategory(id);
+      if (response.status === 200) {
+        setMessage("Category deleted successfully!");
+        getAllCategories().then((data) => {
+          setCategories(data);
+        });
+      }
+    } catch (error) {
+      setMessage("Failed to delete category. Please try again.");
+      console.error(error);
+    }
+  };
+
   const handleEdit = (category) => {
     setEditMode(true);
     setEditCategoryId(category._id);
@@ -77,9 +104,9 @@ const AddCategory = () => {
       <h2
         onClick={() => {
           setEditMode(false);
-            setCategoryName("");
-            setCategoryDescription("");
-            setCategoryImage(null);
+          setCategoryName("");
+          setCategoryDescription("");
+          setCategoryImage(null);
         }}
         className="text-2xl font-bold mb-4"
       >
@@ -160,12 +187,20 @@ const AddCategory = () => {
               <div className="w-full p-2 pt-0 h-full">
                 <h3 className="text-lg font-semibold">{category.name}</h3>
                 <p className="text-sm">{category.description}</p>
-                <button
-                  onClick={() => handleEdit(category)}
-                  className="mt-2 bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
-                >
-                  Edit
-                </button>
+                <div className="flex justify-around">
+                  <button
+                    onClick={() => handleEdit(category)}
+                    className="mt-2 bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteCategory(category._id)}
+                    className="mt-2 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           ))}

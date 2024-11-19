@@ -23,7 +23,11 @@ const Dashboard = ({ setSelectedPage }) => {
             headers: { Authorization: `${localStorage.getItem("token")}` },
           }
         );
-        setProducts(response.data);
+        if (response.status === 200) {
+          setProducts(response.data);
+        }
+        setProducts([]);
+
         setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -40,13 +44,13 @@ const Dashboard = ({ setSelectedPage }) => {
           }
         );
 
-        setInquiries(response.data.inquiries);
-        
+        if (response.status === 200) {
+          setInquiries(response.data.inquiries);
+        }
       } catch (error) {
         console.error("Error fetching inquiries:", error);
       }
     };
-
 
     // Fetch Product Status
     const fetchProductStatus = async () => {
@@ -77,7 +81,10 @@ const Dashboard = ({ setSelectedPage }) => {
               Active Inquiries
               <br />
               <span className="text-2xl pl-2">
-                {inquiries.filter(inquiry => inquiry.status === "Active").length}
+                {
+                  inquiries?.filter((inquiry) => inquiry.status === "Active")
+                    .length
+                }
               </span>
             </div>
           </div>
@@ -86,7 +93,10 @@ const Dashboard = ({ setSelectedPage }) => {
               Completed Inquiries
               <br />
               <span className="text-2xl pl-2">
-                {inquiries.filter(inquiry => inquiry.status === "Completed").length}
+                {
+                  inquiries?.filter((inquiry) => inquiry.status === "Completed")
+                    .length
+                }
               </span>
             </div>
             <div className="h-full w-[48%] p-1"></div>

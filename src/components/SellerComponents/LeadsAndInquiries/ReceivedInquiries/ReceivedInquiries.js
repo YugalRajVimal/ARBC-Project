@@ -1,9 +1,23 @@
 import React from "react";
+import axios from "axios";
+import { updateInquiryStatus } from "../../../../api/SellerAPI/sellerAPI";
 
-const ReceivedInquiries = ({ inquiries, setSelectedPage, setSelectedInquiryDetails }) => {
+const ReceivedInquiries = ({
+  inquiries,
+  setSelectedPage,
+  setSelectedInquiryDetails,
+  fetchInquiries,
+}) => {
   const handleViewInquiry = (inquiry) => {
     setSelectedInquiryDetails(inquiry);
     setSelectedPage("DetailedInquiry");
+  };
+
+  const handleStatusChange = async (inquiryId, newStatus) => {
+    const response = await updateInquiryStatus(inquiryId, newStatus);
+    if (response === 200) {
+      fetchInquiries(); // Refresh the inquiries list after successful update
+    }
   };
 
   return (
@@ -34,7 +48,9 @@ const ReceivedInquiries = ({ inquiries, setSelectedPage, setSelectedInquiryDetai
                 <td className="p-3 border-b">{inquiry.user._id}</td>
                 <td className="p-3 border-b">{inquiry.product._id}</td>
                 <td className="p-3 border-b">{inquiry.product.productName}</td>
-                <td className="p-3 border-b">{inquiry.product.productQuantity}</td>
+                <td className="p-3 border-b">
+                  {inquiry.product.productQuantity}
+                </td>
                 <td className="p-3 border-b">{inquiry.user.name}</td>
                 <td className="p-3 border-b">{inquiry.user.phoneNo}</td>
                 <td className="p-3 border-b">
@@ -42,19 +58,42 @@ const ReceivedInquiries = ({ inquiries, setSelectedPage, setSelectedInquiryDetai
                 </td>
                 <td
                   className={`p-3 border-b ${
-                    inquiry.status === "Completed" ? "text-green-600" : 
-                    inquiry.status === "Active" ? "text-blue-600" : 
-                    "text-red-600"
+                    inquiry.status === "Completed"
+                      ? "text-green-600"
+                      : inquiry.status === "Active"
+                      ? "text-blue-600"
+                      : "text-red-600"
                   }`}
                 >
                   {inquiry.status}
                 </td>
-                <td className="p-3 border-b">
+                <td className="p-3 border-b space-x-2 flex flex-col justify-center">
                   <button
                     onClick={() => handleViewInquiry(inquiry)}
                     className="text-blue-500 hover:text-blue-700"
                   >
                     View
+                  </button>
+                  <hr className="border-black border-[0.5px]" />
+                  <button
+                    onClick={() => handleStatusChange(inquiry._id, "Pending")}
+                    className="text-purple-500 hover:text-purple-700"
+                  >
+                    Mark as Pending
+                  </button>
+                  <hr className="border-black border-[0.5px]" />
+                  <button
+                    onClick={() => handleStatusChange(inquiry._id, "Active")}
+                    className="text-green-500 hover:text-green-700"
+                  >
+                    Mark as Active
+                  </button>
+                  <hr className="border-black border-[0.5px]" />
+                  <button
+                    onClick={() => handleStatusChange(inquiry._id, "Completed")}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    Mark as Completed
                   </button>
                 </td>
               </tr>

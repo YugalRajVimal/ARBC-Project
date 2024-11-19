@@ -3,8 +3,10 @@ import {
   addSubCategory,
   updateSubCategory,
   getAllSubCategories,
+  deleteSubCategory,
 } from "../../../api/AdminAPI/adminAPI";
 import { getAllCategories } from "../../../api/BuyerAPI/buyerAPI";
+import { useNavigate } from "react-router-dom";
 
 const AddSubCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -18,6 +20,8 @@ const AddSubCategory = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [editSubCategoryId, setEditSubCategoryId] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -95,6 +99,21 @@ const AddSubCategory = () => {
     setSubCategoryName(subCategory.name);
     setSubCategoryDescription(subCategory.description);
     setSubCategoryImage(null); // Image upload is optional during edit
+  };
+
+  const handleDelete = async (subCategoryId, categoryId) => {
+    try {
+      const response = await deleteSubCategory(subCategoryId);
+      if (response.status === 200) {
+        setMessage("Subcategory deleted successfully!");
+        alert("Subcategory deleted successfully!");
+        //Refresh the Page
+        navigate("/admin");
+      }
+    } catch (error) {
+      setMessage("Failed to delete subcategory. Please try again.");
+      console.error(error);
+    }
   };
 
   return (
@@ -222,14 +241,24 @@ const AddSubCategory = () => {
             <ul className="list-disc pl-5">
               {subCategories.length > 0 ? (
                 subCategories.map((subCategory) => (
-                  <li key={subCategory._id}>
+                  <li key={subCategory._id} className="flex justify-between">
                     {subCategory.name}{" "}
-                    <button
-                      onClick={() => handleEdit(subCategory)}
-                      className="ml-2 bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
-                    >
-                      Edit
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEdit(subCategory)}
+                        className="ml-2 bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleDelete(subCategory._id, categoryId)
+                        }
+                        className="ml-2 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </li>
                 ))
               ) : (
