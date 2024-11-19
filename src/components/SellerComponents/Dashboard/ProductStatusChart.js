@@ -59,8 +59,13 @@ const ProductStatusChart = () => {
       console.log("----",response);
       if (response.status === 200) {
         setProductsStatus(response.data);
+      }else{
+        setProductsStatus({
+          availableProducts: 0,
+          comingSoonProducts: 0,
+          outOfStockProducts: 0,
+        });
       }
-      setProductsStatus(response);
     });
   }, []);
 

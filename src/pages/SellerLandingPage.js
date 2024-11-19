@@ -45,6 +45,9 @@ const SellerLandingPage = () => {
         //Not Subscribed and have more than 10 inquiries
         setInquiries(response.data.inquiries);
         setSubscribedStatus(false);
+        alert(
+          "You have more than 10 inquiries. Please subscribe to view more inquiries."
+        );
       }
     } catch (error) {
       console.error("Error fetching inquiries:", error);
@@ -157,15 +160,6 @@ const SellerLandingPage = () => {
     checkIsBusinessProfileCompleted();
     fetchInquiries();
   }, []);
-
-  useEffect(() => {
-    if (!subscribedStatus) {
-      alert(
-        "You have more than 10 inquiries. Please subscribe to view more inquiries."
-      );
-    }
-  }, []);
-  
 
   return (
     <div className="h-[93vh] overflow-y-auto overflow-x-hidden flex bg-[#fdfef4]">

@@ -15,11 +15,11 @@ const SidePanel = (props) => {
   return (
     <div className="w-1/5 h-full p-4">
       <ul className="space-y-4 flex flex-col justify-center ">
-        {!subscribedStatus &&(
+        {!subscribedStatus ?(
           <button onClick={()=>handleSubscribe(localStorage.getItem('userId'))} className="bg-red-500 hover:bg-red-700 text-white px-6 py-1 rounded-md">
             Subscribe
           </button>
-        )}
+        ):(<h5 className="text-green-500">Subscribed Seller</h5>)}
         <li
           className={`p-2 rounded hover:bg-[#ffd383] shadow-lg ${selectedPage === "Dashboard" && "bg-[#ffd383]"}`}
           onClick={() => setSelectedPage("Dashboard")}

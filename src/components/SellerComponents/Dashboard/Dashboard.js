@@ -25,8 +25,9 @@ const Dashboard = ({ setSelectedPage }) => {
         );
         if (response.status === 200) {
           setProducts(response.data);
+        } else {
+          setProducts([]);
         }
-        setProducts([]);
 
         setLoading(false);
       } catch (error) {
