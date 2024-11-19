@@ -141,10 +141,10 @@ const UserProfile = () => {
           />
           <button
             onClick={handleImageEdit}
-            className="absolute bottom-0 left-14 bg-transparent text-black bg-slate-100 p-1 rounded-full"
+            className="absolute bottom-0 left-16 text-white bg-black p-1 rounded-full"
             title="Edit Profile Image"
           >
-            <BsPencil className="text-black font-bold text-sm" />{" "}
+            <BsPencil className="font-bold text-sm" />{" "}
             {/* Pencil icon */}
           </button>
           {/* Edit Image Mode */}
