@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
@@ -7,6 +8,8 @@ const NavBar = () => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
+  const [logo, setLogo] = useState("");
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -38,15 +41,45 @@ const NavBar = () => {
     localStorage.removeItem("role");
     localStorage.removeItem("isAuthenticatedSeller");
     navigate("/signin");
-  }
+  };
 
+  const getLogoName = async () => {
+    // /api/admin/get-logo-name
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/admin/get-logo-name`
+      );
+      const data = await response.data;
+      console.log("Logo Name:", data);
+      setLogo(data.logoAndName.logo);
+      setName(data.logoAndName.name);
+      return data;
+    } catch (error) {
+      console.error("Error getting logo name:", error);
+    }
+  };
+
+  useEffect(() => {
+    getLogoName();
+  }, []);
 
   return (
     <div className=" h-[7vh] px-8 flex justify-between items-center shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)]">
-      <div className="logo">LOGO</div>
+      <div className="flex justify-center items-center gap-1">
+        <a
+          href="/"
+          className="logo h-[40px] aspect-[1/1] flex rounded-full overflow-hidden"
+        >
+          <img src={process.env.REACT_APP_API_URL + "/" + logo} alt="logo" />
+        </a>
+        <p>{name}</p>
+      </div>
 
       <div>
-        <button onClick={handleLogout} className="flex justify-center items-center">
+        <button
+          onClick={handleLogout}
+          className="flex justify-center items-center"
+        >
           LogOut
         </button>
       </div>

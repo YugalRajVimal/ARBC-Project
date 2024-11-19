@@ -8,6 +8,8 @@ const NavBar = (props) => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
+  const [logo, setLogo] = useState("");
+  const [name, setName] = useState("");
 
   const [results, setResults] = useState({
     categories: [],
@@ -82,12 +84,36 @@ const NavBar = (props) => {
     navigate(`/subcategories/${categoryId}`);
   };
 
+  const getLogoName = async () => {
+    // /api/admin/get-logo-name
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/admin/get-logo-name`
+      );
+      const data = await response.data;
+      console.log("Logo Name:", data);
+      setLogo(data.logoAndName.logo);
+      setName(data.logoAndName.name);
+      return data;
+    } catch (error) {
+      console.error("Error getting logo name:", error);
+    }
+  };
+
+  useEffect(() => {
+    getLogoName();
+  }, []);
+
   return (
     <div className="h-[7vh] flex justify-around items-center shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)] relative">
-      <a href="/" className="logo">
-        LOGO
-      </a>
-      <div className="searchBar h-[70%] w-[60%] bg-[#f0f5ff] shadow flex justify-center items-center rounded-md text-md px-2 relative">
+      <div className="flex justify-center items-center gap-1">
+        <a href="/" className="logo h-[40px] aspect-[1/1] flex rounded-full overflow-hidden">
+          <img src={process.env.REACT_APP_API_URL + "/" + logo} alt="logo" />
+        </a>
+        <p>{name}</p>
+      </div>
+
+      <div className="searchBar h-[70%] w-[45%] bg-[#f0f5ff] shadow flex justify-center items-center rounded-md text-md px-2 relative">
         <IoSearch className="text-xl" />
         <input
           type="text"
@@ -160,7 +186,7 @@ const NavBar = (props) => {
           </div>
         )}
       </div>
-      {isAuthenticatedBuyer==true ? (
+      {isAuthenticatedBuyer == true ? (
         <div className="flex gap-4">
           <a onClick={handleLogout}>Logout</a>
         </div>
