@@ -44,7 +44,7 @@ const Dashboard = ({ setSelectedPage }) => {
           }
         );
 
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 209) {
           setInquiries(response.data.inquiries);
         }
       } catch (error) {
