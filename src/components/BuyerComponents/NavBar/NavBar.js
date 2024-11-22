@@ -122,18 +122,20 @@ const NavBar = (props) => {
 
   return (
     <div className="h-[7vh] flex justify-around items-center shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)] relative">
-      <div className="flex justify-center items-center gap-1">
+      <div className=" flex justify-center items-center gap-1">
         <a
           href="/"
           className="logo h-[40px] aspect-[1/1] flex rounded-full overflow-hidden"
         >
           <img src={process.env.REACT_APP_API_URL + "/" + logo} alt="logo" />
         </a>
-        <p className="whitespace-nowrap">{name}</p>
-        <p className="px-3 py-[1px] whitespace-nowrap bg-blue-100 rounded-md">{location.state}, {location.country}</p>
+        <p className="whitespace-nowrap mx-2">{name}</p>
+        <p className="m-2 px-3 py-[1px] whitespace-nowrap bg-blue-100 rounded-md">
+          {location.state}, {location.country}
+        </p>
       </div>
 
-      <div className="searchBar h-[70%] w-[45%] bg-[#f0f5ff] shadow flex justify-center items-center rounded-md text-md px-2 relative">
+      <div className="searchBar h-[70%] w-[40%] bg-[#f0f5ff] shadow flex justify-center items-center rounded-md text-md px-2 relative">
         <IoSearch className="text-xl" />
         <input
           type="text"
@@ -207,11 +209,11 @@ const NavBar = (props) => {
         )}
       </div>
       {isAuthenticatedBuyer == true ? (
-        <div className="flex gap-4">
+        <div className="flex gap-2">
           <a onClick={handleLogout}>Logout</a>
         </div>
       ) : (
-        <div className="flex gap-4">
+        <div className="flex gap-2">
           <a onClick={() => navigateTo("signin")}>Sign In</a>
           <a onClick={() => navigateTo("signup")}>Sign Up</a>
         </div>
