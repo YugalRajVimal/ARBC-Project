@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getAsideListItems } from "../../../../api/BuyerAPI/buyerAPI";
 import { useNavigate } from "react-router-dom";
 
-const TrustedProducts = () => {
+const TrustedProducts = (props) => {
+  const {name} = props;
   // const productDetails = [
   //   {
   //     name: "Wireless Headphones",
@@ -104,9 +105,9 @@ const navigate = useNavigate();
   return (
     <div className="w-[45%] h-[75%] rounded-md p-2 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)]">
       <div className="h-[15%]">
-        <h3 className="mb-[-8px] font-bold">TrustedProducts</h3>
+        <h3 className="mb-[-8px] font-bold">Trusted Products</h3>
         <span className="text-xs pl-2">
-          Buy products from 4.5 million verified and trusted Tradeindia
+          Buy products from 4.5 million verified and trusted by {name}
         </span>
       </div>
 

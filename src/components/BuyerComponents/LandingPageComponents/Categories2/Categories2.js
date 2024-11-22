@@ -7,7 +7,7 @@ const Categories2 = () => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     getAllPopulatedCategories().then((data) => {
-        data = data.slice(0, 6);
+        data = data.slice(0, 10);
       setCategories(data);
     });
   }, []);

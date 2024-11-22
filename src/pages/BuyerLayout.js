@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import NavBar from "../components/BuyerComponents/NavBar/NavBar";
 import Footer from "../components/BuyerComponents/Footer/Footer";
 
 const BuyerLayout = (props) => {
-  const navigate = useNavigate();
   const { isAuthenticatedBuyer, setIsAuthenticatedBuyer } = props;
 
   // useEffect(() => {
@@ -19,7 +18,10 @@ const BuyerLayout = (props) => {
   return (
     <>
       <div>
-        <NavBar isAuthenticatedBuyer={isAuthenticatedBuyer} setIsAuthenticatedBuyer={setIsAuthenticatedBuyer} />
+        <NavBar
+          isAuthenticatedBuyer={isAuthenticatedBuyer}
+          setIsAuthenticatedBuyer={setIsAuthenticatedBuyer}
+        />
         <Outlet />
         <Footer />
       </div>
