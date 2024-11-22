@@ -20,25 +20,25 @@ const ProductCard = (props) => {
     navigate(`/product/${productId}`);
   };
 
-  const handleSendInquiry =async (productId) => {
-    if(!localStorage.getItem("token")){
+  const handleSendInquiry = async (productId) => {
+    if (!localStorage.getItem("token")) {
       alert("Login to send inquiry");
       return null;
     }
-    if(!localStorage.getItem("isAuthenticatedBuyer")){
+    if (!localStorage.getItem("isAuthenticatedBuyer")) {
       alert("Login to send inquiry");
       return null;
     }
     try {
       const response = await postInquiry(productId);
-      if(response.status===201){
-        alert("Inquiry sent successfully for product "+productName);
-      }else{
-        alert("Failed to send inquiry for product "+productName);
+      if (response.status === 201) {
+        alert("Inquiry sent successfully for product " + productName);
+      } else {
+        alert("LogIn first to send Inquiry " + productName);
       }
     } catch (error) {
       console.log(error);
-      alert("Failed to send inquiry for product "+productName);
+      alert("LogIn first to send Inquiry " + productName);
     }
   };
   return (

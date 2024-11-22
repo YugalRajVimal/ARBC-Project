@@ -32,11 +32,11 @@ const BuyerDetailedProductPage = () => {
       if (response.status === 201) {
         alert("Inquiry sent successfully for product " + productName);
       } else {
-        alert("Failed to send inquiry for product " + productName);
+        alert("LogIn First to send Inquiry" + productName);
       }
     } catch (error) {
       console.log(error);
-      alert("Failed to send inquiry for product " + productName);
+      alert("LogIn First to send Inquiry " + productName);
     }
   };
 
@@ -76,8 +76,11 @@ const BuyerDetailedProductPage = () => {
               </p>
               {productDetails.youtubeLink && (
                 <p>
-                  <a href={productDetails.youtubeLink || "#"} target="_blank" 
-                  className="text-red-500">
+                  <a
+                    href={productDetails.youtubeLink || "#"}
+                    target="_blank"
+                    className="text-red-500"
+                  >
                     Youtube Link
                   </a>
                 </p>
