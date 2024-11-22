@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import getAddressFromCoordinates from "./getLocation";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -10,6 +11,21 @@ const NavBar = () => {
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
   const [logo, setLogo] = useState("");
   const [name, setName] = useState("");
+
+  const [location, setLocation] = useState({ state: "", country: "" });
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const address = await getAddressFromCoordinates();
+        setLocation(address);
+      } catch (err) {
+        console.error("Error fetching location:", err);
+      }
+    };
+
+    fetchLocation();
+  }, []);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -72,7 +88,10 @@ const NavBar = () => {
         >
           <img src={process.env.REACT_APP_API_URL + "/" + logo} alt="logo" />
         </a>
-        <p>{name}</p>
+        <p className="whitespace-nowrap">{name}</p>
+        <p className="px-3 py-[1px] whitespace-nowrap bg-blue-100 rounded-md">
+          {location.state}, {location.country}
+        </p>
       </div>
 
       <div>

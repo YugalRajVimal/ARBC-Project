@@ -10,7 +10,7 @@ const Home = () => {
       <TopCategories />
       <div className="w-[74%] h-full flex flex-col justify-around">
         <ProductBanners />
-        <CategoriesList />
+        {/* <CategoriesList /> */}
         <FeaturedCategory />
       </div>
     </div>

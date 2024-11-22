@@ -9,13 +9,15 @@ import Testimonials from "../components/BuyerComponents/LandingPageComponents/Te
 import TopCategories from "../components/BuyerComponents/LandingPageComponents/TopCategories/TopCategories";
 import PopularProducts from "../components/BuyerComponents/PopularProducts/PopularProducts";
 import Footer from "../components/BuyerComponents/Footer/Footer";
+import Categories2 from "../components/BuyerComponents/LandingPageComponents/Categories2/Categories2";
 
 const LandingPage = () => {
   return (
     <div className="h-[93vh] overflow-y-auto overflow-x-hidden">
       <Home />
       <FeaturedProducts />
-      <Categories />
+      {/* <Categories /> */}
+      <Categories2 />
       <div className="h-[300px] flex justify-center items-center gap-4">
         <NewArrival />
         <TrustedProducts />

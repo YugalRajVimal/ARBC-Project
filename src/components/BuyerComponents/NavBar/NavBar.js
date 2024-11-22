@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import getAddressFromCoordinates from "./getLocation";
 
 const NavBar = (props) => {
   const { isAuthenticatedBuyer, setIsAuthenticatedBuyer } = props;
@@ -16,6 +17,21 @@ const NavBar = (props) => {
     subCategories: [],
     products: [],
   });
+
+  const [location, setLocation] = useState({ state: "", country: "" });
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const address = await getAddressFromCoordinates();
+        setLocation(address);
+      } catch (err) {
+        console.error("Error fetching location:", err);
+      }
+    };
+
+    fetchLocation();
+  }, []);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -107,10 +123,14 @@ const NavBar = (props) => {
   return (
     <div className="h-[7vh] flex justify-around items-center shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)] relative">
       <div className="flex justify-center items-center gap-1">
-        <a href="/" className="logo h-[40px] aspect-[1/1] flex rounded-full overflow-hidden">
+        <a
+          href="/"
+          className="logo h-[40px] aspect-[1/1] flex rounded-full overflow-hidden"
+        >
           <img src={process.env.REACT_APP_API_URL + "/" + logo} alt="logo" />
         </a>
-        <p>{name}</p>
+        <p className="whitespace-nowrap">{name}</p>
+        <p className="px-3 py-[1px] whitespace-nowrap bg-blue-100 rounded-md">{location.state}, {location.country}</p>
       </div>
 
       <div className="searchBar h-[70%] w-[45%] bg-[#f0f5ff] shadow flex justify-center items-center rounded-md text-md px-2 relative">

@@ -2,24 +2,6 @@ import React, { useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { getBanners } from "../../../../api/BuyerAPI/buyerAPI";
 
-const banners = [
-  {
-    id: 0,
-    img: "https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/d0e281a0cfa9c139.jpg?q=20",
-    link: "/",
-  },
-  {
-    id: 1,
-    img: "https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/1d8f792d59e1f0b9.jpeg?q=20",
-    link: "/",
-  },
-  {
-    id: 2,
-    img: "https://i.pinimg.com/736x/37/40/18/37401850c97351136140f76aa640cbf6.jpg",
-    link: "/",
-  },
-];
-
 const ProductBanners = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [banners, setBanners] = useState([]);
@@ -40,12 +22,20 @@ const ProductBanners = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNextClick();
+    }, 3000); // 3 seconds
+
+    return () => clearInterval(interval); // Clear interval on component unmount
+  }, [currentIndex, banners.length]);
+
   if (banners.length === 0) {
     return null;
   }
 
   return (
-    <div className="productBanner w-full h-[45%] relative rounded-md">
+    <div className="productBanner w-full h-[70%] relative rounded-md">
       <div
         className="absolute left-0 top-1/2 -translate-y-1/2 px-1 py-5 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)] rounded-r-md cursor-pointer"
         onClick={handlePrevClick}

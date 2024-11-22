@@ -74,6 +74,14 @@ const BuyerDetailedProductPage = () => {
                 Available: {productDetails.productQuantity || 0}{" "}
                 {productDetails.productUnitType || "units"}
               </p>
+              {productDetails.youtubeLink && (
+                <p>
+                  <a href={productDetails.youtubeLink || "#"} target="_blank" 
+                  className="text-red-500">
+                    Youtube Link
+                  </a>
+                </p>
+              )}
             </div>
 
             <button
