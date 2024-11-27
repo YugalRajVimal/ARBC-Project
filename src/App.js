@@ -19,8 +19,48 @@ import AdminLayout from "./pages/AdminLayout";
 import AdminLogin from "./components/AdminComponents/AdminAuthComponents/AdminLogin";
 import AdminResetPassword from "./components/AdminComponents/AdminAuthComponents/AdminResetPassword";
 import AdminVerifyAccount from "./components/AdminComponents/AdminAuthComponents/AdminVerifyAccount";
+import axios from "axios";
 
 function App() {
+  const [logo, setLogo] = useState("");
+  const [name, setName] = useState("");
+
+  const getLogoName = async () => {
+    // /api/admin/get-logo-name
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/admin/get-logo-name`
+      );
+      const data = await response.data;
+      console.log("Logo Name:", data);
+      setLogo(data.logoAndName.logo);
+      setName(data.logoAndName.name);
+      return data;
+    } catch (error) {
+      console.error("Error getting logo name:", error);
+    }
+  };
+
+  useEffect(() => {
+    getLogoName();
+
+    // Set the document title
+    document.title = name || "Default Title";
+
+    // Set the favicon
+    if (logo) {
+      const favicon = document.querySelector('link[rel="icon"]');
+      if (favicon) {
+        favicon.href = process.env.REACT_APP_API_URL + "/" + logo;
+      } else {
+        const link = document.createElement("link");
+        link.rel = "icon";
+        link.href = logo;
+        document.head.appendChild(link);
+      }
+    }
+  }, [name, logo]);
+
   const [isAuthenticatedSeller, setIsAuthenticatedSeller] = useState(
     localStorage.getItem("isAuthenticatedSeller") || false
   );

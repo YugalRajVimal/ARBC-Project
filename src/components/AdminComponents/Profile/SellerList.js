@@ -61,7 +61,7 @@ const SellerList = () => {
             <p className="text-gray-600">
               Location: {seller.companyCity}, {seller.companyState}
             </p>
-            <p className="text-gray-600">Turnover: ${seller.companyTurnover}</p>
+            <p className="text-gray-600">Turnover: ₹{seller.companyTurnover}</p>
             <p className="mt-2 font-semibold text-gray-800">Identifiers</p>
             <p className="text-gray-600">
               GST: {seller.companyIdentifiers.gstNumber}

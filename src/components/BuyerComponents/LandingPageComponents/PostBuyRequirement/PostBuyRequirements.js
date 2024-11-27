@@ -54,7 +54,6 @@ const PostBuyRequirements = () => {
         setEmail("");
         setProcessingState(0);
         alert("Requirement posted successfully");
-        
       }
     } catch (error) {
       console.error("Error posting buy requirement", error);
@@ -63,18 +62,17 @@ const PostBuyRequirements = () => {
     }
   };
 
-
   return (
-    <div className="h-[80%] w-full p-4">
-      <div className="h-full bg-white p-8 bg-[#f9f7ee] flex">
-        <div className="h-[100%] w-[45%] bg-[#f9f7ee]">
+    <div id="postBuyRequirements" className="h-[80%] w-full p-4">
+      <div className="h-full bg-white p-8 bg-[#f9f7ee] flex flex-col min-[800px]:flex-row">
+        <div className="h-1/2 min-[800px]:h-[100%] min-[800px]:w-[45%] bg-[#f9f7ee]">
           <img
             src="/postBuyRequirements.png"
             className="h-full w-full object-contain"
             alt="Post Buy Requirements"
           />
         </div>
-        <div className="h-[100%] w-[55%] flex flex-col justify-center gap-2 bg-[#f9f7ee] p-4">
+        <div className="h-1/2 min-[800px]:h-[100%] min-[800px]:w-[55%] flex flex-col justify-center gap-2 bg-[#f9f7ee] p-4">
           <h3>Post Buy Requirement</h3>
           <p>Tell us what you need, and we'll help you get quotes</p>
           <span className="w-full border-[1px] h-[6px] rounded-full overflow-hidden">

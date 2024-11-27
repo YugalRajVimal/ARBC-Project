@@ -53,7 +53,7 @@ const ProductCard = (props) => {
         className="h-1/2 aspect-[1/1] object-cover mx-auto"
       />
       <h3 className="text-[15px] font-semibold">{productName}</h3>
-      <p className="text-sm font-semibold">Price: ${productPrice}</p>
+      <p className="text-sm font-semibold">Price: ₹{productPrice}</p>
       <p className="text-sm">Unit Type: {productUnitType}</p>
       <p className="text-sm">Quantity: {productQuantity}</p>
       <p className="text-sm">Seller: {seller || "Example Seller"}</p>{" "}

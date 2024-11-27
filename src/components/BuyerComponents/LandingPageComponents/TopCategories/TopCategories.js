@@ -29,6 +29,7 @@ import { useNavigate } from "react-router-dom";
 const TopCategories = () => {
   const navigate = useNavigate();
   const [topCategories, setTopCategories] = useState([]);
+
   useEffect(() => {
     // Fetch top categories from API
     getAsideListItems(0).then((data) => {
@@ -44,9 +45,9 @@ const TopCategories = () => {
   const navigateToSubCategories = (categoryId) => {
     // Navigate to sub categories page
     navigate(`/subcategories/${categoryId}`);
-  }
+  };
   return (
-    <div className="p-8 w-[100%]">
+    <div className={`hidden p-8 w-[100%] `}>
       <h2 onClick={navigateToCategories} className="text-xl font-bold mb-4">
         Top Categories
       </h2>

@@ -35,7 +35,7 @@ const FeaturedCategory = () => {
     navigate(`/products/${subCategoryId}`);
   };
   return (
-    <div className="h-[34%]  flex flex-col justify-center items-center">
+    <div className="h-[34%] flex flex-col justify-center items-center">
       <p className="p-2 w-full text-left text-xl font-medium">
         Featured Category
       </p>

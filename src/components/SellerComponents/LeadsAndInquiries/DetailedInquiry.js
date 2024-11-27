@@ -41,7 +41,7 @@ const DetailedInquiry = ({ selectedInquiryDetails, setSelectedPage }) => {
         <p>Product Name: {product.productName}</p>
         <p>Quantity Requested: {product.productQuantity}</p>
         <p>Description: {product.productOverview}</p>
-        <p>Price: ${product.productPrice}</p>
+        <p>Price: ₹{product.productPrice}</p>
       </div>
 
       {/* Seller Details */}

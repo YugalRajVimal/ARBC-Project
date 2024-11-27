@@ -977,7 +977,7 @@ const BuyerProductsPage = () => {
               {/* Product Price and Availability */}
               <div className="mt-4">
                 <p className="text-xl font-bold text-blue-600">
-                  ${product.productPrice.toFixed(2)}
+                ₹{product.productPrice.toFixed(2)}
                 </p>
                 <p className="text-sm text-gray-500 mt-1">
                   Available: {product.productQuantity} {product.productUnitType}

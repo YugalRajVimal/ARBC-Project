@@ -68,7 +68,7 @@ const BuyerDetailedProductPage = () => {
                 {productDetails.productOverview || "Overview not available."}
               </p>
               <p className="text-xl font-semibold text-blue-600 mt-4">
-                ${productDetails.productPrice || "0.00"}
+              ₹{productDetails.productPrice || "0.00"}
               </p>
               <p className="text-sm text-gray-500 mt-1">
                 Available: {productDetails.productQuantity || 0}{" "}
@@ -164,7 +164,7 @@ const BuyerDetailedProductPage = () => {
               {sellerDetails.companyNumberOfEmployees || "N/A"}
             </p>
             <p>
-              <strong>Turnover:</strong> ${sellerDetails.companyTurnover || "0"}
+              <strong>Turnover:</strong> ₹{sellerDetails.companyTurnover || "0"}
             </p>
             <p>
               <strong>Ownership:</strong>{" "}

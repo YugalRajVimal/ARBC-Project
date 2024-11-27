@@ -67,9 +67,9 @@ const Dashboard = ({ setSelectedPage }) => {
   }, []);
 
   return (
-    <div className="w-full h-full flex">
-      <div className="w-[65%] h-full mx-1 p-2">
-        <div className="h-[40%]">
+    <div className="w-full h-full flex flex-col  md:flex-row overflow-y-auto">
+      <div className="md:w-[65%] h-full mx-1 p-2 m-4">
+        <div className="h-1/2">
           <h5>Dashboard</h5>
           <h3 className="text-xl">Welcome, User!</h3>
           <div className="h-[40%] p-1 flex justify-around">
@@ -103,11 +103,11 @@ const Dashboard = ({ setSelectedPage }) => {
             <div className="h-full w-[48%] p-1"></div>
           </div>
         </div>
-        <div className="h-[60%] bg-white flex justify-center items-center p-2 shadow-md">
-          <AnalyticsBarGraph inquiries={inquiries} />
+        <div className=" bg-white p-2 rounded-md shadow-md">
+          <AnalyticsBarGraph inquiries={inquiries}  />
         </div>
       </div>
-      <div className="w-[35%] h-full mx-1 overflow-y-auto">
+      <div className="md:w-[35%] h-full mx-1 md:overflow-y-auto">
         <ProductStatusChart productStatus={productStatus} />
         <div className="h-1/2 text-center flex flex-col justify-between p-2">
           <div className="flex justify-between p-2">
@@ -125,7 +125,7 @@ const Dashboard = ({ setSelectedPage }) => {
                   className="flex justify-between p-2 cursor-pointer hover:bg-gray-200 rounded"
                 >
                   <span className="text-sm">{product.productName}</span>
-                  <span className="text-sm">${product.productPrice}</span>
+                  <span className="text-sm">₹{product.productPrice}</span>
                 </div>
               ))
             ) : (

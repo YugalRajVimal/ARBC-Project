@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <div className="h-full p-2 flex justify-between">
       <TopCategories />
-      <div className="w-[74%] h-full flex flex-col justify-around">
+      <div className=" w-auto min-[800px]:w-[74%] h-full flex flex-col justify-around">
         <ProductBanners />
         {/* <CategoriesList /> */}
         <FeaturedCategory />

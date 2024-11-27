@@ -11,6 +11,7 @@ const NavBar = (props) => {
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
   const [logo, setLogo] = useState("");
   const [name, setName] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const [results, setResults] = useState({
     categories: [],
@@ -130,18 +131,23 @@ const NavBar = (props) => {
           <img src={process.env.REACT_APP_API_URL + "/" + logo} alt="logo" />
         </a>
         <p className="whitespace-nowrap mx-2">{name}</p>
-        <p className="m-2 px-3 py-[1px] whitespace-nowrap bg-blue-100 rounded-md">
+        <p className="m-2 px-3 py-[1px] hidden md:flex whitespace-nowrap bg-blue-100 rounded-md flex items-center">
           {location.state}, {location.country}
+          <img
+            src="./indiaFlag.jpg"
+            alt="india-flag"
+            className="h-4 rounded-sm ml-2"
+          />
         </p>
       </div>
 
-      <div className="searchBar h-[70%] w-[40%] bg-[#f0f5ff] shadow flex justify-center items-center rounded-md text-md px-2 relative">
+      <div className="searchBar h-[70%]  min-[800px]:w-[40%] bg-[#f0f5ff] shadow flex justify-center items-center rounded-md text-md px-2 relative">
         <IoSearch className="text-xl" />
         <input
           type="text"
           id="searchBar"
           placeholder={` Search for Products, Brands and More`}
-          className="bg-[#f0f5ff] w-full h-full p-2"
+          className="bg-[#f0f5ff] hidden min-[800px]:block w-full h-full p-2"
           value={searchText}
           onChange={handleSearch}
         />
@@ -208,18 +214,33 @@ const NavBar = (props) => {
           </div>
         )}
       </div>
-      {isAuthenticatedBuyer == true ? (
+      {isAuthenticatedBuyer ? (
         <div className="flex gap-2">
           <a onClick={handleLogout}>Logout</a>
         </div>
       ) : (
-        <div className="flex gap-2">
-          <a onClick={() => navigateTo("signin")}>Sign In</a>
-          <a onClick={() => navigateTo("signup")}>Sign Up</a>
+        <div className="relative">
+          <button
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex items-center gap-2"
+          >
+            Menu
+          </button>
+          {isDropdownOpen && (
+            <ul className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-20">
+              <li className="p-2 hover:bg-gray-100">
+                <a onClick={() => navigateTo("signin")}>Sign In</a>
+              </li>
+              <li className="p-2 hover:bg-gray-100">
+                <a onClick={() => navigateTo("signup")}>Sign Up</a>
+              </li>
+              <li className="p-2 hover:bg-gray-100">
+                <a onClick={() => navigateTo("signup")}>Become a Seller</a>
+              </li>
+            </ul>
+          )}
         </div>
       )}
-
-      <a onClick={() => navigateTo("signup")}>Become a Seller</a>
     </div>
   );
 };

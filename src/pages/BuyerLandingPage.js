@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Home from "../components/BuyerComponents/LandingPageComponents/HomePage/Home";
-import Categories from "../components/BuyerComponents/LandingPageComponents/Categories/Categories";
 import FeaturedProducts from "../components/BuyerComponents/LandingPageComponents/FeaturedProducts/FeaturedProducts";
 import NewArrival from "../components/BuyerComponents/LandingPageComponents/NewArrival/NewArrival";
 import TrustedProducts from "../components/BuyerComponents/LandingPageComponents/TrustedProducts/TrustedProducts";
@@ -8,7 +7,6 @@ import PostBuyRequirements from "../components/BuyerComponents/LandingPageCompon
 import Testimonials from "../components/BuyerComponents/LandingPageComponents/Testimonials/Testimonials";
 import TopCategories from "../components/BuyerComponents/LandingPageComponents/TopCategories/TopCategories";
 import PopularProducts from "../components/BuyerComponents/PopularProducts/PopularProducts";
-import Footer from "../components/BuyerComponents/Footer/Footer";
 import Categories2 from "../components/BuyerComponents/LandingPageComponents/Categories2/Categories2";
 import axios from "axios";
 
@@ -34,7 +32,23 @@ const LandingPage = () => {
 
   useEffect(() => {
     getLogoName();
-  }, []);
+
+    // Set the document title
+    document.title = name || "Default Title";
+
+    // Set the favicon
+    if (logo) {
+      const favicon = document.querySelector('link[rel="icon"]');
+      if (favicon) {
+        favicon.href = process.env.REACT_APP_API_URL +"/"+ logo;
+      } else {
+        const link = document.createElement("link");
+        link.rel = "icon";
+        link.href = logo;
+        document.head.appendChild(link);
+      }
+    }
+  }, [name, logo]);
 
   return (
     <div className="h-[93vh] overflow-y-auto overflow-x-hidden">

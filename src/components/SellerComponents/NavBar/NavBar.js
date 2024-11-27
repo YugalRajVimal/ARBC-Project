@@ -81,7 +81,8 @@ const NavBar = () => {
 
   return (
     <div className=" h-[7vh] px-8 flex justify-between items-center shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)]">
-      <div className="flex justify-center items-center gap-1">
+      <div className="flex  justify-center items-center gap-1">
+        
         <a
           href="/"
           className="logo h-[40px] aspect-[1/1] flex rounded-full overflow-hidden"
@@ -89,8 +90,13 @@ const NavBar = () => {
           <img src={process.env.REACT_APP_API_URL + "/" + logo} alt="logo" />
         </a>
         <p className="whitespace-nowrap">{name}</p>
-        <p className="px-3 py-[1px] whitespace-nowrap bg-blue-100 rounded-md">
+        <p className="m-2 px-3 py-[1px] hidden md:flex whitespace-nowrap bg-blue-100 rounded-md flex items-center">
           {location.state}, {location.country}
+          <img
+            src="./indiaFlag.jpg"
+            alt="india-flag"
+            className="h-4 rounded-sm ml-2"
+          />
         </p>
       </div>
 
