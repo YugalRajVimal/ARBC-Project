@@ -63,9 +63,9 @@ const PostBuyRequirements = () => {
   };
 
   return (
-    <div id="postBuyRequirements" className="h-[80%] w-full p-4">
-      <div className="h-full bg-white p-8 bg-[#f9f7ee] flex flex-col min-[800px]:flex-row">
-        <div className="h-1/2 min-[800px]:h-[100%] min-[800px]:w-[45%] bg-[#f9f7ee]">
+    <div id="postBuyRequirements" className="h-[90%] md:h-[75%] w-full p-4">
+      <div className="h-full bg-white p-2 md:p-8 bg-[#f9f7ee] flex flex-col min-[800px]:flex-row">
+        <div className="h-1/2 min-[800px]:h-[100%] min-[800px]:w-[45%] bg-[#f9f7ee] p-2">
           <img
             src="/postBuyRequirements.png"
             className="h-full w-full object-contain"
@@ -131,7 +131,7 @@ const PostBuyRequirements = () => {
             />
           </div>
 
-          <div className="text-right">
+          <div className="text-right p-4">
             <button
               className="bg-gradient-to-r from-[#3d80a8] to-[#285f84] text-white px-4 py-1 rounded-md"
               onClick={handleSubmit}
