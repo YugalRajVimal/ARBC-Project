@@ -27,7 +27,6 @@ const UserLogin = (props) => {
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.userId);
-        
 
         if (isSeller) {
           localStorage.setItem("role", "seller");

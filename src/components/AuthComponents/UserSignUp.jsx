@@ -41,9 +41,7 @@ const UserSignUp = (props) => {
       }
       if (response.status === 209) {
         // If user already exists, redirect to login page
-        navigate("/verify-account", {
-          state: { email: email, role: isSeller ? "seller" : "customer" },
-        });
+        navigate("/reset-password");
       }
       console.log(response);
       setError("Something went wrong. Please try again later.");
