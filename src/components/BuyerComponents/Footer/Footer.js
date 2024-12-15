@@ -10,12 +10,12 @@ const Footer = () => {
           <ul className="space-y-2 text-xs">
             <li>
               <a href="/" className="hover:text-yellow-500">
-                Phone No.-
+                Phone No. 8929788700
               </a>
             </li>
             <li>
               <a href="/" className="hover:text-yellow-500">
-                Email -
+                Email - 
               </a>
             </li>
             <li>

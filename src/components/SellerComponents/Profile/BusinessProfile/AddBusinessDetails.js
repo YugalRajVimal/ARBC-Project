@@ -29,7 +29,7 @@ const AddBusinessDetails = () => {
     modeOfPayment: [],
     companyWorkingDays: [],
     bankAccountType: "",
-    bankLinkedPhoneNumber: "",
+    // bankLinkedPhoneNumber: "",
     accountHolderName: "",
     accountNumber: "",
     ifscCode: "",
@@ -240,21 +240,21 @@ const AddBusinessDetails = () => {
           name="aadharNumber"
           value={formData.aadharNumber}
           onChange={handleChange}
-          required
+
         />
         <InputField
           label="PAN Number"
           name="panNumber"
           value={formData.panNumber}
           onChange={handleChange}
-          required
+
         />
         <InputField
           label="TAN Number"
           name="tanNumber"
           value={formData.tanNumber}
           onChange={handleChange}
-          required
+
         />
       </div>
 
@@ -310,12 +310,6 @@ const AddBusinessDetails = () => {
           label="Bank Account Type"
           name="bankAccountType"
           value={formData.bankAccountType}
-          onChange={handleChange}
-        />
-        <InputField
-          label="Bank Linked Phone Number"
-          name="bankLinkedPhoneNumber"
-          value={formData.bankLinkedPhoneNumber}
           onChange={handleChange}
         />
         <InputField

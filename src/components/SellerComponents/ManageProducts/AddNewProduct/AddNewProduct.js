@@ -407,6 +407,7 @@ const AddNewProduct = () => {
     productImages: [],
     productPrice: "",
     productQuantity: "",
+    minOrderQuantity:"",
     productUnitType: "",
     productOverview: "",
     productSpecifications: [{ name: "", value: "" }],
@@ -493,6 +494,7 @@ const AddNewProduct = () => {
     formData.append("productName", productDetails.productName);
     formData.append("productPrice", productDetails.productPrice);
     formData.append("productQuantity", productDetails.productQuantity);
+    formData.append("minOrderQuantity", productDetails.minOrderQuantity);
     formData.append("productUnitType", productDetails.productUnitType);
     formData.append("productOverview", productDetails.productOverview);
     formData.append("youtubeLink", productDetails.youtubeLink); // Append youtubeLink
@@ -662,6 +664,25 @@ const AddNewProduct = () => {
             id="productQuantity"
             name="productQuantity"
             value={productDetails.productQuantity}
+            onChange={handleChange}
+            className="w-full p-3 mt-2 border border-gray-300 rounded-lg"
+            required
+          />
+        </div>
+
+        {/* Minimum Order Quantity */}
+        <div className="mb-4">
+          <label
+            htmlFor="minOrderQuantity"
+            className="block text-lg font-medium text-gray-700"
+          >
+            Minimum Order Quantity
+          </label>
+          <input
+            type="number"
+            id="minOrderQuantity"
+            name="minOrderQuantity"
+            value={productDetails.minOrderQuantity}
             onChange={handleChange}
             className="w-full p-3 mt-2 border border-gray-300 rounded-lg"
             required

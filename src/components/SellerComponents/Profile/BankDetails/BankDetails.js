@@ -65,10 +65,10 @@ const BankDetails = () => {
           <p>
             <strong>Account Type:</strong> {bankDetailsData.bankAccountType}
           </p>
-          <p>
+          {/* <p>
             <strong>Linked Phone Number:</strong>{" "}
             {bankDetailsData.bankLinkedPhoneNumber}
-          </p>
+          </p> */}
           <p>
             <strong>IFSC Code:</strong> {bankDetailsData.ifscCode}
           </p>

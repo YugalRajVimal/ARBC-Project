@@ -68,10 +68,14 @@ const BuyerDetailedProductPage = () => {
                 {productDetails.productOverview || "Overview not available."}
               </p>
               <p className="text-xl font-semibold text-blue-600 mt-4">
-              ₹{productDetails.productPrice || "0.00"}
+                ₹{productDetails.productPrice || "0.00"}
               </p>
               <p className="text-sm text-gray-500 mt-1">
                 Available: {productDetails.productQuantity || 0}{" "}
+                {productDetails.productUnitType || "units"}
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Minimum Order Quantity: {productDetails.minOrderQuantity || 0}{" "}
                 {productDetails.productUnitType || "units"}
               </p>
               {productDetails.youtubeLink && (
@@ -101,9 +105,21 @@ const BuyerDetailedProductPage = () => {
 
         {/* Seller Information */}
         <div className="w-1/3 p-4 border rounded-lg shadow-md ml-4">
-          <h3 className="text-lg font-bold">
-            {sellerDetails.companyName || "Seller Name"}
-          </h3>
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-bold ">
+              {sellerDetails.companyName || "Seller Name"}{" "}
+            </h3>
+            <img
+              src={
+                process.env.REACT_APP_API_URL +
+                  "/" +
+                  sellerDetails.companyLogo || ""
+              }
+              alt="Company Logo"
+              className="w-10 aspect-[1/1] overflow-hidden bg-zinc-200 rounded-full"
+            />
+          </div>
+
           <p className="text-gray-600">
             {sellerDetails.companyDescription || "No description available."}
           </p>
@@ -123,14 +139,6 @@ const BuyerDetailedProductPage = () => {
             <strong>Working Days:</strong>{" "}
             {sellerDetails.companyWorkingDays?.join(", ") || "N/A"}
           </p>
-          <img
-            src={
-              process.env.REACT_APP_API_URL + "/" + sellerDetails.companyLogo ||
-              ""
-            }
-            alt="Company Logo"
-            className="w-24 mt-4"
-          />
         </div>
       </div>
 

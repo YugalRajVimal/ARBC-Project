@@ -579,6 +579,23 @@ const MyProducts = () => {
               />
             </div>
 
+            {/* Min Order Quantity */}
+            <div className="mb-4">
+              <label className="block text-gray-700">Minimum Order Quantity</label>
+              <input
+                type="number"
+                value={currentProduct.minOrderQuantity}
+                onChange={(e) =>
+                  setCurrentProduct({
+                    ...currentProduct,
+                    minOrderQuantity: e.target.value,
+                  })
+                }
+                className="w-full p-2 border border-gray-300 rounded"
+                required
+              />
+            </div>
+
             {/* Youtube Link */}
             <div className="mb-4">
               <label className="block text-gray-700">YouTube Link</label>
@@ -692,9 +709,12 @@ const MyProducts = () => {
                 ))}
               </div>
               <p className="text-gray-700">{product.productOverview}</p>
-              <p className="font-semibold">Price: ₹{product.productPrice}</p>
+              <p className="font-semibold">Price: ₹{product.productPrice} / {product.productUnitType}</p>
               <p className="font-semibold">
-                Quantity: {product.productQuantity}
+                Total Available Quantity: {product.productQuantity} {product.productUnitType}
+              </p>
+              <p className="font-semibold">
+                Minimum OrderQuantity: {product.minOrderQuantity} {product.productUnitType}
               </p>
               <div className="flex space-x-4 mt-4">
                 <button

@@ -162,6 +162,15 @@ const AdminSidePanel = (props) => {
         >
           <h4 className="flex gap-2 items-center">Testimonials </h4>
         </li>
+
+        <li
+          className={`p-2 rounded hover:bg-[#ffd383] shadow-lg ${
+            selectedPage === "setInquiryCount" && "bg-[#ffd383]"
+          }`}
+          onClick={() => setSelectedPage("setInquiryCount")}
+        >
+          <h4 className="flex gap-2 items-center">Set Inquiry Count </h4>
+        </li>
       </ul>
     </div>
   );

@@ -46,7 +46,7 @@ const SellerLandingPage = () => {
         setInquiries(response.data.inquiries);
         setSubscribedStatus(false);
         alert(
-          "You have more than 10 inquiries. Please subscribe to view more inquiries."
+          "You have reached inquiry limit. Please subscribe to view more inquiries."
         );
       }
     } catch (error) {

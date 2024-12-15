@@ -16,6 +16,7 @@ import Banners from "../components/AdminComponents/Banners/Banners";
 import Testimonials from "../components/AdminComponents/Testimonials/Testimonials";
 import LogoAndName from "../components/AdminComponents/LogoAndName/LogoAndName";
 import axios from "axios";
+import SetInquiryCount from "../components/AdminComponents/SetInquiryCount/SetInquiryCount";
 
 
 const AdminLandingPage = () => {
@@ -85,6 +86,7 @@ const AdminLandingPage = () => {
             {selectedPage === "AllInquiries"&& <AllInquiries />}
             {selectedPage === "Banners" && <Banners />}
             {selectedPage === "Testimonials" && <Testimonials />}
+            {selectedPage === "setInquiryCount" && <SetInquiryCount />}
           </>
       </div>
     </div>
