@@ -89,8 +89,8 @@ const TopCategories = () => {
 
   return (
     <>
-      <div className="w-[0px] min-[800px]:w-[24%] hidden min-[800px]:block h-full shadow-[0px_0px_10px_2px_rgba(0,0,0,0.3)] p-2 rounded-md flex flex-col justify-around ">
-        <div className="h-[90%]">
+      <div className="w-[0px] min-[800px]:w-[24%] hidden min-[800px]:block h-full shadow-[0px_0px_10px_2px_rgba(0,0,0,0.3)] p-2 rounded-md flex flex-col justify-evenly ">
+        <div className="h-[90%] pb-[7%]">
           <h3
             onClick={navigateToCategories}
             className="h-[5%] text-lg font-bold pb-2"
@@ -120,10 +120,10 @@ const TopCategories = () => {
             ))}
           </ul>
         </div>
-        <div className="h-[5%]">
+        <div className="h-[10%] bg-white-900 flex justify-center items-center z-20">
           <button
             onClick={navigateToCategories}
-            className="w-full px-4 py-2 text-blue-900 rounded"
+            className="w-full px-4 py-2 text-blue-900 rounded flex justify-center items-center"
           >
             View All Categories
           </button>

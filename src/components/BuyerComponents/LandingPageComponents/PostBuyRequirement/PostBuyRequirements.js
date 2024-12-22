@@ -64,15 +64,15 @@ const PostBuyRequirements = () => {
 
   return (
     <div id="postBuyRequirements" className="h-[90%] md:h-[75%] w-full p-4">
-      <div className="h-full bg-white p-2 md:p-8 bg-[#f9f7ee] flex flex-col min-[800px]:flex-row">
-        <div className="h-1/2 min-[800px]:h-[100%] min-[800px]:w-[45%] bg-[#f9f7ee] p-2">
+      <div className="h-full bg-white p-2 md:p-8 bg-[#dfd8be] flex flex-col min-[800px]:flex-row">
+        <div className="h-1/2 min-[800px]:h-[100%] min-[800px]:w-[45%] bg-[#dfd8be] p-2 flex justify-center items-center ">
           <img
-            src="/postBuyRequirements.png"
-            className="h-full w-full object-contain"
+            src="/postBuyRequirements.jpeg"
+            className="h-[70%] w-[70%] object-contain rounded-md"
             alt="Post Buy Requirements"
           />
         </div>
-        <div className="h-1/2 min-[800px]:h-[100%] min-[800px]:w-[55%] flex flex-col justify-center gap-2 bg-[#f9f7ee] p-4">
+        <div className="h-1/2 min-[800px]:h-[100%] min-[800px]:w-[55%] flex flex-col justify-center gap-2 bg-[#dfd8be] p-4">
           <h3>Post Buy Requirement</h3>
           <p>Tell us what you need, and we'll help you get quotes</p>
           <span className="w-full border-[1px] h-[6px] rounded-full overflow-hidden">

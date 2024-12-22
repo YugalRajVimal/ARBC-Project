@@ -15,6 +15,7 @@ import SidePanel from "../components/SellerComponents/SidePanel/SidePanel";
 import AddBusinessDetails from "../components/SellerComponents/Profile/BusinessProfile/AddBusinessDetails";
 import DetailedInquiry from "../components/SellerComponents/LeadsAndInquiries/DetailedInquiry";
 import Subscribe from "../components/SellerComponents/Subscribe/Subscribe";
+import PackageDetails from "../components/SellerComponents/PackageDeatils/PackageDetails";
 
 const SellerLandingPage = () => {
   const [selectedPage, setSelectedPage] = useState("Dashboard");
@@ -28,6 +29,8 @@ const SellerLandingPage = () => {
   const [selectedInquiryDetails, setSelectedInquiryDetails] = useState(null);
 
   const [cashfree, setCashfree] = useState(null);
+
+  const [showPackageDetails, setShowPackageDetails] = useState(false);
 
   const fetchInquiries = async () => {
     try {
@@ -64,13 +67,15 @@ const SellerLandingPage = () => {
     initializeSDK();
   }, []);
 
-  const handleSubscribe = async () => {
+  const handlePackage = async (status) => {
+    setShowPackageDetails(status);
+  };
+
+  const handleSubscribe = async (subsRegion, subsPackage) => {
     //Generate Session Id and display Payment Form
     try {
-      // Get sessionId with token and parameter
-
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/user/seller/sessionid`,
+        `${process.env.REACT_APP_API_URL}/user/seller/sessionid?subsregion=${subsRegion}&subspackage=${subsPackage}`,
         {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
@@ -190,7 +195,7 @@ const SellerLandingPage = () => {
     if (logo) {
       const favicon = document.querySelector('link[rel="icon"]');
       if (favicon) {
-        favicon.href = process.env.REACT_APP_API_URL +"/"+ logo;
+        favicon.href = process.env.REACT_APP_API_URL + "/" + logo;
       } else {
         const link = document.createElement("link");
         link.rel = "icon";
@@ -206,7 +211,7 @@ const SellerLandingPage = () => {
         setSelectedPage={setSelectedPage}
         selectedPage={selectedPage}
         subscribedStatus={subscribedStatus}
-        handleSubscribe={handleSubscribe}
+        handlePackage={handlePackage}
       />
 
       <div className="w-4/5 h-full mx-1 bg-[#fdfef4] p-4">
@@ -250,11 +255,16 @@ const SellerLandingPage = () => {
                 setSelectedInquiryDetails={setSelectedInquiryDetails}
               />
             )}
+
             {showSubscriptionForm == true && (
               <Subscribe
                 orderDetails={orderDetails}
                 handlePayment={handlePayment}
+                setShowSubscriptionForm = {setShowSubscriptionForm}
               />
+            )}
+            {showPackageDetails == true && (
+              <PackageDetails handleSubscribe={handleSubscribe} handlePackage={handlePackage} />
             )}
           </>
         ) : (
