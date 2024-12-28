@@ -125,7 +125,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoIosMenu } from "react-icons/io";
 
 const SidePanel = (props) => {
-  const { setSelectedPage, selectedPage, subscribedStatus, handleSubscribe, handlePackage } =
+  const { setSelectedPage, selectedPage, subscribedStatus, handlePackage } =
     props;
 
   const [isProfileOpen, setIsProfileOpen] = useState(false);

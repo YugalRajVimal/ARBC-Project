@@ -1,15 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 
-// Sample bank details to represent a seller (this would typically come from an API)
-// const bankDetailsData = {
-//   bankAccountType: "Savings",
-//   bankLinkedPhoneNumber: "987-654-3210",
-//   accountHolderName: "John Doe",
-//   accountNumber: "123456789012",
-//   ifscCode: "IFSC123456",
-// };
-
 const BankDetails = () => {
   const [bankDetailsData, setBankDetailsData] = React.useState({});
   const [error, setError] = React.useState("");
@@ -41,15 +32,14 @@ const BankDetails = () => {
 
   return (
     <div className="container mx-auto p-6 space-y-8 h-full w-full overflow-y-auto">
-      {/* Header Section */}
-      <header className="bg-[#e2a940] text-white p-6 rounded-lg shadow-md">
+      {bankDetailsData?(<>
+        <header className="bg-[#e2a940] text-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-semibold">Bank Account Details</h1>
         <p className="text-xl">
           Manage and view the linked bank account details
         </p>
       </header>
 
-      {/* Bank Details Section */}
       <section className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
         <h2 className="text-2xl font-bold mb-4 text-[#e2a940]">
           Account Details
@@ -74,6 +64,12 @@ const BankDetails = () => {
           </p>
         </div>
       </section>
+      </>):(
+        <div>
+          <h4 className="text-red-500 text-xl text-center">Bank Details Not Found!</h4>
+        </div>
+      )}
+      
     </div>
   );
 };

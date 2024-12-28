@@ -41,13 +41,13 @@ const SellerLandingPage = () => {
         }
       );
       if (response.status === 200) {
-        setSubscribedStatus(true);
+        setSubscribedStatus(response.data.subscribed);
         setInquiries(response.data.inquiries);
       }
       if (response.status === 209) {
         //Not Subscribed and have more than 10 inquiries
         setInquiries(response.data.inquiries);
-        setSubscribedStatus(false);
+        setSubscribedStatus(response.data.subscribed);
         alert(
           "You have reached inquiry limit. Please subscribe to view more inquiries."
         );
@@ -260,11 +260,14 @@ const SellerLandingPage = () => {
               <Subscribe
                 orderDetails={orderDetails}
                 handlePayment={handlePayment}
-                setShowSubscriptionForm = {setShowSubscriptionForm}
+                setShowSubscriptionForm={setShowSubscriptionForm}
               />
             )}
             {showPackageDetails == true && (
-              <PackageDetails handleSubscribe={handleSubscribe} handlePackage={handlePackage} />
+              <PackageDetails
+                handleSubscribe={handleSubscribe}
+                handlePackage={handlePackage}
+              />
             )}
           </>
         ) : (
