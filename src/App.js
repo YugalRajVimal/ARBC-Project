@@ -20,6 +20,8 @@ import AdminLogin from "./components/AdminComponents/AdminAuthComponents/AdminLo
 import AdminResetPassword from "./components/AdminComponents/AdminAuthComponents/AdminResetPassword";
 import AdminVerifyAccount from "./components/AdminComponents/AdminAuthComponents/AdminVerifyAccount";
 import axios from "axios";
+import TermsAndCondition from "./components/TermsAndCondition";
+import ContactUs from "./components/ContactUs";
 
 function App() {
   const [logo, setLogo] = useState("");
@@ -98,6 +100,8 @@ function App() {
             path="/product/:productId"
             element={<BuyerDetailedProductPage />}
           />
+          <Route path="/termsandconditions" element={<TermsAndCondition />} />
+          <Route path="/contactus" element={<ContactUs />} />
         </Route>
         {/* Seller */}
         <Route

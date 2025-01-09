@@ -41,7 +41,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="/" className="hover:text-yellow-500">
+              <a href="/contactus" className="hover:text-yellow-500">
                 Contact Us
               </a>
             </li>
@@ -122,7 +122,7 @@ const Footer = () => {
             <a href="/" className="hover:text-yellow-500">
               Privacy Policy
             </a>
-            <a href="/" className="hover:text-yellow-500">
+            <a href="/termsandconditions" className="hover:text-yellow-500">
               Terms & Conditions
             </a>
           </div>
