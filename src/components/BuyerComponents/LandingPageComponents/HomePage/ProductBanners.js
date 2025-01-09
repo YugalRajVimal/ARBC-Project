@@ -45,7 +45,7 @@ const ProductBanners = () => {
       <img
         src={process.env.REACT_APP_API_URL + "/" + banners[currentIndex].image}
         alt="banner"
-        className="w-full h-full rounded-md object-contain "
+        className="w-full h-full rounded-md"
       />
       <div
         className="absolute right-0 top-1/2 -translate-y-1/2 px-1 py-5 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)] rounded-l-md cursor-pointer"

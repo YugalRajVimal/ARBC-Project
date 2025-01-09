@@ -15,7 +15,7 @@ const Footer = () => {
             </li>
             <li>
               <a href="/" className="hover:text-yellow-500">
-                Email - 
+                Email - care@internationaltradeworld.com
               </a>
             </li>
             <li>

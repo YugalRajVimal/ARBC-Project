@@ -1,5 +1,3 @@
-
-
 // import axios from "axios";
 // import React, { useEffect, useState } from "react";
 // import { IoSearch } from "react-icons/io5";
@@ -334,6 +332,7 @@ import { IoSearch } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import getAddressFromCoordinates from "./getLocation";
+import { IoMdCall } from "react-icons/io";
 
 const NavBar = (props) => {
   const { isAuthenticatedBuyer, setIsAuthenticatedBuyer } = props;
@@ -513,7 +512,9 @@ const NavBar = (props) => {
             onChange={handleStateChange}
             className="bg-transparent focus:outline-none w-[120px]"
           >
-            <option value="" disabled>Select State</option>
+            <option value="" disabled>
+              Select State
+            </option>
             {Object.entries(states).map(([code, name]) => (
               <option key={code} value={name}>
                 {name}
@@ -527,6 +528,13 @@ const NavBar = (props) => {
             className="h-4 rounded-sm ml-2"
           />
         </div>
+      </div>
+
+      <div className="flex gap-2 justify-center items-center">
+
+          <IoMdCall />
+          8929788700
+
       </div>
 
       <div className="searchBar h-[70%] min-[800px]:w-[40%] bg-[#f0f5ff] shadow flex justify-center items-center rounded-md text-md px-2 relative">

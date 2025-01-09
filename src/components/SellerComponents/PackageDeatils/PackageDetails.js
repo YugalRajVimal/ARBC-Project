@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
+import axios from "axios";
 
 const PackageDetails = (props) => {
   const { handleSubscribe, handlePackage } = props;
+  const [customNationalDuration, setCustomNationalDuration] = useState(0);
+  const [customInternationalDuration, setCustomInternationalDuration] =
+    useState(0);
   const subscribePackage = async (subsRegion, subsPackage) => {
     // Handle Subscribe logic here
     await handleSubscribe(subsRegion, subsPackage);
@@ -29,6 +33,39 @@ const PackageDetails = (props) => {
     "Feedback calls",
   ];
 
+  const customSubscription = async (location) => {
+    const duration =
+      location === "National"
+        ? customNationalDuration
+        : customInternationalDuration;
+
+    if (!duration || duration <= 0) {
+      alert("Please enter a valid duration.");
+      return;
+    }
+
+    try {
+      const userId = localStorage.getItem("userId");
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/user/seller/custom-subscription`,
+        {
+          location,
+          duration,
+          userId,
+        }
+      );
+
+      if (response.status === 201) {
+        alert("Subscription request sent successfully!");
+        setCustomInternationalDuration(0);
+        setCustomNationalDuration(0);
+      }
+    } catch (error) {
+      console.error("Error sending subscription request:", error);
+      alert("Failed to send subscription request. Please try again.");
+    }
+  };
+
   return (
     <div className="absolute w-[90%] h-[90%] top-1/2 left-1/2 z-[110] -translate-y-1/2 -translate-x-1/2 bg-white shadow-2xl rounded-lg p-8 flex flex-col overflow-hidden overflow-y-auto">
       <div className="flex justify-between items-center px-4 ">
@@ -36,7 +73,7 @@ const PackageDetails = (props) => {
           Subscription Packages
         </h1>
         <span className="text-2xl">
-          <IoClose onClick={()=>handlePackage(false)} />
+          <IoClose onClick={() => handlePackage(false)} />
         </span>
       </div>
 
@@ -92,6 +129,23 @@ const PackageDetails = (props) => {
                 Subscribe
               </button>
             </li>
+            <li className="mb-4 flex justify-between items-center">
+              <span className="font-medium text-lg">Custom:</span>
+              <span className="text-xl text-gray-800">
+                <input
+                  className="px-2 border border-black rounded-md"
+                  value={customNationalDuration}
+                  onChange={(e) => setCustomNationalDuration(e.target.value)}
+                  type="number"
+                />
+              </span>
+              <button
+                className="ml-4 px-4 py-2 bg-green-600 text-white rounded-md transition duration-300 hover:bg-green-700"
+                onClick={() => customSubscription("National")}
+              >
+                Submit
+              </button>
+            </li>
           </ul>
         </div>
 
@@ -131,6 +185,25 @@ const PackageDetails = (props) => {
                 }
               >
                 Subscribe
+              </button>
+            </li>
+            <li className="mb-4 flex justify-between items-center">
+              <span className="font-medium text-lg">Custom:</span>
+              <span className="text-xl text-gray-800">
+                <input
+                  className="px-2  border border-black rounded-md"
+                  value={customInternationalDuration}
+                  onChange={(e) =>
+                    setCustomInternationalDuration(e.target.value)
+                  }
+                  type="number"
+                />
+              </span>
+              <button
+                className="ml-4 px-4 py-2 bg-green-600 text-white rounded-md transition duration-300 hover:bg-green-700"
+                onClick={() => customSubscription("International")}
+              >
+                Submit
               </button>
             </li>
           </ul>
