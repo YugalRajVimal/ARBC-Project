@@ -14,6 +14,8 @@ const PackageDetails = (props) => {
 
   const subscriptionPrice = {
     national: {
+      oneMonths: 3350,
+      twoMonths: 6700,
       fourMonths: 13000,
       sixMonths: 18900,
       twelveMonths: 35000,
@@ -84,6 +86,36 @@ const PackageDetails = (props) => {
             National Packages
           </h2>
           <ul>
+          <li className="mb-4 flex justify-between items-center">
+              <span className="font-medium text-lg">1 Months:</span>
+              <span className="text-xl font-bold text-gray-800">
+                ₹{subscriptionPrice.national.oneMonths}{" "}
+                <span className="text-sm text-gray-600">
+                  (excluding 18% GST)
+                </span>
+              </span>
+              <button
+                className="ml-4 px-4 py-2 bg-blue-600 text-white rounded-md transition duration-300 hover:bg-blue-700"
+                onClick={() => subscribePackage("national", "oneMonths")}
+              >
+                Subscribe
+              </button>
+            </li>
+            <li className="mb-4 flex justify-between items-center">
+              <span className="font-medium text-lg">2 Months:</span>
+              <span className="text-xl font-bold text-gray-800">
+                ₹{subscriptionPrice.national.twoMonths}{" "}
+                <span className="text-sm text-gray-600">
+                  (excluding 18% GST)
+                </span>
+              </span>
+              <button
+                className="ml-4 px-4 py-2 bg-blue-600 text-white rounded-md transition duration-300 hover:bg-blue-700"
+                onClick={() => subscribePackage("national", "twoMonths")}
+              >
+                Subscribe
+              </button>
+            </li>
             <li className="mb-4 flex justify-between items-center">
               <span className="font-medium text-lg">4 Months:</span>
               <span className="text-xl font-bold text-gray-800">
