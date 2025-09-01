@@ -42,9 +42,9 @@ const BuyerDetailedProductPage = () => {
 
   return (
     <div className="p-4">
-      <div className="flex mb-8">
+      <div className="flex flex-col items-center md:flex-row mb-8">
         {/* Product Card */}
-        <div className="w-full flex border border-gray-200 rounded-lg shadow-md p-4">
+        <div className="w-full flex border border-gray-200 rounded-lg shadow-md p-4 mb-2">
           {/* Left Image Section */}
           <div className="w-1/3 h-64 overflow-hidden rounded-lg">
             <img
@@ -104,7 +104,7 @@ const BuyerDetailedProductPage = () => {
         </div>
 
         {/* Seller Information */}
-        <div className="w-1/3 p-4 border rounded-lg shadow-md ml-4">
+        <div className=" w-full md:w-1/3  p-4 border rounded-lg shadow-md md:ml-4">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-bold ">
               {sellerDetails.companyName || "Seller Name"}{" "}
@@ -142,8 +142,8 @@ const BuyerDetailedProductPage = () => {
         </div>
       </div>
 
-      <div className="flex">
-        <div className="w-2/3 p-4">
+      <div className="flex md:flex-row flex-col">
+        <div className="w-full md:w-2/3 p-4">
           {/* Detailed Product Overview */}
           <div className="mb-4">
             <h4 className="text-lg font-semibold">Product Overview</h4>
@@ -153,7 +153,7 @@ const BuyerDetailedProductPage = () => {
           </div>
 
           {/* Detailed Product Specifications */}
-          <div className="mb-4">
+          <div className=" mb-4">
             <h4 className="text-lg font-semibold">Product Specifications</h4>
             <ul className="list-disc list-inside mt-2 text-gray-600">
               {productDetails.productSpecifications?.map((spec, index) => (
@@ -182,7 +182,7 @@ const BuyerDetailedProductPage = () => {
         </div>
 
         {/* Seller Taxation and Bank Details */}
-        <div className="w-1/3 p-4 border-l">
+        <div className="w-full md:w-1/3 p-4 border-l">
           <h4 className="text-lg font-semibold mb-4">
             Seller Taxation Details
           </h4>

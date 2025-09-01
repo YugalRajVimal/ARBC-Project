@@ -17,7 +17,7 @@ import Testimonials from "../components/AdminComponents/Testimonials/Testimonial
 import LogoAndName from "../components/AdminComponents/LogoAndName/LogoAndName";
 import axios from "axios";
 import SetInquiryCount from "../components/AdminComponents/SetInquiryCount/SetInquiryCount";
-
+import OnboardSeller from "../components/AdminComponents/OnboardSeller/OnboardSeller";
 
 const AdminLandingPage = () => {
   const [selectedPage, setSelectedPage] = useState("Category");
@@ -50,7 +50,7 @@ const AdminLandingPage = () => {
     if (logo) {
       const favicon = document.querySelector('link[rel="icon"]');
       if (favicon) {
-        favicon.href = process.env.REACT_APP_API_URL +"/"+ logo;
+        favicon.href = process.env.REACT_APP_API_URL + "/" + logo;
       } else {
         const link = document.createElement("link");
         link.rel = "icon";
@@ -60,7 +60,6 @@ const AdminLandingPage = () => {
     }
   }, [name, logo]);
 
-
   return (
     <div className="h-[93vh] overflow-y-auto overflow-x-hidden flex bg-[#fdfef4]">
       <AdminSidePanel
@@ -69,25 +68,26 @@ const AdminLandingPage = () => {
       />
 
       <div className="w-4/5 h-full mx-1 bg-[#fdfef4] p-4">
-          <>
-            {/* {selectedPage === "Dashboard" && <Dashboard />} */}
-            {selectedPage === "LogoAndName" && <LogoAndName />}
-            {selectedPage === "Category" && <AddCategory />}
-            {selectedPage === "SubCategory" && <AddSubCategory />}
-            {selectedPage === "BuyerProfile" && <BuyerList />}
-            {selectedPage === "SellerProfile" && <SellerList />}
-            {selectedPage === "TopCategories" && <TopCategories />}
-            {selectedPage === "FeaturedProducts" && <FeaturedProducts />}
-            {selectedPage === "PopularProducts" && <PopularProducts />}
-            {selectedPage === "ProductShowcase" && <ProductShowcase />}
-            {selectedPage === "TrustedProducts" && <TrustedProducts />}
-            {selectedPage === "FeaturedCategory" && <FeaturedCategory />}
-            {selectedPage === "PostBuyRequirements" && <PostBuyRequirements />}
-            {selectedPage === "AllInquiries"&& <AllInquiries />}
-            {selectedPage === "Banners" && <Banners />}
-            {selectedPage === "Testimonials" && <Testimonials />}
-            {selectedPage === "setInquiryCount" && <SetInquiryCount />}
-          </>
+        <>
+          {/* {selectedPage === "Dashboard" && <Dashboard />} */}
+          {selectedPage === "LogoAndName" && <LogoAndName />}
+          {selectedPage === "Category" && <AddCategory />}
+          {selectedPage === "SubCategory" && <AddSubCategory />}
+          {selectedPage === "BuyerProfile" && <BuyerList />}
+          {selectedPage === "SellerProfile" && <SellerList />}
+          {selectedPage === "TopCategories" && <TopCategories />}
+          {selectedPage === "FeaturedProducts" && <FeaturedProducts />}
+          {selectedPage === "PopularProducts" && <PopularProducts />}
+          {selectedPage === "ProductShowcase" && <ProductShowcase />}
+          {selectedPage === "TrustedProducts" && <TrustedProducts />}
+          {selectedPage === "FeaturedCategory" && <FeaturedCategory />}
+          {selectedPage === "PostBuyRequirements" && <PostBuyRequirements />}
+          {selectedPage === "AllInquiries" && <AllInquiries />}
+          {selectedPage === "Banners" && <Banners />}
+          {selectedPage === "Testimonials" && <Testimonials />}
+          {selectedPage === "setInquiryCount" && <SetInquiryCount />}
+          {selectedPage === "OnboardSeller" && <OnboardSeller />}
+        </>
       </div>
     </div>
   );

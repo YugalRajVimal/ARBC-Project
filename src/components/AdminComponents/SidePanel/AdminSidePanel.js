@@ -13,14 +13,22 @@ const AdminSidePanel = (props) => {
   return (
     <div className="w-1/5 h-full p-4">
       <ul className="space-y-4">
-      {/* LogoAndName */}
-      <li
+        {/* LogoAndName */}
+        <li
           className={`p-2 rounded hover:bg-[#ffd383] shadow-lg ${
             selectedPage === "LogoAndName" && "bg-[#ffd383]"
           }`}
           onClick={() => setSelectedPage("LogoAndName")}
         >
           <h4 className="flex gap-2 items-center">Logo And Name</h4>
+        </li>
+        <li
+          className={`p-2 rounded hover:bg-[#ffd383] shadow-lg ${
+            selectedPage === "OnboardSeller" && "bg-[#ffd383]"
+          }`}
+          onClick={() => setSelectedPage("OnboardSeller")}
+        >
+          <h4 className="flex gap-2 items-center">Onboard Seller</h4>
         </li>
         <li
           className={`p-2 rounded hover:bg-[#ffd383] shadow-lg ${
