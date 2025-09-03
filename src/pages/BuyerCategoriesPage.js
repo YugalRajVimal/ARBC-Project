@@ -30,7 +30,10 @@ const BuyerCategoriesPage = () => {
               onClick={() => navigateToSubCategory(category._id)}
               className=" h-[120px] w-[340px] bg-slate-100 flex justify-between items-center p-2"
             >
-              <img className="h-full aspect-[1/1] bg-slate-200"></img>
+              <img
+                src={process.env.REACT_APP_API_URL + "/" + category.image}
+                className="h-full aspect-[1/1] bg-slate-200"
+              ></img>
               <div className="w-full p-2 pt-0 h-full">
                 <h3 className="text-lg font-semibold">{category.name}</h3>
                 <p className="text-sm">{category.description}</p>
