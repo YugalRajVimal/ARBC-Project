@@ -56,7 +56,7 @@ const LandingPage = () => {
       <FeaturedProducts />
       {/* <Categories /> */}
       <Categories2 />
-      <div className="h-[300px] flex justify-center items-center gap-4 my-10">
+      <div className="md:h-[300px] flex md:flex-row flex-col justify-center items-center gap-4 my-10">
         <NewArrival />
         <TrustedProducts name={name} />
       </div>

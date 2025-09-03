@@ -62,10 +62,10 @@ const PostBuyRequirements = () => {
     >
       <div className="w-full max-w-5xl bg-white rounded-2xl shadow-md shadow-black flex flex-col md:flex-row overflow-hidden">
         {/* Left Side Image */}
-        <div className="w-full md:w-[45%] bg-gray-100 flex justify-center items-center p-6">
+        <div className="w-full md:w-[45%] bg-[#d8d2ba] flex justify-center items-center p-6">
           <img
             src="/postBuyRequirements.jpeg"
-            className="w-[80%] h-auto object-contain rounded-lg"
+            className="w-[40%] md:w-[80%] h-auto object-contain rounded-lg"
             alt="Post Buy Requirements"
           />
         </div>

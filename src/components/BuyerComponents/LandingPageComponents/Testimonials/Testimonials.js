@@ -105,7 +105,7 @@ const Testimonials = () => {
                   "/" +
                   testimonials[prevTestimonial].image
                 }
-                alt="Previous Profile"
+                // alt="Previous Profile"
                 className="h-[70px] w-[70px] rounded-full bg-slate-400 object-cover"
               />
             </div>
@@ -120,7 +120,7 @@ const Testimonials = () => {
                     "/" +
                     testimonials[currentTestimonial].image
                   }
-                  alt="Current Profile"
+                  // alt="Current Profile"
                   className="h-full aspect-[1/1] rounded-full bg-slate-400 object-cover"
                 />
               </div>
@@ -161,7 +161,7 @@ const Testimonials = () => {
                   "/" +
                   testimonials[nextTestimonial].image
                 }
-                alt="Next Profile"
+                // alt="Next Profile"
                 className="h-[70px] w-[70px] rounded-full bg-slate-400 object-cover"
               />
             </div>
