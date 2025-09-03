@@ -1,17 +1,14 @@
+// ✅ TrustedProducts.jsx
 import React, { useEffect, useState } from "react";
 import { getAsideListItems } from "../../../../api/BuyerAPI/buyerAPI";
 import { useNavigate } from "react-router-dom";
 
-const TrustedProducts = (props) => {
-  const {name} = props;
- 
-const navigate = useNavigate();
+const TrustedProducts = ({ name }) => {
+  const navigate = useNavigate();
   const [productDetails, setProductDetails] = useState([]);
 
   useEffect(() => {
-    // Fetch top categories from API
     getAsideListItems(3).then((data) => {
-      console.log(data[0].products);
       setProductDetails(data[0].products);
     });
   }, []);
@@ -21,31 +18,42 @@ const navigate = useNavigate();
   };
 
   return (
-    <div className="w-[45%] h-[75%] rounded-md p-2 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)]">
-      <div className="h-[15%]">
-        <h3 className="mb-[-8px] font-bold">Trusted Products</h3>
-        <span className="text-xs pl-2">
-          Buy products from 4.5 million verified and trusted by {name}
-        </span>
+    <div className="w-full md:w-[48%] h-full shadow-md shadow-black  bg-white rounded-xl shadow-md p-4 flex flex-col">
+      {/* Header */}
+      <div className="mb-4">
+        <h3 className="text-lg font-bold text-gray-900">Trusted Products</h3>
+        <p className="text-sm text-gray-500">
+          Buy from 4.5M+ verified suppliers trusted by {name}
+        </p>
+        <div className="h-[2px] w-12 bg-green-600 mt-2"></div>
       </div>
 
-      <div className="h-[85%] flex justify-center pl-2">
-        <div className=" h-[100%] flex justify-start items-center gap-2 overflow-x-auto overflow-y-hidden">
-          {productDetails.map((product, index) => (
-            <div
-            onClick={() => (navigateToDetailedProduct(product._id))}
-            className="h-[90%] aspect-[6/5]  border rounded-md p-1">
+      {/* Products scroll */}
+      <div className="flex gap-4 overflow-x-auto pb-2">
+        {productDetails.map((product, index) => (
+          <div
+            key={index}
+            onClick={() => navigateToDetailedProduct(product._id)}
+            className="min-w-[160px] bg-gray-50 rounded-lg shadow-sm cursor-pointer transition hover:shadow-md hover:scale-105 p-3 flex flex-col"
+          >
+            <div className="h-28 w-full flex items-center justify-center bg-white rounded-md mb-2 overflow-hidden">
               <img
-                src={process.env.REACT_APP_API_URL+"/"+product.productImages[0]}
+                src={process.env.REACT_APP_API_URL + "/" + product.productImages[0]}
                 alt={product.productName}
-                className="h-1/2 aspect-[1/1] object-cover m-auto rounded-sm p-1"
+                className="h-full w-full object-contain"
               />
-              <h3 className="text-md font-semibold border-t-[1px]">{product.productName}</h3>
-              <p className="text-sm">{product.productPrice} / {product.productUnitType}</p>
-              <p className="text-sm">{product.productQuantity} in Stock</p>
             </div>
-          ))}
-        </div>
+            <h3 className="text-sm font-semibold text-gray-800 truncate">
+              {product.productName}
+            </h3>
+            <p className="text-xs text-gray-600">
+              {product.productPrice} / {product.productUnitType}
+            </p>
+            <p className="text-xs text-green-600">
+              {product.productQuantity} in Stock
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

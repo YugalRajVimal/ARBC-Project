@@ -51,12 +51,12 @@ const LandingPage = () => {
   }, [name, logo]);
 
   return (
-    <div className="h-[93vh] overflow-y-auto overflow-x-hidden">
+    <div className=" overflow-y-auto overflow-x-hidden">
       <Home />
       <FeaturedProducts />
       {/* <Categories /> */}
       <Categories2 />
-      <div className="h-[300px] flex justify-center items-center gap-4">
+      <div className="h-[300px] flex justify-center items-center gap-4 my-10">
         <NewArrival />
         <TrustedProducts name={name} />
       </div>

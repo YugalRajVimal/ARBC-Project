@@ -6,9 +6,14 @@ import FeaturedCategory from "./FeaturedCategory";
 
 const Home = () => {
   return (
-    <div className="h-full p-2 flex justify-between">
-      <TopCategories />
-      <div className=" w-auto min-[800px]:w-[74%] h-full flex flex-col justify-around">
+    <div className="md:h-full p-2 w-full flex  flex-col-reverse md:flex-row gap-4">
+      {/* Left Side - Categories */}
+      <div className="w-full md:w-[26%]">
+        <TopCategories />
+      </div>
+
+      {/* Right Side - Banners + Featured */}
+      <div className="w-full md:w-[74%] h-full flex flex-col gap-4">
         <ProductBanners />
         {/* <CategoriesList /> */}
         <FeaturedCategory />

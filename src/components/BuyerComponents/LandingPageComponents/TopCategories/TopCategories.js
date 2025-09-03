@@ -2,30 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getAsideListItems } from "../../../../api/BuyerAPI/buyerAPI";
 import { useNavigate } from "react-router-dom";
 
-// const topCategories = [
-//   { name: "Earthing Electrode", url: "/earthing-electrode" },
-//   { name: "Jackets", url: "/jackets" },
-//   { name: "Personal Care Products", url: "/personal-care-products" },
-//   { name: "Rolling Mill Machinery", url: "/rolling-mill-machinery" },
-//   { name: "ICU Equipment", url: "/icu-equipment" },
-//   {
-//     name: "Medical, Diagnostic & Hospital Supplies",
-//     url: "/medical-diagnostic-hospital-supplies",
-//   },
-//   { name: "Temperature Instruments", url: "/temperature-instruments" },
-//   { name: "Disposable Gloves", url: "/disposable-gloves" },
-//   {
-//     name: "Healthcare & Hygiene Products",
-//     url: "/healthcare-hygiene-products",
-//   },
-//   {
-//     name: "Immunization & Vaccination Drugs",
-//     url: "/immunization-vaccination-drugs",
-//   },
-//   { name: "ENT Equipment & Supplies", url: "/ent-equipment-supplies" },
-//   // Add more categories here...
-// ];
-
 const TopCategories = () => {
   const navigate = useNavigate();
   const [topCategories, setTopCategories] = useState([]);

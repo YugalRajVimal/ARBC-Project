@@ -5,49 +5,60 @@ import { getAllPopulatedCategories } from "../../../../api/BuyerAPI/buyerAPI";
 const Categories2 = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     getAllPopulatedCategories().then((data) => {
-        data = data.slice(0, 10);
-      setCategories(data);
+      setCategories(data.slice(0, 10)); // show only first 10
     });
   }, []);
 
   const navigateToSubCategories = (categoryId) => {
-    // Navigate to sub categories page
     navigate(`/subcategories/${categoryId}`);
   };
 
   const navigateToCategories = () => {
-    // Navigate to categories page
     navigate("/categories");
   };
 
-
-
   return (
-    <div className="p-2 flex flex-col justify-center gap-2 items-start">
-      <h2 className="p-2 text-xl font-bold h-[12%]">Categories</h2>
-      <div className=" flex flex-wrap justify-center w-full gap-4 overflow-x-auto mx-4">
+    <div className="w-full px-4 py-6">
+      {/* Title */}
+      <h2 className="text-xl font-semibold text-gray-900 mb-6">
+        Categories
+      </h2>
+
+      {/* Categories Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-center">
         {categories.map((category, index) => (
-            <div
+          <div
             key={index}
             onClick={() => navigateToSubCategories(category._id)}
-            className="flex flex-col justify-center items-center gap-2 cursor-pointer w-[280px] px-10 py-2 border-[1px] border-black rounded-md"
+            className="flex flex-col items-center bg-white shadow-sm rounded-lg p-4 cursor-pointer transition transform hover:scale-105 hover:shadow-md"
           >
-            <img
-              src={process.env.REACT_APP_API_URL + "/" + category.image}
-              alt={category.name}
-              className="h-[70px] w-[70px] object-cover border-[1px] border-black rounded-md"
-            />
-            <p className="text-sm font-semibold bg-blue-700 px-6 py-2 rounded-md whitespace-nowrap text-white">{category.name}</p>
+            {/* Image wrapper */}
+            <div className="h-20 w-20 flex items-center justify-center rounded-full bg-gray-100 overflow-hidden mb-3">
+              <img
+                src={process.env.REACT_APP_API_URL + "/" + category.image}
+                alt={category.name}
+                className="h-16 w-16 object-cover rounded-full"
+              />
+            </div>
+            {/* Category Name */}
+            <p className="text-sm font-medium text-gray-800 bg-blue-600 text-white px-4 py-1.5 rounded-full">
+              {category.name}
+            </p>
           </div>
         ))}
+
+        {/* All Categories Card */}
         <div
-            onClick={() => navigateToCategories()}
-            className="flex flex-col justify-center items-center gap-2 cursor-pointer w-[280px] px-10 py-2 "
-          >
-            <p className="text-sm font-semibold bg-blue-700 px-6 py-2 rounded-md whitespace-nowrap text-white">All Categories</p>
-          </div>
+          onClick={navigateToCategories}
+          className="flex flex-col items-center justify-center bg-blue-50 border border-dashed border-blue-400 shadow-sm rounded-lg p-4 cursor-pointer transition hover:scale-105 hover:shadow-md"
+        >
+          <p className="text-sm font-medium text-blue-600 bg-white px-4 py-1.5 rounded-full border border-blue-400">
+            All Categories
+          </p>
+        </div>
       </div>
     </div>
   );

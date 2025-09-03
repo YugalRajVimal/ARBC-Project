@@ -7,11 +7,11 @@ const ProductBanners = () => {
   const [banners, setBanners] = useState([]);
 
   const handlePrevClick = () => {
-    setCurrentIndex(currentIndex === 0 ? banners.length - 1 : currentIndex - 1);
+    setCurrentIndex((prev) => (prev === 0 ? banners.length - 1 : prev - 1));
   };
 
   const handleNextClick = () => {
-    setCurrentIndex(currentIndex === banners.length - 1 ? 0 : currentIndex + 1);
+    setCurrentIndex((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
   };
 
   useEffect(() => {
@@ -25,33 +25,51 @@ const ProductBanners = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleNextClick();
-    }, 3000); // 3 seconds
+    }, 5000); // Auto-slide every 5s
 
-    return () => clearInterval(interval); // Clear interval on component unmount
-  }, [currentIndex, banners.length]);
+    return () => clearInterval(interval);
+  }, [banners.length]);
 
   if (banners.length === 0) {
     return null;
   }
 
   return (
-    <div className="productBanner w-full h-[70%] relative rounded-md">
-      <div
-        className="absolute left-0 top-1/2 -translate-y-1/2 px-1 py-5 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)] rounded-r-md cursor-pointer"
-        onClick={handlePrevClick}
-      >
-        <IoIosArrowBack className="text-xl" />
-      </div>
+    <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-lg">
+      {/* Banner Image */}
       <img
         src={process.env.REACT_APP_API_URL + "/" + banners[currentIndex].image}
-        alt="banner"
-        className="w-full h-full rounded-md"
+        alt={banners[currentIndex].image}
+        className="w-full h-full object-cover transition-all duration-700 ease-in-out"
       />
-      <div
-        className="absolute right-0 top-1/2 -translate-y-1/2 px-1 py-5 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.2)] rounded-l-md cursor-pointer"
-        onClick={handleNextClick}
+
+      {/* Prev Button */}
+      <button
+        onClick={handlePrevClick}
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-gray-800 rounded-full p-2 shadow-md transition"
       >
-        <IoIosArrowForward className="text-xl z-20" />
+        <IoIosArrowBack className="text-2xl" />
+      </button>
+
+      {/* Next Button */}
+      <button
+        onClick={handleNextClick}
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-gray-800 rounded-full p-2 shadow-md transition"
+      >
+        <IoIosArrowForward className="text-2xl" />
+      </button>
+
+      {/* Dots Indicator */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        {banners.map((_, index) => (
+          <div
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-3 h-3 rounded-full cursor-pointer transition ${
+              index === currentIndex ? "bg-white shadow-md" : "bg-white/50"
+            }`}
+          ></div>
+        ))}
       </div>
     </div>
   );

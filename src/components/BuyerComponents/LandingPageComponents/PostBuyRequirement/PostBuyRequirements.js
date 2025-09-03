@@ -12,7 +12,6 @@ const PostBuyRequirements = () => {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    // Fetch top categories from API
     getAllCategories().then((data) => {
       setCategories(data);
     });
@@ -35,20 +34,15 @@ const PostBuyRequirements = () => {
       email,
     };
 
-    //Validate email
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailRegex.test(email)) {
       alert("Enter a valid Email");
       return;
     }
 
-    console.log("Requirement Data", requirementData);
-
     try {
       const response = await postBuyRequirement(requirementData);
       if (response.status === 201) {
-        // Add success notification or action here
-        //Empty the fields
         setSelectedCategory("");
         setProductName("");
         setEmail("");
@@ -58,37 +52,54 @@ const PostBuyRequirements = () => {
     } catch (error) {
       console.error("Error posting buy requirement", error);
       alert("Error posting buy requirement");
-      // Add error notification or action here
     }
   };
 
   return (
-    <div id="postBuyRequirements" className="h-[90%] md:h-[75%] w-full p-4">
-      <div className="h-full bg-white p-2 md:p-8 bg-[#dfd8be] flex flex-col min-[800px]:flex-row">
-        <div className="h-1/2 min-[800px]:h-[100%] min-[800px]:w-[45%] bg-[#dfd8be] p-2 flex justify-center items-center ">
+    <div
+      id="postBuyRequirements"
+      className="h-auto md:h-[75%] w-full p-4 flex justify-center items-center "
+    >
+      <div className="w-full max-w-5xl bg-white rounded-2xl shadow-md shadow-black flex flex-col md:flex-row overflow-hidden">
+        {/* Left Side Image */}
+        <div className="w-full md:w-[45%] bg-gray-100 flex justify-center items-center p-6">
           <img
             src="/postBuyRequirements.jpeg"
-            className="h-[70%] w-[70%] object-contain rounded-md"
+            className="w-[80%] h-auto object-contain rounded-lg"
             alt="Post Buy Requirements"
           />
         </div>
-        <div className="h-1/2 min-[800px]:h-[100%] min-[800px]:w-[55%] flex flex-col justify-center gap-2 bg-[#dfd8be] p-4">
-          <h3>Post Buy Requirement</h3>
-          <p>Tell us what you need, and we'll help you get quotes</p>
-          <span className="w-full border-[1px] h-[6px] rounded-full overflow-hidden">
-            <p
-              className={`${processingState === 0 && "w-1/4"} ${
-                processingState === 1 && "w-1/2"
-              } ${processingState === 2 && "w-3/4"} ${
-                processingState === 3 && "w-full"
-              } h-full bg-gradient-to-r from-[#fbd162] to-[#f2964e] rounded-r-full transition-all ease-in-out delay-150`}
-            ></p>
-          </span>
 
-          <div>
-            {/* <span className="color-red">*</span> */}
+        {/* Right Side Form */}
+        <div className="w-full md:w-[55%] p-6 flex flex-col justify-center">
+          <h3 className="text-2xl font-bold text-gray-900">
+            Post Buy Requirement
+          </h3>
+          <p className="text-sm text-gray-600 mb-4">
+            Tell us what you need, and we’ll connect you with suppliers
+          </p>
+
+          {/* Progress bar */}
+          <div className="w-full bg-gray-200 h-2 rounded-full mb-6">
+            <div
+              className={`h-full rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 transition-all duration-500`}
+              style={{
+                width:
+                  processingState === 0
+                    ? "25%"
+                    : processingState === 1
+                    ? "50%"
+                    : processingState === 2
+                    ? "75%"
+                    : "100%",
+              }}
+            ></div>
+          </div>
+
+          {/* Form */}
+          <div className="flex flex-col gap-4">
             <select
-              className="w-full p-2 border-[1px] border-gray-300 rounded-md"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
               value={selectedCategory}
               onChange={(e) => {
                 setSelectedCategory(e.target.value);
@@ -103,37 +114,31 @@ const PostBuyRequirements = () => {
               ))}
               <option value="00000000000000000">Others</option>
             </select>
-          </div>
 
-          <div>
             <input
               type="text"
               placeholder="Enter the product you are looking for"
-              className="w-full p-2 border-[1px] border-gray-300 rounded-md"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
               value={productName}
               onChange={(e) => {
                 setProductName(e.target.value);
                 handleProcessingState(2, e.target.value);
               }}
             />
-          </div>
 
-          <div className="w-full">
             <input
               type="email"
-              placeholder="Enter Email"
-              className="w-full p-2 border-[1px] border-gray-300 rounded-md"
+              placeholder="Enter your email"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
                 handleProcessingState(3, e.target.value);
               }}
             />
-          </div>
 
-          <div className="text-right p-4">
             <button
-              className="bg-gradient-to-r from-[#3d80a8] to-[#285f84] text-white px-4 py-1 rounded-md"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-3 rounded-lg font-semibold shadow hover:scale-[1.02] transition"
               onClick={handleSubmit}
             >
               Continue
